@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import axios from 'axios';
-import Subcomponent from './components/Subcomponent.jsx';
+import RPList from './components/RI&C/RPList.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -13,8 +13,9 @@ class App extends React.Component {
   }
 
   render () {
-    return (<div>
-        Placeholder
+    return (
+    <div>
+        <RPList />
     </div>)
   }
 }
