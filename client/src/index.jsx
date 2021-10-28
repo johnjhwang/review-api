@@ -2,7 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import axios from 'axios';
-import Subcomponent from './components/Subcomponent.jsx';
+import styled from 'styled-components';
+import Reviews from './components/R&R/Reviews.jsx';
+import Ratings from './components/R&R/Ratings.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -13,8 +15,9 @@ class App extends React.Component {
 
   render () {
     return (<div>
-        Placeholder
-    </div>)
+        <Ratings/>
+        <Reviews/>
+      </div>)
   }
 }
 
