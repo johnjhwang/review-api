@@ -12,6 +12,10 @@ class App extends React.Component {
 
   }
 
+  // stars, loading more questions/reviews, adding a question/review,
+  // tailwind css https://tailwindcss.com/
+  // how to handle custom css? global? sass? other stuff? look it up on slides
+
   render () {
     return (<div>
         Placeholder
