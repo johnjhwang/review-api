@@ -15,7 +15,7 @@ class App extends React.Component {
   render () {
     return (
     <div>
-        <RPList />
+        <RPList productId={39333}/>
     </div>)
   }
 }
