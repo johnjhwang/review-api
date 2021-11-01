@@ -28,7 +28,7 @@ app.get('/products/:product_id', (req, res) => {
     })
 })
 
-//route for get related product id
+//request handler for get related product id
 app.get('/products/:product_id/related', (req, res) => {
   //console.log('REQ.PARAMS: ', req.params);
   axios.get(
@@ -43,6 +43,21 @@ app.get('/products/:product_id/related', (req, res) => {
     })
 })
 
+//request handler for get product styles
+app.get('/products/:product_id/styles', (req, res) => {
+  //console.log('REQ.PARAMS: ', req.params);
+  axios.get(
+    `https://app-hrsei-api.herokuapp.com/api/fec2/hr-nyc/products/${req.params.product_id}/styles`,
+    { headers: { 'Authorization': API_KEY }}
+  )
+    .then((results) => {
+      //console.log('results.data.results🐥',results.data.results)
+      res.send(results.data)
+    })
+    .catch((err) => {
+      console.log('Error in getting individual product information: ', err);
+    })
+})
 
 
 
