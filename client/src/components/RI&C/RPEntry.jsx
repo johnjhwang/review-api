@@ -9,14 +9,16 @@ class RPEntry extends React.Component {
     super(props);
     this.state = {
       productInfo: {},
-      productStyle: {}
+      productStyle: {},
+      productRatings: {}
     };
 
   }
 
   componentDidMount() {
     this.getProductInfo(),
-    this.getProductStyle()
+    this.getProductStyle(),
+    this.getProductRating()
   }
   //////////////////////////////////////////////////////////////////////////////////
   getProductInfo() {
@@ -47,13 +49,36 @@ class RPEntry extends React.Component {
       })
   }
 
+  getProductRating() {
+    const id = this.props.relatedProductId;
+    axios.get(`reviews/meta/${id}`)
+      .then((results) => {
+        //console.log('Results in productRatings: ', results.data.ratings)
+        this.setState({
+          productRatings: results.data
+        })
+      })
+      .catch((err) => {
+        console.log('Error in getProductInfo')
+      })
+  }
+
   //////////////////////////////////////////////////////////////////////////////////
 
   render() {
-    //console.log(this.state.productStyle.results[0].photos[0].ur)
     const results = this.state.productStyle.results
-    if (results) {let image = this.state.productStyle.results[0].photos[0].url}
+    const ratings = this.state.productRatings.ratings
+    let avgRating = 0; let length = 0
+    if (ratings) {
+      let sum = 0;
+      for (let key in ratings) {
+        sum += key*ratings[key]
+        length += Number(ratings[key])
+      }
+      avgRating = sum / length
+      }
     const {category, name, default_price} = this.state.productInfo
+
     return (
       <div >
 
@@ -61,6 +86,7 @@ class RPEntry extends React.Component {
         Name: {name}
         Price: {default_price}
         Image: {results ? <img src={this.state.productStyle.results[0].photos[0].url}></img> : 'null'}
+        Rating: {avgRating}
 
       </div>
     );

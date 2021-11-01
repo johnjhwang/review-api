@@ -59,6 +59,22 @@ app.get('/products/:product_id/styles', (req, res) => {
     })
 })
 
+//request handler for get product ratings
+app.get('/reviews/meta/:product_id', (req, res) => {
+  //console.log('REQ.PARAMS: ', req.params);
+  axios.get(
+    `https://app-hrsei-api.herokuapp.com/api/fec2/hr-nyc/reviews/meta?product_id=${req.params.product_id}`,
+    { headers: { 'Authorization': API_KEY }}
+  )
+    .then((results) => {
+      //console.log('results.data',results.data)
+      res.send(results.data)
+    })
+    .catch((err) => {
+      console.log('Error in getting individual product information: ', err);
+    })
+})
+
 
 
 
