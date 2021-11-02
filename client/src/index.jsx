@@ -15,9 +15,9 @@ class App extends React.Component {
   render () {
     return (
     <div>
-        <RPList productId={39334}/>
+        <RPList productId={this.props.productId}/>
     </div>)
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('app'));
+ReactDOM.render(<App productId={39334}/>, document.getElementById('app'));

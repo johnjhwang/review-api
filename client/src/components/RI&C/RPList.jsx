@@ -9,13 +9,15 @@ class RPList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      relatedProductId: []
+      relatedProductId: [],
+      currentProductInfo: {}
     };
 
   }
 
   componentDidMount() {
-    this.getRelatedProductId();
+    this.getRelatedProductId(),
+    this.getCurrentProductInfo()
   }
 
   getRelatedProductId() {
@@ -32,15 +34,30 @@ class RPList extends React.Component {
       })
   }
 
+  getCurrentProductInfo() {
+    const id = this.props.productId;
+    axios
+      .get(`products/${id}`)
+      .then((results) => {
+        //console.log('Results in getProductInfo: ', results.data)
+        this.setState({
+          currentProductInfo: results.data,
+        });
+      })
+      .catch((err) => {
+        console.log("Error in currentProductInfo");
+      });
+  }
+
 
   render() {
-    //console.log(this.state.relatedProductId)
+    //console.log(this.state.currentProductInfo)
     return (
       <div>
         <ListContainer>
           <CarouserContainerInner>
         {this.state.relatedProductId.map((id) => {
-          return <RPEntry relatedProductId={id} key={id}/>
+          return <RPEntry relatedProductId={id} key={id} productInfo={this.state.currentProductInfo}/>
         })}
         </CarouserContainerInner>
         </ListContainer>
@@ -50,7 +67,7 @@ class RPList extends React.Component {
 }
 
 const ListContainer = styled.div`
-  margin: auto;
+  //margin: auto;
   height: 300px;
   width: 70%;
   display: flex;

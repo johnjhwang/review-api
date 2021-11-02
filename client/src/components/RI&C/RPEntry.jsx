@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import $ from "jquery";
 import axios from "axios";
 import styled from "styled-components";
-import Comparison from "./Comparison.jsx";
+import ComparisonModal from "./ComparisonModal.jsx";
 
 class RPEntry extends React.Component {
   constructor(props) {
@@ -19,7 +19,9 @@ class RPEntry extends React.Component {
   }
 
   componentDidMount() {
-    this.getProductInfo(), this.getProductStyle(), this.getProductRating();
+    this.getProductInfo(),
+    this.getProductStyle(),
+    this.getProductRating();
   }
 
   //////////////////////////////////////////////////////////////////////////////////
@@ -79,6 +81,7 @@ class RPEntry extends React.Component {
   //////////////////////////////////////////////////////////////////////////////////
 
   render() {
+   //console.log(this.props.productInfo)
     const { category, name, default_price } = this.state.productInfo;
     const results = this.state.productStyle.results;
     const salePrice = results ? results.sale_price : "null";
@@ -103,7 +106,9 @@ class RPEntry extends React.Component {
         Rating: {avgRating}
         <button onClick={this.toggleModal}>Open Modal</button>
         {this.state.openModal && <Comparison />} */}
-        {this.state.openModal && <Comparison closeModal={this.toggleModal} />}
+        {this.state.openModal &&
+        <ComparisonModal closeModal={this.toggleModal} rpInfo={this.state.productInfo} cpInfo={this.props.productInfo}/>
+        }
         <Card>
           <Image url={results ? this.state.productStyle.results[0].photos[0].thumbnail_url : 'null'}>
           <Button><button onClick={this.toggleModal}>Open Modal</button></Button>
