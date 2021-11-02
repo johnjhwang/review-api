@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import $ from "jquery";
 import axios from "axios";
 import styled from 'styled-components';
+import Comparison from './Comparison.jsx'
 
 class RPEntry extends React.Component {
   constructor(props) {
@@ -10,9 +11,11 @@ class RPEntry extends React.Component {
     this.state = {
       productInfo: {},
       productStyle: {},
-      productRatings: {}
+      productRatings: {},
+      openModal: false
     };
 
+    this.toggleModal = this.toggleModal.bind(this)
   }
 
   componentDidMount() {
@@ -20,6 +23,7 @@ class RPEntry extends React.Component {
     this.getProductStyle(),
     this.getProductRating()
   }
+
   //////////////////////////////////////////////////////////////////////////////////
   getProductInfo() {
     const id = this.props.relatedProductId;
@@ -65,8 +69,18 @@ class RPEntry extends React.Component {
 
   //////////////////////////////////////////////////////////////////////////////////
 
+  toggleModal() {
+    this.setState({
+      openModal: !this.state.openModal
+    })
+  }
+
+  //////////////////////////////////////////////////////////////////////////////////
+
   render() {
+    const {category, name, default_price} = this.state.productInfo
     const results = this.state.productStyle.results
+    const salePrice = results ? results.sale_price : 'null'
     const ratings = this.state.productRatings.ratings
     let avgRating = 0; let length = 0
     if (ratings) {
@@ -77,16 +91,30 @@ class RPEntry extends React.Component {
       }
       avgRating = sum / length
       }
-    const {category, name, default_price} = this.state.productInfo
 
     return (
       <div >
-
-        Category: {category}
+        {/* Category: {category}
         Name: {name}
-        Price: {default_price}
+        Price: {salePrice ? 'onsale'+salePrice : default_price}
         Image: {results ? <img src={this.state.productStyle.results[0].photos[0].url}></img> : 'null'}
         Rating: {avgRating}
+        <button onClick={this.toggleModal}>Open Modal</button>
+        {this.state.openModal && <Comparison />} */}
+        <Card>
+          <Content>
+            <button onClick={this.toggleModal}>Open Modal</button>
+            <p>
+              {category} <br></br>
+              {name} <br></br>
+              {salePrice ? 'onsale'+salePrice : '$'+default_price} <br></br>
+              {'Rating: '+ avgRating}
+            </p>
+
+          </Content>
+        </Card>
+        {this.state.openModal && <Comparison closeModal={this.toggleModal}/>}
+
 
       </div>
     );
@@ -96,6 +124,20 @@ class RPEntry extends React.Component {
 }
 
 
+const Card = styled.div`
+  width: 200px;
+  height: 300px;
+  padding: 30px;
+  box-shadow: 0 0.5em 1em -0.125em rgb(10 10 10 / 10%), 0 0 0 1px rgb(10 10 10 / 2%);
+  border-radius: .25rem;
+`
+
+const Content = styled.div`
+  width: 200px;
+  height: 100px;
+  padding: 10px;
+  margin-top: 200px;
+`
 
 
 export default RPEntry;
