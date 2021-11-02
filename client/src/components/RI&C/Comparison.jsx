@@ -16,11 +16,13 @@ class Comparison extends React.Component {
   render() {
     return (
       <div>
-        {/* <Background>
-          <ModalWrapper> */}
-          <button onClick={() => {this.props.closeModal()}}> X </button>
-          {/* </ModalWrapper>
-        </Background> */}
+        <Background>
+          <ModalWrapper>
+            <CloseButton>
+              <button onClick={() => {this.props.closeModal()}}> X </button>
+            </CloseButton>
+          </ModalWrapper>
+        </Background>
       </div>
     );
   }
@@ -38,17 +40,21 @@ const Background = styled.div`
 `;
 
 const ModalWrapper = styled.div`
-  width: 1000px;
-  height: 500px;
-  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.2);
-  background: #fff;
-  color: #000;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  position: relative;
-  z-index: 10;
-  border-radius: 10px;
+  width: 800px;
+  height: 400px;
+  border-radius: 12px;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  display: flex;
+  flex-direction: column;
+  padding: 25px;
 `;
+
+
+const CloseButton = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`
 
 export default Comparison;
 

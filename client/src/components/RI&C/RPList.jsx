@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import $ from "jquery";
 import axios from "axios";
 import RPEntry from "./RPEntry.jsx"
+import styled from 'styled-components'
 
 class RPList extends React.Component {
   constructor(props) {
@@ -36,13 +37,34 @@ class RPList extends React.Component {
     //console.log(this.state.relatedProductId)
     return (
       <div>
+        <ListContainer>
+          <CarouserContainerInner>
         {this.state.relatedProductId.map((id) => {
           return <RPEntry relatedProductId={id} key={id}/>
         })}
+        </CarouserContainerInner>
+        </ListContainer>
       </div>
     );
   }
 }
+
+const ListContainer = styled.div`
+  margin: auto;
+  height: 300px;
+  width: 70%;
+  display: flex;
+  align-items: center;
+`
+
+
+const CarouserContainerInner = styled.div`
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  display: flex;
+`
 
 
 export default RPList;
