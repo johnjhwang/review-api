@@ -4,7 +4,7 @@ import $ from 'jquery';
 import axios from 'axios';
 import styled from 'styled-components';
 import Overview from './components/R&R/Overview.jsx';
-
+import RPList from './components/RI&C/RPList.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -15,10 +15,12 @@ class App extends React.Component {
   }
 
   render () {
-    return (<div>
-        <div><RPList productId={this.state.product_id}/></div>
-        {/* <div><Overview product_id={this.state.product_id}/></div> */}
-      </div>)
+
+    return (
+    <div>
+        <RPList productId={this.state.product_id}/>
+        {/* <Overview product_id={this.state.product_id}/> */}
+    </div>)
   }
 }
 
