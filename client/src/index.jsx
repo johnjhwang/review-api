@@ -17,7 +17,7 @@ class App extends React.Component {
   render () {
     return (<div>
         <div><RPList productId={this.state.product_id}/></div>
-        <div><Overview product_id={this.state.product_id}/></div>
+        {/* <div><Overview product_id={this.state.product_id}/></div> */}
       </div>)
   }
 }
