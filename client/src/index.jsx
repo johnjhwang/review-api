@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import axios from 'axios';
+import styled from 'styled-components';
+import Overview from './components/R&R/Overview.jsx';
 import RPList from './components/RI&C/RPList.jsx';
 
 class App extends React.Component {
@@ -10,10 +12,10 @@ class App extends React.Component {
     this.state = {
       product_id: 39334
     }
-
   }
 
   render () {
+
     return (
     <div>
         <RPList productId={this.state.product_id}/>
