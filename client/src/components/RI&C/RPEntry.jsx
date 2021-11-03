@@ -111,7 +111,7 @@ class RPEntry extends React.Component {
         }
         <Card>
           <Image url={results ? this.state.productStyle.results[0].photos[0].thumbnail_url : 'null'}>
-          <Button><button onClick={this.toggleModal}>Open Modal</button></Button>
+          <Button><button onClick={this.toggleModal}>★</button></Button>
           </Image>
           <Content>
             <p>

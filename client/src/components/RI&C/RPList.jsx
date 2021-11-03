@@ -54,6 +54,7 @@ class RPList extends React.Component {
     //console.log(this.state.currentProductInfo)
     return (
       <div>
+        <Title>RELATED PRODUCTS</Title>
         <ListContainer>
           <CarouserContainerInner>
         {this.state.relatedProductId.map((id) => {
@@ -65,6 +66,10 @@ class RPList extends React.Component {
     );
   }
 }
+
+const Title = styled.h3`
+  color: grey;
+`
 
 const ListContainer = styled.div`
   //margin: auto;

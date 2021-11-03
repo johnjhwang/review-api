@@ -3,15 +3,13 @@ import React from "react";
 import $ from "jquery";
 import axios from "axios";
 import styled from "styled-components";
-import ComparisonTable from "./ComparisonTable.jsx"
+
 
 class ComparisonModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       features: {},
-      cpName: this.props.cpInfo.name,
-      rpName: this.props.rpInfo.name
     };
   }
 
@@ -45,7 +43,8 @@ class ComparisonModal extends React.Component {
   }
 
   render() {
-    console.log(this.state.features)
+    //console.log(this.state.features)
+    const festures = this.state.features
     return (
       <div>
         <Background>
@@ -53,7 +52,30 @@ class ComparisonModal extends React.Component {
             <CloseButton>
               <button onClick={() => { this.props.closeModal(); }}> X </button>
             </CloseButton>
-            <ComparisonTable cpName={this.state.cpName} rpName={this.state.rpName}/>
+            <Table>
+              <thead>
+                <TR>
+                  <TH>{this.props.cpInfo.name}</TH>
+                  <TH>Characteristics</TH>
+                  <TH>{this.props.rpInfo.name}</TH>
+                </TR>
+              </thead>
+              <tbody>
+               {Object.keys(festures).map((key, i) => {
+                 //console.log(`${key} : ${festures[key].product1}`)
+                 let f1 = festures[key].product1 ? festures[key].product1 : " ";
+                 let f2 = festures[key].product2 ? festures[key].product2 : " ";
+                 return (
+                   <TR key={i}>
+                     <TD>{f1}</TD>
+                     <TD>{`${key}`}</TD>
+                     <TD>{f2}</TD>
+                  </TR>
+                 )
+                 })
+               }
+              </tbody>
+            </Table>
           </ModalWrapper>
         </Background>
       </div>
@@ -88,19 +110,23 @@ const CloseButton = styled.div`
 `;
 
 const Table = styled.table`
-  border: 1px solid black;
+  border-collapse: collapse;
 `;
 
 const TR = styled.tr`
-  border: 1px solid black;
+  border: 1px solid #ddd;
 `
 
 const TD = styled.td`
-  border: 1px solid black;
+  border: 1px solid #ddd;
+  text-align: center;
+  padding: 5px;
 `
 
 const TH = styled.th`
-  border: 1px solid black;
+  border: 1px solid #ddd;
+  padding: 5px;
+  background-color: #ddd;
 `
 
 export default ComparisonModal;
