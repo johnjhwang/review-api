@@ -117,7 +117,7 @@ class RPEntry extends React.Component {
             <p>
               {category} <br></br>
               {name} <br></br>
-              {salePrice ? "onsale" + salePrice : "$" + default_price} <br></br>
+              {salePrice ? "$" + <s>{default_price}</s> + salePrice : "$" + default_price} <br></br>
               {"Rating: " + avgRating}
             </p>
           </Content>

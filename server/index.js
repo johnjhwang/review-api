@@ -13,6 +13,9 @@ app.use(express.static(__dirname + '/../client/dist'));
 
 // attach authorization header with API key imported in from config.js file here or in helper js
 
+
+///////////////////////////////Related Product and Comparison////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////
 //request handler for get individual product information
 app.get('/products/:product_id', (req, res) => {
   //console.log('REQ.PARAMS: ', req.params);
@@ -75,7 +78,7 @@ app.get('/reviews/meta/:product_id', (req, res) => {
     })
 })
 
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
