@@ -70,6 +70,7 @@ class RPEntry extends React.Component {
       });
   }
 
+
   //////////////////////////////////////////////////////////////////////////////////
 
   toggleModal() {
@@ -81,7 +82,7 @@ class RPEntry extends React.Component {
   //////////////////////////////////////////////////////////////////////////////////
 
   render() {
-   //console.log(this.props.productInfo)
+   //console.log(this.props.rp)
     const { category, name, default_price } = this.state.productInfo;
     const results = this.state.productStyle.results;
     const salePrice = results ? results.sale_price : "null";
@@ -111,7 +112,10 @@ class RPEntry extends React.Component {
         }
         <Card>
           <Image url={results ? this.state.productStyle.results[0].photos[0].thumbnail_url : 'null'}>
-          <Button><button onClick={this.toggleModal}>★</button></Button>
+          <Button>
+            {this.props.rp && <button onClick={this.toggleModal}>★</button>}
+            {this.props.outfit && <button onClick={() => {this.props.deleteOutfit(this.state.productInfo.id)}}>X</button>}
+          </Button>
           </Image>
           <Content>
             <p>
@@ -122,13 +126,14 @@ class RPEntry extends React.Component {
             </p>
           </Content>
         </Card>
+
       </div>
     );
   }
 }
 
 const Card = styled.div`
-  width: 200px;
+  width: 180px;
   height: 300px;
   box-shadow: 0 0.5em 1em -0.125em rgb(10 10 10 / 10%), 0 0 0 1px rgb(10 10 10 / 2%);
   border-radius: 0.25rem;

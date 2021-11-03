@@ -58,7 +58,7 @@ class RPList extends React.Component {
         <ListContainer>
           <CarouserContainerInner>
         {this.state.relatedProductId.map((id) => {
-          return <RPEntry relatedProductId={id} key={id} productInfo={this.state.currentProductInfo}/>
+          return <RPEntry relatedProductId={id} key={id} productInfo={this.state.currentProductInfo} rp={true}/>
         })}
         </CarouserContainerInner>
         </ListContainer>
