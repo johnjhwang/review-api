@@ -11,37 +11,14 @@ class NewReview extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      show: false
     }
+    this.toggleModal = this.toggleModal.bind(this);
   }
 
-  componentDidMount() {
-    this.getReviews();
-    this.getReviewsMeta();
-  }
-
-  componentDidUpdate(prevProps) {
-    if (this.props.product_id !== prevProps.product_id) {
-      this.getReviews();
-      this.getReviewsMeta();
-    }
-  }
-
-  getReviews() { // no sort yet
-    handler.get(this.state.product_id, (responseData) => {
-      console.log('client responseData >>>>', responseData);
-      this.setState({ reviewsData: responseData }, () => {
-        console.log('this.state.reviewsData >>>', this.state.reviewsData);
-      });
-    })
-  }
-
-  getReviewsMeta() {
-    handler.getMeta(this.state.product_id, (responseData) => {
-      console.log('client metaData >>>>', responseData);
-      this.setState({ reviewsMetaData: responseData }, () => {
-        console.log('reviewsMetaData in state >>>', this.state.reviewsMetaData);
-      });
+  toggleModal() {
+    this.setState({
+      show: !this.state.show
     })
   }
 
@@ -50,11 +27,20 @@ class NewReview extends React.Component {
   // All reviews will be saved per product.  Specific styles will not be accounted for within the review module.
   // 39333 to 40343
   render () {
+    if (this.state.show) {
+      return (<div>
+        Submission form line 1
+        <br />
+        Submission form line 2
+        <br />
+        <button onClick={this.toggleModal}>Close Submission Form</button>
+        </div>);
+    } else {
+        return (<div>
+        <button onClick={this.toggleModal}>Add a Review</button>
+        </div>)
+    }
 
-
-    return (<div>
-        Add a Review
-    </div>)
   }
 }
 

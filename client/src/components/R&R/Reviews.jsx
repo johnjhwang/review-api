@@ -16,6 +16,7 @@ class Reviews extends React.Component {
       reviews: this.props.reviewsData.results,
       visible: 2
     }
+    this.showMoreReviews = this.showMoreReviews.bind(this);
   }
 
   componentDidMount() {
@@ -32,6 +33,12 @@ class Reviews extends React.Component {
     }
   }
 
+  showMoreReviews() {
+    this.setState({
+      visible: this.state.visible + 2
+    })
+  }
+
   // stars, loading more questions/reviews, adding a question/review,
   // styled-components
   // All reviews will be saved per product.  Specific styles will not be accounted for within the review module.
@@ -40,9 +47,10 @@ class Reviews extends React.Component {
     const { reviewsData } = this.props;
 
     return (<div>
-        <ReviewsSort total={this.state.reviews && this.state.reviews.length}/>
+        <ReviewsSort total={this.state.reviews && this.state.reviews.length} updateReviews={this.props.updateReviews}/>
         <ReviewList reviews={this.state.reviews} visible={this.state.visible}/>
-        <span><MoreReviews/><NewReview/></span>
+        <MoreReviews total={this.state.reviews && this.state.reviews.length} visible={this.state.visible} showMoreReviews={this.showMoreReviews}/>
+        <NewReview/>
     </div>)
   }
 }

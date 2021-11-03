@@ -10,8 +10,8 @@ const ReviewList = ({ reviews, visible }) => {
   const visibleReviews = reviews && reviews.slice(0, visible);
 
     return (<div>
-      {visibleReviews && visibleReviews.map((review) => (
-        <ReviewTile review={review}/>
+      {visibleReviews && visibleReviews.map((review, key) => (
+        <ReviewTile review={review} key={key}/>
       ))}
     </div>
     )

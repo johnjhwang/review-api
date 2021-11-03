@@ -25,6 +25,7 @@ const ReviewTile = ({ review }) => {
     <br />
     {review.body}
     <br/>
+    {review.recommend && <div>✅  I recommend this product</div>}
   </div>);
 
 }

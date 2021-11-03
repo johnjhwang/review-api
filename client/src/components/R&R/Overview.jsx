@@ -17,6 +17,9 @@ class Overview extends React.Component {
       reviewsData: {},
       reviewsMetaData: {}
     }
+    this.getReviews = this.getReviews.bind(this);
+    this.getReviewsMeta = this.getReviewsMeta.bind(this);
+    this.updateReviews = this.updateReviews.bind(this);
   }
 
   componentDidMount() {
@@ -49,17 +52,18 @@ class Overview extends React.Component {
     })
   }
 
+  updateReviews(sort, count, etc) {
+
+  }
   // stars, loading more questions/reviews, adding a question/review,
   // styled-components
   // All reviews will be saved per product.  Specific styles will not be accounted for within the review module.
   // 39333 to 40343
   render () {
-
-
     return (<div>
       <FlexContainer>
         <Ratings reviewsMetaData={this.state.reviewsMetaData}/>
-        <Reviews reviewsData={this.state.reviewsData} reviewsMetaData={this.state.reviewsMetaData}/>
+        <Reviews reviewsData={this.state.reviewsData} reviewsMetaData={this.state.reviewsMetaData} updateReviews={this.updateReviews}/>
         </FlexContainer>
     </div>)
   }
