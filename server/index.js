@@ -19,17 +19,37 @@ app.use(express.static(__dirname + '/../client/dist'));
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // ==================== Ratings & Reviews =========================
 
 app.get('/reviews/:product_id', (req, res) => {
   console.log('req.params >>>>>', req.params)
-  axios.get(`${url}/reviews?product_id=${req.params.product_id}`, {
+  axios.get(`${url}/reviews?product_id=${req.params.product_id}`, { // refactor to use params obj?
     headers: {
       Authorization: API_KEY,
     }
   })
     .then((responseData) => {
-      console.log('server responseData >>>', responseData);
+      console.log('server responseData.data >>>', responseData.data);
       res.status(200).send(responseData.data)
     })
     .catch((err) => {
@@ -37,6 +57,24 @@ app.get('/reviews/:product_id', (req, res) => {
     })
 })
 
+app.get('/reviews/meta/:product_id', (req, res) => {
+  console.log('req.params >>>>>', req.params)
+  axios.get(`${url}/reviews/meta?product_id=${req.params.product_id}`, {
+    headers: {
+      Authorization: API_KEY,
+    }
+  })
+    .then((responseData) => {
+      console.log('server response.metadata >>>', responseData.data);
+      res.status(200).send(responseData.data)
+    })
+    .catch((err) => {
+      console.log('error on server side >>>', err);
+    })
+})
+
+
+// ================================================================
 
 
 
