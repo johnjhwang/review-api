@@ -52,7 +52,7 @@ class Overview extends React.Component {
     })
   }
 
-  updateReviews(sort, count, etc) {
+  updateReviews(sort) {
 
   }
   // stars, loading more questions/reviews, adding a question/review,
