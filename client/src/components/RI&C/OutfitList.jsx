@@ -33,15 +33,12 @@ class OutfitList extends React.Component {
   }
 
   render() {
-    console.log(this.state);
     return(
       <div>
         <Title>YOUR OUTFIT</Title>
         <ListContainer>
+          <Card><PlusButton onClick={this.handlePlusButtonClick}>+</PlusButton></Card>
           <CarouserContainerInner>
-            <Card>
-              <PlusButton onClick={this.handlePlusButtonClick}>+</PlusButton>
-            </Card>
             {this.state.outfits.map((id) => {
               return <RPEntry relatedProductId={id} key={id} outfit={true} deleteOutfit={this.deleteOutfit}/>
             })}

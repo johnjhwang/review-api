@@ -4,6 +4,7 @@ import $ from "jquery";
 import axios from "axios";
 import styled from "styled-components";
 import ComparisonModal from "./ComparisonModal.jsx";
+import Stars from "../../helpers/Stars.jsx"
 
 class RPEntry extends React.Component {
   constructor(props) {
@@ -114,7 +115,7 @@ class RPEntry extends React.Component {
           <Image url={results ? this.state.productStyle.results[0].photos[0].thumbnail_url : 'null'}>
           <Button>
             {this.props.rp && <button onClick={this.toggleModal}>★</button>}
-            {this.props.outfit && <button onClick={() => {this.props.deleteOutfit(this.state.productInfo.id)}}>X</button>}
+            {this.props.outfit && <button onClick={() => {this.props.deleteOutfit(this.state.productInfo.id)}}>ⓧ</button>}
           </Button>
           </Image>
           <Content>
@@ -122,7 +123,8 @@ class RPEntry extends React.Component {
               {category} <br></br>
               {name} <br></br>
               {salePrice ? "$" + <s>{default_price}</s> + salePrice : "$" + default_price} <br></br>
-              {"Rating: " + avgRating}
+              {/* {"Rating: " + avgRating} */}
+              <Stars rating={avgRating}/>
             </p>
           </Content>
         </Card>
