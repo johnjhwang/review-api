@@ -7,7 +7,7 @@ class QuestionsAndAnswers extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      product_id: 39336,
+      product_id: 39334,
       questions: []
     }
     this.getQuestions = this.getQuestions.bind(this);
@@ -16,6 +16,10 @@ class QuestionsAndAnswers extends React.Component {
   componentDidMount() {
     this.getQuestions();
   }
+
+  // componentDidUpdate() {
+  //   this.getQuestions();
+  // }
 
   getQuestions() {
     const product_id = this.state.product_id;
