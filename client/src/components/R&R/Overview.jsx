@@ -14,22 +14,27 @@ class Overview extends React.Component {
     this.state = {
       product_id: this.props.product_id,
       reviewsData: {},
-      reviewsMetaData: {}
+      reviewsMetaData: {},
+      name: ''
     }
     this.getReviews = this.getReviews.bind(this);
     this.getReviewsMeta = this.getReviewsMeta.bind(this);
     this.updateReviews = this.updateReviews.bind(this);
+    this.getProductName = this.getProductName.bind(this);
   }
 
   componentDidMount() {
     this.getReviews();
     this.getReviewsMeta();
+    this.getProductName();
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.product_id !== prevProps.product_id) {
       this.getReviews();
       this.getReviewsMeta();
+      this.getProductName();
+
     }
   }
 
@@ -55,6 +60,19 @@ class Overview extends React.Component {
     this.getReviews();
     this.getReviewsMeta();
   }
+
+  getProductName() {
+    axios.get(`/products/${this.props.product_id}`)
+      .then((responseData) => {
+        console.log('result', responseData.data.name);
+        this.setState({
+          name: responseData.data.name,
+        });
+      })
+      .catch((err) => {
+        console.log("Error getting product name");
+      });
+  }
   // stars, filter reviews by rating, show characteristics, adding a question/review (XXXXL)
   // styled-components
 
@@ -64,8 +82,8 @@ class Overview extends React.Component {
     return (<div>
       <Flex>
         <Ratings reviewsMetaData={this.state.reviewsMetaData}/>
-        <Reviews reviewsData={this.state.reviewsData} reviewsMetaData={this.state.reviewsMetaData} getReviews={this.getReviews} updateReviews={this.updateReviews}/>
-        </Flex>
+        <Reviews reviewsData={this.state.reviewsData} reviewsMetaData={this.state.reviewsMetaData} getReviews={this.getReviews} updateReviews={this.updateReviews} name={this.state.name}/>
+      </Flex>
     </div>)
   }
 }

@@ -116,7 +116,7 @@ app.get('/reviews/:product_id/:sort', (req, res) => {
     }
   })
     .then((responseData) => {
-      console.log('server responseData.data >>>', responseData.data);
+      // console.log('server responseData.data >>>', responseData.data);
       res.status(200).send(responseData.data)
     })
     .catch((err) => {
@@ -147,7 +147,7 @@ app.put('/reviews/:review_id/:action', (req, res) => {
     }
   })
     .then((responseData) => {
-      console.log('server put response>>>', responseData);
+      console.log('server put response>>>', responseData.data);
       res.status(204).send(responseData.data)
     })
     .catch((err) => {

@@ -31,6 +31,8 @@ class NewReview extends React.Component {
       return (
         <Background>
           <ModalWrapper>
+            <h2>Write Your Review</h2>
+            <h3>About the {this.props.name}</h3>
         Submission form line 1
         <br />
         Submission form line 2

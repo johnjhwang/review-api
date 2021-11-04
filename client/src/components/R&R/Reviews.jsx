@@ -51,7 +51,7 @@ class Reviews extends React.Component {
         <ReviewsSort total={this.state.reviews && this.state.reviews.length} getReviews={this.props.getReviews}/>
         <ReviewList reviews={this.state.reviews} visible={this.state.visible} updateReviews={this.props.updateReviews}/>
         <MoreReviews total={this.state.reviews && this.state.reviews.length} visible={this.state.visible} showMoreReviews={this.showMoreReviews}/>
-        <NewReview/>
+        <NewReview name={this.props.name}/>
     </div>)
   }
 }
