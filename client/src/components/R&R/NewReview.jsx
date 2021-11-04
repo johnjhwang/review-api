@@ -28,13 +28,17 @@ class NewReview extends React.Component {
   // 39333 to 40343
   render () {
     if (this.state.show) {
-      return (<div>
+      return (
+        <Background>
+          <ModalWrapper>
         Submission form line 1
         <br />
         Submission form line 2
         <br />
-        <button onClick={this.toggleModal}>Close Submission Form</button>
-        </div>);
+        <Button onClick={this.toggleModal}>Close</Button>
+        </ModalWrapper>
+        </Background>
+        );
     } else {
         return (<div>
         <button onClick={this.toggleModal}>Add a Review</button>
@@ -44,10 +48,35 @@ class NewReview extends React.Component {
   }
 }
 
-const FlexContainer = styled.div`
+const Button = styled.button`
+  display: inline-block;
+  border-radius: 3px;
+  width: 15rem;
+  color: black;
+  border: 1px solid black;
+`
+
+const Background = styled.div`
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
-  padding: 10px;
-  gap: 100px;
-  `;
+  justify-content: center;
+  align-items: center;
+`;
+
+const ModalWrapper = styled.div`
+  width: 70%;
+  height: 70%;
+  border-radius: 12px;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  display: flex;
+  flex-direction: column;
+  padding: 25px;
+`;
 
 export default NewReview;

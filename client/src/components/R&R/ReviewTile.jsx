@@ -12,9 +12,9 @@ const ReviewTile = ({ review, updateReviews }) => {
 
 
 
-  // stars, loading more questions/reviews, adding a question/review,
+  // stars, filter reviews by rating, show characteristics, adding a question/review (XXXXL)
   // styled-components
-  // All reviews will be saved per product.  Specific styles will not be accounted for within the review module.
+
   // 39333 to 40343
   const handleClick = (e) => {
     console.log('handleClick target', e.target.getAttribute('name'));
@@ -24,7 +24,6 @@ const ReviewTile = ({ review, updateReviews }) => {
     })
 
   }
-
 
   return (
     <div>
