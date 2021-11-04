@@ -11,9 +11,23 @@ class NewReview extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      show: false
-    }
+      show: false,
+      stars: null,
+      recommend: null,
+      characteristics: null,
+      summary: '',
+      body: '',
+      images: [],
+      nickname: '',
+      email: '',
+      count: 60,
+    };
     this.toggleModal = this.toggleModal.bind(this);
+    this.submitReview = this.submitReview.bind(this);
+  }
+
+  submitReview() {
+
   }
 
   toggleModal() {
@@ -29,17 +43,19 @@ class NewReview extends React.Component {
   render () {
     if (this.state.show) {
       return (
+        <div>
         <Background>
           <ModalWrapper>
             <h2>Write Your Review</h2>
             <h3>About the {this.props.name}</h3>
-        Submission form line 1
+        Submission form line 1         Submission form line 1        Submission form line 1         Submission form line 1        Submission form line 1
         <br />
-        Submission form line 2
+        Submission form line 2         Submission form line 2        Submission form line 2         Submission form line 2        Submission form line 2
         <br />
-        <Button onClick={this.toggleModal}>Close</Button>
+        <div style={{display: 'inline'}}><Button onClick={this.toggleModal}>Close</Button>&nbsp; &nbsp; &nbsp;<Button onClick={this.submitReview}>Submit Review</Button></div>
         </ModalWrapper>
         </Background>
+        </div>
         );
     } else {
         return (<div>
@@ -53,7 +69,7 @@ class NewReview extends React.Component {
 const Button = styled.button`
   display: inline-block;
   border-radius: 3px;
-  width: 15rem;
+  width: 10rem;
   color: black;
   border: 1px solid black;
 `

@@ -50,12 +50,21 @@ class Reviews extends React.Component {
     return (<div>
         <ReviewsSort total={this.state.reviews && this.state.reviews.length} getReviews={this.props.getReviews}/>
         <ReviewList reviews={this.state.reviews} visible={this.state.visible} updateReviews={this.props.updateReviews}/>
-        <MoreReviews total={this.state.reviews && this.state.reviews.length} visible={this.state.visible} showMoreReviews={this.showMoreReviews}/>
-        <NewReview name={this.props.name}/>
+        <Flex>
+          <MoreReviews total={this.state.reviews && this.state.reviews.length} visible={this.state.visible} showMoreReviews={this.showMoreReviews}/>
+        </Flex><Flex>
+          <NewReview name={this.props.name}/>
+        </Flex>
     </div>)
   }
 }
 
+const Flex = styled.div`
+  display: inline-block;
+  padding: 1px;
+  gap: 5px;
+  justify-content: left;
+  `;
 
 export default Reviews;
 
