@@ -9,15 +9,32 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static(__dirname + '/../client/dist'));
 
+let {helpers} = require('./helpers.js');
+
 // attach authorization header with API key imported in from config.js file here or in helper js
 
 
 
+// app.get('/products', function (req, res) {
+
+// })
 
 
 
-
-
+app.get(`/products/:productid`, function (req, res) {
+  // TODO - your code here!
+  console.log(req.params.productid);
+  let end = {};
+  helpers.getProducts(req.params.productid).then((product) => {
+    end.product = product.data;
+    helpers.getStyle(req.params.productid).then((styles) => {
+      end.styles = styles.data.results;
+      res.status(200).send(end);
+    })
+  })
+  
+  
+});
 
 
 

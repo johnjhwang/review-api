@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import axios from 'axios';
-import Subcomponent from './components/Subcomponent.jsx';
+import Overview from './components/Overview/OverviewIndex.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -14,11 +14,10 @@ class App extends React.Component {
 
   render () {
     return (<div>
-        Placeholder
+        <Overview />
     </div>)
   }
 }
 
 ReactDOM.render(<App />, document.getElementById('app'));
 
-// Kyle here
