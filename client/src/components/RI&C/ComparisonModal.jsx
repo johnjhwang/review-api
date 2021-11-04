@@ -117,6 +117,7 @@ const CloseButton = styled.div`
 
 const Table = styled.table`
   border-collapse: collapse;
+  overflow-y: scroll;
 `;
 
 const TR = styled.tr`

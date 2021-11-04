@@ -10,9 +10,15 @@ class RPList extends React.Component {
     super(props);
     this.state = {
       relatedProductId: [],
-      currentProductInfo: {}
+      currentProductInfo: {},
+      leftCount:0,
+      showLeft: false,
+      showRight: true
     };
-
+    this.myRef = React.createRef();
+    this.moveToPrev = this.moveToPrev.bind(this);
+    this.moveToNext = this.moveToNext.bind(this);
+    this.showArrow = this.showArrow.bind(this);
   }
 
   componentDidMount() {
@@ -20,11 +26,17 @@ class RPList extends React.Component {
     this.getCurrentProductInfo()
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.productId !== prevProps.productId) {
+      this.getRelatedProductId()
+      this.getCurrentProductInfo()
+    }
+  }
+
   getRelatedProductId() {
     let id = this.props.productId;
     axios.get(`products/${id}/related`)
       .then((results) => {
-        //console.log('Results in getProductId: ', results.data)
         this.setState({
           relatedProductId: results.data
         })
@@ -39,7 +51,6 @@ class RPList extends React.Component {
     axios
       .get(`products/${id}`)
       .then((results) => {
-        //console.log('Results in getProductInfo: ', results.data)
         this.setState({
           currentProductInfo: results.data,
         });
@@ -49,18 +60,55 @@ class RPList extends React.Component {
       });
   }
 
+  moveToNext() {
+    this.setState({leftCount: this.state.leftCount + 1}, this.showArrow)
+  }
+
+  moveToPrev() {
+    this.setState({leftCount: this.state.leftCount - 1}, this.showArrow)
+  }
+
+
+  showArrow() {
+    //right arrow
+    if (this.myRef.current) {
+     let containerWidth = this.myRef.current.offsetWidth;
+     let cardWidth = (this.state.relatedProductId.length - this.state.leftCount) * 200
+     if (containerWidth > cardWidth) {
+       this.setState({ showRight: false })
+     } else if (containerWidth <= cardWidth) {
+      this.setState({ showRight: true })
+     }
+    }
+    //left arrow
+    if (this.state.leftCount > 0) {
+      this.setState({ showLeft: true})
+    } else if (this.state.leftCount < 1) {
+      this.setState({ showLeft: false})
+    }
+  }
+
 
   render() {
-    //console.log(this.state.currentProductInfo)
+    //console.log(this.state.leftCount)
+    let leftCount = this.state.leftCount
+    let relatedProductId = [];
+    this.state.relatedProductId.forEach((id) => {
+      if (!relatedProductId.includes(id)) {
+        relatedProductId.push(id);
+      }
+    })
     return (
       <div>
         <Title>RELATED PRODUCTS</Title>
         <ListContainer>
-          <CarouserContainerInner>
-        {this.state.relatedProductId.map((id) => {
-          return <RPEntry relatedProductId={id} key={id} productInfo={this.state.currentProductInfo} rp={true}/>
+        <ButtonContainer>{this.state.showLeft && <LeftArrow onClick={this.moveToPrev}>˱</LeftArrow>}</ButtonContainer>
+          <CarouserContainerInner ref={this.myRef}>
+        {relatedProductId.slice(leftCount).map((id) => {
+          return <RPEntry relatedProductId={id} key={id} productInfo={this.state.currentProductInfo} rp={true} handleProductChange={this.props.handleProductChange}/>
         })}
         </CarouserContainerInner>
+        <ButtonContainer>{this.state.showRight && <RightArrow onClick={this.moveToNext}>˲</RightArrow>}</ButtonContainer>
         </ListContainer>
       </div>
     );
@@ -69,23 +117,49 @@ class RPList extends React.Component {
 
 const Title = styled.h3`
   color: grey;
+  margin-left: 50px;
 `
 
 const ListContainer = styled.div`
-  //margin: auto;
-  height: 300px;
-  width: 70%;
+  height: 320px;
+  width: 80%;
   display: flex;
   align-items: center;
 `
 
 
 const CarouserContainerInner = styled.div`
-  overflow-x: scroll;
+  //overflow-x: scroll;
+  overflow: hidden;
   scroll-snap-type: x mandatory;
   -ms-overflow-style: none;
   scrollbar-width: none;
   display: flex;
+  left: 0px;
+  width: 80%;
+`
+
+const ButtonContainer = styled.div`
+  width: 40px;
+  height: 100px;
+`
+
+const LeftArrow = styled.button`
+  left:0;
+  margin-top: -70px;
+  font-size: 90px;
+  text-align: center;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  color: grey;
+  &:hover{
+    color: black;
+  }
+`
+
+const RightArrow = styled(LeftArrow)`
+  right:0;
 `
 
 

@@ -4,7 +4,7 @@ import $ from "jquery";
 import axios from "axios";
 import styled from "styled-components";
 import ComparisonModal from "./ComparisonModal.jsx";
-import Stars from "../../helpers/Stars.jsx"
+import Stars from "../../helpers/Stars.jsx";
 
 class RPEntry extends React.Component {
   constructor(props) {
@@ -24,6 +24,7 @@ class RPEntry extends React.Component {
     this.getProductStyle(),
     this.getProductRating();
   }
+
 
   //////////////////////////////////////////////////////////////////////////////////
   getProductInfo() {
@@ -80,13 +81,13 @@ class RPEntry extends React.Component {
     });
   }
 
+
   //////////////////////////////////////////////////////////////////////////////////
 
   render() {
-   //console.log(this.props.rp)
     const { category, name, default_price } = this.state.productInfo;
     const results = this.state.productStyle.results;
-    const salePrice = results ? results.sale_price : "null";
+    const salePrice = results && results.sale_price;
     const ratings = this.state.productRatings.ratings;
     let avgRating = 0;
     let length = 0;
@@ -101,29 +102,22 @@ class RPEntry extends React.Component {
 
     return (
       <div>
-        {/* Category: {category}
-        Name: {name}
-        Price: {salePrice ? 'onsale'+salePrice : default_price}
-        Image: {results ? <img src={this.state.productStyle.results[0].photos[0].thumbnail_url}></img> : 'null'}
-        Rating: {avgRating}
-        <button onClick={this.toggleModal}>Open Modal</button>
-        {this.state.openModal && <Comparison />} */}
         {this.state.openModal &&
         <ComparisonModal closeModal={this.toggleModal} rpInfo={this.state.productInfo} cpInfo={this.props.productInfo}/>
         }
         <Card>
-          <Image url={results ? this.state.productStyle.results[0].photos[0].thumbnail_url : 'null'}>
-          <Button>
-            {this.props.rp && <button onClick={this.toggleModal}>★</button>}
-            {this.props.outfit && <button onClick={() => {this.props.deleteOutfit(this.state.productInfo.id)}}>ⓧ</button>}
-          </Button>
+          <Image url={results && this.state.productStyle.results[0].photos[0].thumbnail_url}>
+          <ButtonContainer>
+            {this.props.rp && <Button onClick={this.toggleModal}>★</Button>}
+            {this.props.outfit && <Button onClick={() => {this.props.deleteOutfit(this.state.productInfo.id)}}>ⓧ</Button>}
+          </ButtonContainer>
+          <Click onClick={() => this.props.handleProductChange(this.state.productInfo.id)}> </Click>
           </Image>
           <Content>
             <p>
               {category} <br></br>
               {name} <br></br>
-              {salePrice ? "$" + <s>{default_price}</s> + salePrice : "$" + default_price} <br></br>
-              {/* {"Rating: " + avgRating} */}
+              {salePrice ? "$" + salePrice : "$" + default_price} <br></br>
               <Stars rating={avgRating}/>
             </p>
           </Content>
@@ -131,6 +125,7 @@ class RPEntry extends React.Component {
 
       </div>
     );
+
   }
 }
 
@@ -149,18 +144,33 @@ const Content = styled.div`
   padding: 5px;
 `;
 
-const Button = styled.div`
+const ButtonContainer = styled.div`
   display: flex;
   justify-content: flex-end;
 `;
+
+const Button = styled.button`
+  border: none;
+  color: grey;
+  background-color: transparent;
+  font-size: 20px;
+  cursor: pointer;
+`
+
 
 const Image = styled.div`
   width: 100%;
   height: 200px;
   // border: solid;
-  background-image: url(${props => props.url || " "});
+  background-image: url(${props => props.url || "https://images.unsplash.com/photo-1529108750117-bcbad8bd25dd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80"});
   background-repeat: no-repeat;
   background-size: 100% 100%;
 `;
+
+const Click = styled.div`
+  width: 100%;
+  height: 170px;
+  //border: solid;
+`
 
 export default RPEntry;
