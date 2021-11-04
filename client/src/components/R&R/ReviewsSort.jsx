@@ -14,12 +14,10 @@ class ReviewsSort extends React.Component {
     this.handleSortChange = this.handleSortChange.bind(this);
   }
 
-  componentDidMount() {
-
-  }
   handleSortChange(e) {
+    console.log('e.target.value', e.target.value);
     this.setState({ sort: e.target.value }, () => {
-      this.props.updateReviews(sort)
+      this.props.getReviews(this.state.sort);
   })
 }
 

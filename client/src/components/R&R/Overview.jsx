@@ -34,8 +34,8 @@ class Overview extends React.Component {
     }
   }
 
-  getReviews() { // no sort yet
-    handler.get(this.state.product_id, (responseData) => {
+  getReviews(sort = 'relevant') {
+    handler.get(this.state.product_id, sort, (responseData) => {
       console.log('client responseData >>>>', responseData);
       this.setState({ reviewsData: responseData }, () => {
         console.log('this.state.reviewsData >>>', this.state.reviewsData);
@@ -52,8 +52,9 @@ class Overview extends React.Component {
     })
   }
 
-  updateReviews(sort) {
-
+  updateReviews() {
+    this.getReviews();
+    this.getReviewsMeta();
   }
   // stars, loading more questions/reviews, adding a question/review,
   // styled-components
@@ -61,18 +62,18 @@ class Overview extends React.Component {
   // 39333 to 40343
   render () {
     return (<div>
-      <FlexContainer>
+      <Flex>
         <Ratings reviewsMetaData={this.state.reviewsMetaData}/>
-        <Reviews reviewsData={this.state.reviewsData} reviewsMetaData={this.state.reviewsMetaData} updateReviews={this.updateReviews}/>
-        </FlexContainer>
+        <Reviews reviewsData={this.state.reviewsData} reviewsMetaData={this.state.reviewsMetaData} getReviews={this.getReviews} updateReviews={this.updateReviews}/>
+        </Flex>
     </div>)
   }
 }
 
-const FlexContainer = styled.div`
+const Flex = styled.div`
   display: flex;
   padding: 10px;
-  gap: 100px;
-  `;
+  gap: 20px;
+`;
 
 export default Overview;

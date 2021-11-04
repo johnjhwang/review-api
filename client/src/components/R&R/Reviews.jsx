@@ -27,9 +27,10 @@ class Reviews extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (this.state.reviews !== this.props.reviewsData.results){
-      this.setState(
-        { reviews: this.props.reviewsData.results }
-      )
+      this.setState({
+        reviews: this.props.reviewsData.results,
+        visible: 2
+      })
     }
   }
 
@@ -47,8 +48,8 @@ class Reviews extends React.Component {
     const { reviewsData } = this.props;
 
     return (<div>
-        <ReviewsSort total={this.state.reviews && this.state.reviews.length} updateReviews={this.props.updateReviews}/>
-        <ReviewList reviews={this.state.reviews} visible={this.state.visible}/>
+        <ReviewsSort total={this.state.reviews && this.state.reviews.length} getReviews={this.props.getReviews}/>
+        <ReviewList reviews={this.state.reviews} visible={this.state.visible} updateReviews={this.props.updateReviews}/>
         <MoreReviews total={this.state.reviews && this.state.reviews.length} visible={this.state.visible} showMoreReviews={this.showMoreReviews}/>
         <NewReview/>
     </div>)
