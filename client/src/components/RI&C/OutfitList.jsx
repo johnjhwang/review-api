@@ -2,62 +2,40 @@ import React from "react";
 import ReactDOM from "react-dom";
 import $ from "jquery";
 import axios from "axios";
-import RPEntry from "./RPEntry.jsx"
-import styled from 'styled-components'
+import styled from "styled-components";
+import RPEntry from "./RPEntry.jsx";
 
-class RPList extends React.Component {
+
+class OutfitList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      relatedProductId: [],
-      currentProductInfo: {},
-      leftCount:0,
+      outfits: [39340],
+      leftCount: 0,
       showLeft: false,
       showRight: true
     };
     this.myRef = React.createRef();
+    this.handlePlusButtonClick = this.handlePlusButtonClick.bind(this);
+    this.deleteOutfit = this.deleteOutfit.bind(this);
     this.moveToPrev = this.moveToPrev.bind(this);
     this.moveToNext = this.moveToNext.bind(this);
     this.showArrow = this.showArrow.bind(this);
   }
 
-  componentDidMount() {
-    this.getRelatedProductId(),
-    this.getCurrentProductInfo()
-  }
-
-  componentDidUpdate(prevProps) {
-    if (this.props.productId !== prevProps.productId) {
-      this.getRelatedProductId()
-      this.getCurrentProductInfo()
+  handlePlusButtonClick() {
+    let copy = this.state.outfits;
+    if (!copy.includes(this.props.productId)) {
+      copy.push(this.props.productId);
     }
+    this.setState({ outfits: copy });
   }
 
-  getRelatedProductId() {
-    let id = this.props.productId;
-    axios.get(`products/${id}/related`)
-      .then((results) => {
-        this.setState({
-          relatedProductId: results.data
-        })
-      })
-      .catch((err) => {
-        console.log('Error in getProductInfo')
-      })
-  }
-
-  getCurrentProductInfo() {
-    const id = this.props.productId;
-    axios
-      .get(`products/${id}`)
-      .then((results) => {
-        this.setState({
-          currentProductInfo: results.data,
-        });
-      })
-      .catch((err) => {
-        console.log("Error in currentProductInfo");
-      });
+  deleteOutfit(id) {
+    let copy = this.state.outfits;
+    let index = copy.indexOf(id);
+    copy.splice(index, 1)
+    this.setState({ outfits: copy })
   }
 
   moveToNext() {
@@ -68,12 +46,11 @@ class RPList extends React.Component {
     this.setState({leftCount: this.state.leftCount - 1}, this.showArrow)
   }
 
-
   showArrow() {
     //right arrow
     if (this.myRef.current) {
      let containerWidth = this.myRef.current.offsetWidth;
-     let cardWidth = (this.state.relatedProductId.length - this.state.leftCount) * 200
+     let cardWidth = (this.state.outfits.length - this.state.leftCount) * 200
      if (containerWidth > cardWidth) {
        this.setState({ showRight: false })
      } else if (containerWidth <= cardWidth) {
@@ -88,32 +65,27 @@ class RPList extends React.Component {
     }
   }
 
-
   render() {
-    //console.log(this.state.leftCount)
-    let leftCount = this.state.leftCount
-    let relatedProductId = [];
-    this.state.relatedProductId.forEach((id) => {
-      if (!relatedProductId.includes(id)) {
-        relatedProductId.push(id);
-      }
-    })
-    return (
+    return(
       <div>
-        <Title>RELATED PRODUCTS</Title>
+        <Title>YOUR OUTFIT</Title>
         <ListContainer>
         <ButtonContainer>{this.state.showLeft && <LeftArrow onClick={this.moveToPrev}>˱</LeftArrow>}</ButtonContainer>
+          <Card><PlusButton onClick={this.handlePlusButtonClick}>+</PlusButton></Card>
           <CarouserContainerInner ref={this.myRef}>
-        {relatedProductId.slice(leftCount).map((id) => {
-          return <RPEntry relatedProductId={id} key={id} productInfo={this.state.currentProductInfo} rp={true} handleProductChange={this.props.handleProductChange}/>
-        })}
+            {this.state.outfits.slice(this.state.leftCount).map((id) => {
+              return <RPEntry relatedProductId={id} key={id} outfit={true} deleteOutfit={this.deleteOutfit}/>
+            })}
         </CarouserContainerInner>
         <ButtonContainer>{this.state.showRight && <RightArrow onClick={this.moveToNext}>˲</RightArrow>}</ButtonContainer>
         </ListContainer>
       </div>
-    );
+
+    )
   }
 }
+
+export default OutfitList;
 
 const Title = styled.h3`
   color: grey;
@@ -121,8 +93,9 @@ const Title = styled.h3`
 `
 
 const ListContainer = styled.div`
+  //margin: auto;
   height: 320px;
-  width: 80%;
+  width: 71%;
   display: flex;
   align-items: center;
 `
@@ -135,13 +108,30 @@ const CarouserContainerInner = styled.div`
   -ms-overflow-style: none;
   scrollbar-width: none;
   display: flex;
-  left: 0px;
-  width: 80%;
+  width: 71%;
 `
+
+const Card = styled.div`
+  min-width: 180px;
+  height: 300px;
+  box-shadow: 0 0.5em 1em -0.125em rgb(10 10 10 / 10%), 0 0 0 1px rgb(10 10 10 / 2%);
+  border-radius: 0.25rem;
+  margin: 8px;
+  border: 1px solid grey;
+`;
 
 const ButtonContainer = styled.div`
   width: 40px;
   height: 100px;
+`
+
+const PlusButton = styled.button`
+  margin-top: 115px;
+  margin-left: 65px;
+  font-size: 70px;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
 `
 
 const LeftArrow = styled.button`
@@ -161,6 +151,3 @@ const LeftArrow = styled.button`
 const RightArrow = styled(LeftArrow)`
   right:0;
 `
-
-
-export default RPList;
