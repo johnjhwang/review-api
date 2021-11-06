@@ -111,7 +111,7 @@ class RPEntry extends React.Component {
             {this.props.rp && <Button onClick={this.toggleModal}>★</Button>}
             {this.props.outfit && <Button onClick={() => {this.props.deleteOutfit(this.state.productInfo.id)}}>ⓧ</Button>}
           </ButtonContainer>
-          <Click onClick={() => this.props.handleProductChange(this.state.productInfo.id)}> </Click>
+          {this.props.rp && <Click onClick={() => this.props.handleProductChange(this.state.productInfo.id)}> </Click>}
           </Image>
           <Content>
             <p>

@@ -1,88 +1,86 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import React, { useState, useEffect, useRef } from 'react';
+import useLocalStorageState from 'use-local-storage-state';
 import $ from "jquery";
 import axios from "axios";
 import styled from "styled-components";
 import RPEntry from "./RPEntry.jsx";
 
 
-class OutfitList extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      outfits: [39340],
-      leftCount: 0,
-      showLeft: false,
-      showRight: true
-    };
-    this.myRef = React.createRef();
-    this.handlePlusButtonClick = this.handlePlusButtonClick.bind(this);
-    this.deleteOutfit = this.deleteOutfit.bind(this);
-    this.moveToPrev = this.moveToPrev.bind(this);
-    this.moveToNext = this.moveToNext.bind(this);
-    this.showArrow = this.showArrow.bind(this);
-  }
+const OutfitList = (props) => {
 
-  handlePlusButtonClick() {
-    let copy = this.state.outfits;
-    if (!copy.includes(this.props.productId)) {
-      copy.push(this.props.productId);
+  const [storageOutfits, setStorageOutfits] = useLocalStorageState("storageOutfits", [])
+  const [outfits, setOutfits] = useState(storageOutfits)
+  const [leftCount, setLeftCount] = useState(0)
+  const [showLeft, setShowLeft] = useState(false)
+  const [showRight, setShowRight] = useState(true)
+  const ref = useRef()
+
+  useEffect(() => { showArrow() })
+
+  const handlePlusButtonClick = () => {
+    let copy = outfits;
+    if (!copy.includes(props.productId)) {
+      copy.push(props.productId);
     }
-    this.setState({ outfits: copy });
+    setOutfits(copy)
+    setStorageOutfits(outfits)
   }
 
-  deleteOutfit(id) {
-    let copy = this.state.outfits;
+  const deleteOutfit = (id) => {
+    let copy = storageOutfits;
     let index = copy.indexOf(id);
     copy.splice(index, 1)
-    this.setState({ outfits: copy })
+    setOutfits(copy)
+    setStorageOutfits(outfits)
   }
 
-  moveToNext() {
-    this.setState({leftCount: this.state.leftCount + 1}, this.showArrow)
+  const moveToNext = () => {
+    setLeftCount(leftCount => leftCount + 1)
+    showArrow()
   }
 
-  moveToPrev() {
-    this.setState({leftCount: this.state.leftCount - 1}, this.showArrow)
+  const moveToPrev = () => {
+    setLeftCount(leftCount => leftCount - 1)
+    showArrow()
   }
 
-  showArrow() {
+  const showArrow = () => {
     //right arrow
-    if (this.myRef.current) {
-     let containerWidth = this.myRef.current.offsetWidth;
-     let cardWidth = (this.state.outfits.length - this.state.leftCount) * 200
+    if (ref.current) {
+     let containerWidth = ref.current.offsetWidth;
+     let cardWidth = (storageOutfits.length - leftCount) * 200
      if (containerWidth > cardWidth) {
-       this.setState({ showRight: false })
+      setShowRight(false)
      } else if (containerWidth <= cardWidth) {
-      this.setState({ showRight: true })
+      setShowRight(true)
      }
     }
     //left arrow
-    if (this.state.leftCount > 0) {
-      this.setState({ showLeft: true})
-    } else if (this.state.leftCount < 1) {
-      this.setState({ showLeft: false})
+    if (leftCount > 0) {
+      setShowLeft(true)
+    } else if (leftCount < 1) {
+      setShowLeft(false)
     }
   }
 
-  render() {
+  //render() {
     return(
       <div>
         <Title>YOUR OUTFIT</Title>
         <ListContainer>
-        <ButtonContainer>{this.state.showLeft && <LeftArrow onClick={this.moveToPrev}>˱</LeftArrow>}</ButtonContainer>
-          <Card><PlusButton onClick={this.handlePlusButtonClick}>+</PlusButton></Card>
-          <CarouserContainerInner ref={this.myRef}>
-            {this.state.outfits.slice(this.state.leftCount).map((id) => {
-              return <RPEntry relatedProductId={id} key={id} outfit={true} deleteOutfit={this.deleteOutfit}/>
+        <ButtonContainer>{showLeft && <LeftArrow onClick={moveToPrev}>˱</LeftArrow>}</ButtonContainer>
+          <Card><PlusButton onClick={handlePlusButtonClick}>+</PlusButton></Card>
+          <CarouserContainerInner ref={ref}>
+            {storageOutfits.slice(leftCount).map((id) => {
+              return <RPEntry relatedProductId={id} key={id} outfit={true} deleteOutfit={deleteOutfit}/>
             })}
         </CarouserContainerInner>
-        <ButtonContainer>{this.state.showRight && <RightArrow onClick={this.moveToNext}>˲</RightArrow>}</ButtonContainer>
+        <ButtonContainer>{showRight && <RightArrow onClick={moveToNext}>˲</RightArrow>}</ButtonContainer>
         </ListContainer>
       </div>
 
     )
-  }
+  //}
 }
 
 export default OutfitList;
