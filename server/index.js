@@ -1,4 +1,5 @@
 const express = require('express');
+const { rest } = require('underscore');
 const app = express();
 const PORT = 3000;
 const config = require('../config.js');
@@ -36,7 +37,26 @@ app.get(`/products/:productid`, function (req, res) {
   
 });
 
+app.post(`/cart/:sku_id`, function (req, res) {
+  // TODO - your code here!
+  
+  let product = req.params.sku_id;
 
+  console.log('Hi there, cart', product);
+
+  helpers.intoCart(product).then((data) => {
+    res.status(200);
+  }).catch((err) => {
+    res.status(404);
+  })
+});
+
+app.get(`/cart`, function (req, res) {
+  // TODO - your code here!
+  helpers.retrieveCart().then((cart) => {
+    res.status(200).send(cart.data);
+  })
+});
 
 
 

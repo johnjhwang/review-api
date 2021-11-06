@@ -4,7 +4,7 @@ import React from "react";
 
 import axios from "axios";
 import StyleSelector from "./components/StyleSelector.jsx";
-
+import ImageGallery from "./components/ImageGallery.jsx";
 
 class Overview extends React.Component {
   constructor(props) {
@@ -13,9 +13,18 @@ class Overview extends React.Component {
       productSelected: {name: null},
       productStyles: ["default"],
       productPrice: 0,
+      totalPrice: 0,
       styleSelected: 0,
-      quantity: [0]
+      quantity: [0],
+      chosenAmount: 0,
+      picIndex: 0,
+      picMax: 0,
+      sku: 0,
+      size: null
     }
+  }
+
+  componentDidMount() {
     this.productGetter.bind(this);
     this.productGetter(39333);
   }
@@ -28,23 +37,74 @@ class Overview extends React.Component {
       this.setState({
         productSelected: data.data.product, 
         productStyles: data.data.styles, 
-        productPrice: data.data.product.default_price
+        productPrice: data.data.product.default_price,
+        picIndex: 0,
+        picMax: (data.data.styles[0].photos.length - 1)
       });
     });
   }
 
   handleStyleChange (e) {
-    this.setState({styleSelected: e.target.getAttribute("id")});
+    let ind = e.target.getAttribute("id");
+    let style = this.state.productStyles[ind];
+    let size_ids = Object.keys(style.skus);
+    let newSku = 0;
+    for (var i = 0; i < size_ids.length; i++) {
+      if (style.skus[size_ids[i]].size === this.state.size) {
+        newSku = size_ids[i];
+      }
+    }
+    this.setState({
+      styleSelected: ind, 
+      productPrice: style.original_price, 
+      picIndex: 0,
+      picMax: (style.photos.length - 1),
+      sku: newSku
+    });
   }
 
   handleSizeChange (e) {
-    console.log('Quantity', e);
-    let arr = [0]
-    for (var i = 0; i < e; i++) {
-      arr.push(i+1);
+    // e is an html element
+    let q = Number(e.getAttribute("quant"));
+    let s = Number(e.value);
+    let text = e.innerText;
+    if (this.state.chosenAmount <= q) {
+      this.setState({quantity: q, sku: s, size: text});
+    } else {
+      this.setState({quantity: q, chosenAmount: 0, sku: s, size: text});
     }
-    this.setState({quantity: arr});
   }
+
+  handlePriceChange (q) {
+    this.setState({chosenAmount: q});
+  }
+
+  handlePictureChange (direction) {
+    
+    if (direction && this.state.picIndex < this.state.picMax) {
+      this.setState({picIndex: (this.state.picIndex + 1)})
+    } else if (!direction && this.state.picIndex > 0) {
+      this.setState({picIndex: (this.state.picIndex - 1)})
+    } else {
+      console.log('what?');
+    }
+  }
+
+  retrieveCart () {
+
+  }
+
+  sendToCart (id) {
+    console.log(id);
+    if (id !== 0) {
+      axios.post(`/cart/${id}`).then((data) => {
+        axios.get('/cart').then((newCart) => {
+          console.log(newCart.data);
+        })
+      })
+    }
+  }
+
 
   render () {
     return (
@@ -56,11 +116,19 @@ class Overview extends React.Component {
         styles={this.state.productStyles} 
         styleHandler={this.handleStyleChange.bind(this)} 
         sizeHandler={this.handleSizeChange.bind(this)} 
+        priceHandler={this.handlePriceChange.bind(this)}
         currentStyle={this.state.styleSelected} 
         quantity={this.state.quantity} 
         />
-        
+        <p>Total is: {this.state.chosenAmount * this.state.productPrice}</p>
+        <ImageGallery 
+        pics={this.state.productStyles[this.state.styleSelected].photos || null} 
+        currentPic={this.state.picIndex} 
+        picChangeHandler={this.handlePictureChange.bind(this)} 
+        />
+        <button onClick={(e) => {this.sendToCart(this.state.sku)}}>Add to Cart</button>
       </div>
+      
     )
   }
 }

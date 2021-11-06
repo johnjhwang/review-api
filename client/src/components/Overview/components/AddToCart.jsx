@@ -4,7 +4,7 @@ import _ from "underscore";
 
 
 const AddToCart = (props) => {
-  console.log("Cart Adding System");
+  // console.log("Cart Adding System");
 //   console.log(props.styleInfo);
 
 //   let handleNewStyle = (event) => {
@@ -16,26 +16,31 @@ const AddToCart = (props) => {
   if (props.styleInfo !== 'default') {
     sizeDetails = props.styleInfo.skus
     sizes = Object.keys(sizeDetails);
-    console.log('sizes', sizes);
+    // console.log('sizes', sizes);
   } 
   
+  let arr = [0]
+  for (var i = 0; i < props.quantity; i++) {
+    arr.push(i+1);
+  }
 
   return (<div>
-    <h2>Add to Cart</h2>
+    <h2>Buy Product</h2>
     <h3>Select Size</h3>
-    <select onChange={(e) => {props.handler(e.target.options[e.target.selectedIndex].getAttribute("quant"))}}>
-    <option value={null} quant={[0]} > Choose Size </option>
+    <select onChange={(e) => {props.sizeHandler(e.target.options[e.target.selectedIndex])}}>
+    <option value={0} quant={[0]} > Choose Size </option>
       {_.map(sizes, (k) => {
         
-        return (<option value={"" + k} quant={sizeDetails[k].quantity} > {sizeDetails[k].size} </option>)
+        return (<option value={"" + k} quant={sizeDetails[k].quantity} >{sizeDetails[k].size}</option>)
       })}
     </select>
     <h3>Select Quantity</h3>
-    <select>
-      {_.map(props.quantity, (q) => {
-        return (<option value={"" + q}> {q} </option>)
+    <select onChange={(e) => {props.priceHandler(e.target.options[e.target.selectedIndex].value)}}>
+      {_.map(arr, (q) => {
+        return (<option value={"" + q}>{q}</option>)
       })}
     </select>
+    
   </div>)
 }
 

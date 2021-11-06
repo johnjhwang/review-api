@@ -4,10 +4,16 @@ import _ from "underscore";
 
 import AddToCart from "./AddToCart.jsx";
 
+
+
 const StyleSelector = (props) => {
-  console.log(props.styles);
+  // console.log(props.styles);
 
   let num = -1;
+  let photos = null;
+  if (props.styles[props.currentStyle].photos) {
+    photos = props.styles[props.currentStyle].photos;
+  }
 
   return (<div>
       <h2>Style List</h2>
@@ -18,8 +24,10 @@ const StyleSelector = (props) => {
       <AddToCart 
       styleInfo={props.styles[props.currentStyle]} 
       quantity={props.quantity} 
-      handler={props.sizeHandler} 
+      sizeHandler={props.sizeHandler} 
+      priceHandler={props.priceHandler}
       />
+      
   </div>)
 }
 
