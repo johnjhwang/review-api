@@ -17,6 +17,7 @@ const OutfitList = (props) => {
 
   useEffect(() => { showArrow() })
 
+
   const handlePlusButtonClick = () => {
     let copy = outfits;
     if (!copy.includes(props.productId)) {
