@@ -62,7 +62,6 @@ class NewReview extends React.Component {
         <button onClick={this.toggleModal}>Add a Review</button>
         </div>)
     }
-
   }
 }
 
