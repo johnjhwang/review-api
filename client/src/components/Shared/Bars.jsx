@@ -5,26 +5,28 @@ const Bars = ({count, total}) => {
 
 
   const backgroundStyle = {
-    width: '14%',
-    height: '1.2%',
+    width: '12%',
+    height: '1%',
     backgroundColor: '#cccccc',
-    marginLeft: '5px',
-    position: 'absolute'
+    marginLeft: '0.5%',
+    marginTop: '5px',
+    position: 'absolute',
   }
 
   const filledStyle = {
     backgroundColor: '#268246',
-    height: '1.2%',
-    width: `${14 * percentage}%`,
-    position: 'absolute'
-
+    height: '1%',
+    width: `${12 * percentage}%`,
+    position: 'absolute',
+    marginLeft: '0.5%',
+    marginTop: '5px',
   }
 
   return (
-    <div>
+    <span>
       <span style={backgroundStyle}></span>
       <span style={filledStyle}></span>
-    </div>
+    </span>
 
 
   )

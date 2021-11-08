@@ -15,7 +15,8 @@ class Overview extends React.Component {
       product_id: this.props.product_id,
       reviewsData: {},
       reviewsMetaData: {},
-      name: ''
+      name: '',
+      filters: [],
     }
     this.getReviews = this.getReviews.bind(this);
     this.getReviewsMeta = this.getReviewsMeta.bind(this);
@@ -73,6 +74,10 @@ class Overview extends React.Component {
         console.log("Error getting product name");
       });
   }
+
+  addFilter(e){
+    let starFilter = e.target.getAttribute('value');
+  }
   // stars, filter reviews by rating, show characteristics, adding a question/review (XXXXL)
   // styled-components
 
@@ -98,10 +103,10 @@ const Flex = styled.div`
 
 const RatingsStyle = styled.div`
   padding-left: 10px;
-  flex: 1 0 20%;
+  flex: 1 0 18%;
 `
 const ReviewsStyle = styled.div`
-  flex: 0 1 80%;
+  flex: 0 1 82%;
 `
 
 

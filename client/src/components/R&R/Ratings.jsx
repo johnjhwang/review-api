@@ -49,9 +49,10 @@ const Ratings = ({ reviewsMetaData }) => {
         {recommended && <div>{getRecPercentage()}% of Users recommend this product</div>}
         <br />
         {ratings && Object.entries(ratings).map((rating) => {
-          return (<div style={{display: 'inline'}}>
-            <span>{rating[0]} stars</span><span><Bars count={rating[1]} total={getTotal()} /></span>
-            <br/>
+          return (<div>
+            <span onClick={e=>console.log(e)} value={rating[0]} style={{textDecoration: 'underline'}}>{rating[0]} stars </span>
+            <Bars count={rating[1]} total={getTotal()} />
+            <br />
             </div>)
           })
         }
@@ -64,6 +65,12 @@ const Ratings = ({ reviewsMetaData }) => {
     </div>
   )
 }
+
+
+const barStyle = styled.div`
+  display: flex;
+  align-items: left;
+`
 
 export default Ratings;
 
