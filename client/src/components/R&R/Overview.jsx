@@ -79,19 +79,32 @@ class Overview extends React.Component {
   // 39333 to 40343
 
   render () {
-    return (<div>
+    return (
       <Flex>
-        <Ratings reviewsMetaData={this.state.reviewsMetaData}/>
-        <Reviews reviewsData={this.state.reviewsData} reviewsMetaData={this.state.reviewsMetaData} getReviews={this.getReviews} updateReviews={this.updateReviews} name={this.state.name}/>
+        <RatingsStyle><Ratings reviewsMetaData={this.state.reviewsMetaData}/></RatingsStyle>
+        <ReviewsStyle><Reviews reviewsData={this.state.reviewsData} reviewsMetaData={this.state.reviewsMetaData} getReviews={this.getReviews} updateReviews={this.updateReviews} name={this.state.name}/></ReviewsStyle>
       </Flex>
-    </div>)
+    )
   }
 }
 
 const Flex = styled.div`
   display: flex;
+  flex-wrap: nowrap;
   padding: 10px;
-  gap: 20px;
-`;
+  gap: 10px;
+  width: 95%;
+`
+
+const RatingsStyle = styled.div`
+  padding-left: 10px;
+  flex: 1 0 20%;
+`
+const ReviewsStyle = styled.div`
+  flex: 0 1 80%;
+`
+
+
+
 
 export default Overview;

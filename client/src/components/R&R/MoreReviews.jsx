@@ -11,7 +11,6 @@ const MoreReviews = ({ total, visible, showMoreReviews }) => {
   if (total > visible) {
     return (
       <div>
-      <br />
       <button onClick={showMoreReviews}>More Reviews</button>
       </div>
     )

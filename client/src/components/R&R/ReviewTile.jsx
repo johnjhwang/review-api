@@ -30,11 +30,8 @@ class ReviewTile extends React.Component {
     }
     if (action === 'report' && this.state.reported === false) {
       this.setState({ reported: true });
-      handler.update(review.review_id, action, (responseData) => {
-        updateReviews();
-      })
+      handler.update(review.review_id, action);
     }
-
   }
 
   render() {
@@ -48,11 +45,14 @@ class ReviewTile extends React.Component {
         <h3>{review.summary}</h3>
         {review.body}
         <br/>
-        {review.recommend && <div>✅  I recommend this product</div>}
-        <span>Helpful? </span>
-        <span name="helpful" onClick={(e) => this.handleClick(e)} style={{textDecoration: 'underline'}}>Yes</span>
-        <span> {review.helpfulness} |  </span>
-        <span name="report" onClick={(e) => this.handleClick(e)} style={{textDecoration: 'underline'}}>Report</span>
+        {review.recommend && <div>✅ &nbsp; I recommend this product</div>}
+        <br/>
+        <span>Was this review helpful? </span>
+        <span name='helpful' onClick={(e) => this.handleClick(e)} style={{textDecoration: 'underline', cursor: 'pointer'}}>Yes</span>
+        <span> ({review.helpfulness}) |  </span>
+        {this.state.reported ?
+        <span>Reported</span> : <span name='report' onClick={(e) => this.handleClick(e)} style={{textDecoration: 'underline', cursor: 'pointer'}}>Report</span>}
+
       </div>
     )
   }

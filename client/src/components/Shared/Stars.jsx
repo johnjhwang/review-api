@@ -16,7 +16,7 @@ const Stars = ({rating}) => {
   }
 
   const emptyStarStyle = {
-    'zIndex': '1',
+    'zIndex': '-1',
     'color': 'black',
     'position': 'absolute',
     'fontSize': 'large'

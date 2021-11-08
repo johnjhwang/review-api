@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import handler from '../Shared/reviewhandler.js';
 import Stars from "../Shared/Stars.jsx";
+import Bars from "../Shared/Bars.jsx";
 
 
 const Ratings = ({ reviewsMetaData }) => {
@@ -11,15 +12,24 @@ const Ratings = ({ reviewsMetaData }) => {
 
   console.log('ratings', recommended);
 
-
-  const getAverageRating = () => {
-    let count = 0;
+  const getTotal = () => {
     let total = 0;
     for (let key in ratings) {
-      total += Number(key) * Number(ratings[key]);
-      count += Number(ratings[key]);
+      total += Number(ratings[key]);
     }
-    return (total / count).toFixed(1);
+    return total;
+  }
+
+  const getAverageRating = () => {
+    let sum = 0;
+    for (let key in ratings) {
+      sum += Number(key) * Number(ratings[key]);
+    }
+    if (ratings !== undefined){
+
+      console.log('Object.entries >>>', Object.entries(ratings))
+    }
+    return (sum / getTotal()).toFixed(1);
   };
 
   const getRecPercentage = () => {
@@ -39,11 +49,16 @@ const Ratings = ({ reviewsMetaData }) => {
         {recommended && <div>{getRecPercentage()}% of Users recommend this product</div>}
         <br />
         {ratings && Object.entries(ratings).map((rating) => {
-          return (<div>{rating[0]} stars: {rating[1]} people  </div>)})}
+          return (<div style={{display: 'inline'}}>
+            <span>{rating[0]} stars</span><span><Bars count={rating[1]} total={getTotal()} /></span>
+            <br/>
+            </div>)
+          })
+        }
         <br />
         {characteristics && Object.entries(characteristics).map((characteristic) => {
           return (
-            <div>{characteristic[0]} characteristic: {characteristic[1].value} </div>
+            <div>{characteristic[0]}: {characteristic[1].value} </div>
           )
         })}
     </div>
