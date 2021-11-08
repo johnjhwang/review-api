@@ -4,7 +4,7 @@ import $ from "jquery";
 import axios from "axios";
 import styled from "styled-components";
 import ComparisonModal from "./ComparisonModal.jsx";
-import Stars from "../../helpers/Stars.jsx";
+import Stars from "../Shared/Stars.jsx";
 
 class RPEntry extends React.Component {
   constructor(props) {
