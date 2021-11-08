@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import axios from 'axios';
 import styled from 'styled-components';
-import handler from '../../helpers/reviewhandler.js';
+import handler from '../Shared/reviewhandler.js';
 import Reviews from './Reviews.jsx';
 import Ratings from './Ratings.jsx';
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
-import handler from '../../helpers/reviewhandler.js';
-import dateFormatter from '../../helpers/dateformatter.js';
+import handler from '../Shared/reviewhandler.js';
+import dateFormatter from '../Shared/dateformatter.js';
 
 
 class ReviewTile extends React.Component {
