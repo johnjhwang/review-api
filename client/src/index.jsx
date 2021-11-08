@@ -7,6 +7,7 @@ import Overview from './components/R&R/Overview.jsx';
 import RPList from './components/RI&C/RPList.jsx';
 import OutfitList from './components/RI&C/OutfitList.jsx'
 
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -16,14 +17,12 @@ class App extends React.Component {
     this.handleProductChange = this.handleProductChange.bind(this);
   }
 
-
   handleProductChange(id) {
-    //console.log('currentid', id)
     this.setState({ product_id: id })
   }
 
   render () {
-    //console.log(this.state.product_id);
+
 
     return (
     <div>

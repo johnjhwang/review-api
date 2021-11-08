@@ -89,6 +89,7 @@ class RPEntry extends React.Component {
     const results = this.state.productStyle.results;
     const salePrice = results && results.sale_price;
     const ratings = this.state.productRatings.ratings;
+    //console.log(ratings);
     let avgRating = 0;
     let length = 0;
     if (ratings) {
@@ -111,14 +112,14 @@ class RPEntry extends React.Component {
             {this.props.rp && <Button onClick={this.toggleModal}>★</Button>}
             {this.props.outfit && <Button onClick={() => {this.props.deleteOutfit(this.state.productInfo.id)}}>ⓧ</Button>}
           </ButtonContainer>
-          <Click onClick={() => this.props.handleProductChange(this.state.productInfo.id)}> </Click>
+          {this.props.rp && <Click onClick={() => this.props.handleProductChange(this.state.productInfo.id)}> </Click>}
           </Image>
           <Content>
             <p>
               {category} <br></br>
               {name} <br></br>
               {salePrice ? "$" + salePrice : "$" + default_price} <br></br>
-              <Stars rating={avgRating}/>
+              {avgRating ? <Stars rating={avgRating}/> : ''}
             </p>
           </Content>
         </Card>

@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import $ from "jquery";
 import axios from "axios";
-import RPEntry from "./RPEntry.jsx"
+import ProductCard from "./ProductCard.jsx"
 import styled from 'styled-components'
 
 class RPList extends React.Component {
@@ -105,7 +105,7 @@ class RPList extends React.Component {
         <ButtonContainer>{this.state.showLeft && <LeftArrow onClick={this.moveToPrev}>˱</LeftArrow>}</ButtonContainer>
           <CarouserContainerInner ref={this.myRef}>
         {relatedProductId.slice(leftCount).map((id) => {
-          return <RPEntry relatedProductId={id} key={id} productInfo={this.state.currentProductInfo} rp={true} handleProductChange={this.props.handleProductChange}/>
+          return <ProductCard relatedProductId={id} key={id} productInfo={this.state.currentProductInfo} rp={true} handleProductChange={this.props.handleProductChange}/>
         })}
         </CarouserContainerInner>
         <ButtonContainer>{this.state.showRight && <RightArrow onClick={this.moveToNext}>˲</RightArrow>}</ButtonContainer>
