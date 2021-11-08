@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import handler from '../Shared/reviewhandler.js';
 import dateFormatter from '../Shared/dateformatter.js';
+import Stars from "../Shared/Stars.jsx";
 
 
 class ReviewTile extends React.Component {
@@ -42,11 +43,9 @@ class ReviewTile extends React.Component {
     return (
       <div>
         <br/>
-        {review.rating} stars
+        <div><Stars rating={review.rating}/></div>
         <div style={{ float: 'right' }}>{review.reviewer_name}, {dateFormatter(review.date)}</div>
-        <br />
-        {review.summary}
-        <br />
+        <h3>{review.summary}</h3>
         {review.body}
         <br/>
         {review.recommend && <div>✅  I recommend this product</div>}

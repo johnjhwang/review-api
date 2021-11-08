@@ -2,12 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import handler from '../Shared/reviewhandler.js';
+import Stars from "../Shared/Stars.jsx";
+
 
 const Ratings = ({ reviewsMetaData }) => {
 
   let { ratings, recommended, characteristics } = reviewsMetaData;
 
   console.log('ratings', recommended);
+
 
   const getAverageRating = () => {
     let count = 0;
@@ -32,13 +35,12 @@ const Ratings = ({ reviewsMetaData }) => {
 
   return (
      <div>
-        Ratings & Reviews
-        <div>Average Rating: {getAverageRating()}</div>
+        <div style={{fontSize: '50px', textDecoration: 'bold', display: 'inline'}}>{getAverageRating()}</div><div style={{display: 'inline'}}><Stars rating={getAverageRating()}/></div>
         {recommended && <div>{getRecPercentage()}% of Users recommend this product</div>}
-
+        <br />
         {ratings && Object.entries(ratings).map((rating) => {
-          return (<div>{rating[0]} stars given by {rating[1]} people</div>)})}
-
+          return (<div>{rating[0]} stars: {rating[1]} people  </div>)})}
+        <br />
         {characteristics && Object.entries(characteristics).map((characteristic) => {
           return (
             <div>{characteristic[0]} characteristic: {characteristic[1].value} </div>

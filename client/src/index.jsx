@@ -12,7 +12,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      product_id: 39335
+      product_id: 39568
     }
     this.handleProductChange = this.handleProductChange.bind(this);
   }
@@ -27,6 +27,7 @@ class App extends React.Component {
     return (
     <div>
         {/* <RPList productId={this.state.product_id}/> */}
+        <h3>RATINGS & REVIEWS</h3>
         <Overview product_id={this.state.product_id}/>
     </div>)
   }
