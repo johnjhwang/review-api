@@ -3,7 +3,7 @@ import useLocalStorageState from 'use-local-storage-state';
 import $ from "jquery";
 import axios from "axios";
 import styled from "styled-components";
-import RPEntry from "./RPEntry.jsx";
+import ProductCard from "./ProductCard.jsx";
 
 
 const OutfitList = (props) => {
@@ -73,7 +73,7 @@ const OutfitList = (props) => {
           <Card><PlusButton onClick={handlePlusButtonClick}>+</PlusButton></Card>
           <CarouserContainerInner ref={ref}>
             {storageOutfits.slice(leftCount).map((id) => {
-              return <RPEntry relatedProductId={id} key={id} outfit={true} deleteOutfit={deleteOutfit}/>
+              return <ProductCard relatedProductId={id} key={id} outfit={true} deleteOutfit={deleteOutfit}/>
             })}
         </CarouserContainerInner>
         <ButtonContainer>{showRight && <RightArrow onClick={moveToNext}>˲</RightArrow>}</ButtonContainer>
