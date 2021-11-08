@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
-import helpers from '../../helpers/reviewhandler.js';
+import handler from '../Shared/reviewhandler.js';
 
 const Ratings = ({ reviewsMetaData }) => {
 

@@ -3,10 +3,9 @@ import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import axios from 'axios';
 import styled from 'styled-components';
-import handler from '../../helpers/reviewhandler.js';
+import handler from '../Shared/reviewhandler.js';
 import Reviews from './Reviews.jsx';
 import Ratings from './Ratings.jsx';
-
 
 
 class Overview extends React.Component {
@@ -15,27 +14,32 @@ class Overview extends React.Component {
     this.state = {
       product_id: this.props.product_id,
       reviewsData: {},
-      reviewsMetaData: {}
+      reviewsMetaData: {},
+      name: ''
     }
     this.getReviews = this.getReviews.bind(this);
     this.getReviewsMeta = this.getReviewsMeta.bind(this);
     this.updateReviews = this.updateReviews.bind(this);
+    this.getProductName = this.getProductName.bind(this);
   }
 
   componentDidMount() {
     this.getReviews();
     this.getReviewsMeta();
+    this.getProductName();
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.product_id !== prevProps.product_id) {
       this.getReviews();
       this.getReviewsMeta();
+      this.getProductName();
+
     }
   }
 
-  getReviews() { // no sort yet
-    handler.get(this.state.product_id, (responseData) => {
+  getReviews(sort = 'relevant') {
+    handler.get(this.state.product_id, sort, (responseData) => {
       console.log('client responseData >>>>', responseData);
       this.setState({ reviewsData: responseData }, () => {
         console.log('this.state.reviewsData >>>', this.state.reviewsData);
@@ -52,27 +56,42 @@ class Overview extends React.Component {
     })
   }
 
-  updateReviews(sort) {
-
+  updateReviews() {
+    this.getReviews();
+    this.getReviewsMeta();
   }
-  // stars, loading more questions/reviews, adding a question/review,
+
+  getProductName() {
+    axios.get(`/products/${this.props.product_id}`)
+      .then((responseData) => {
+        console.log('result', responseData.data.name);
+        this.setState({
+          name: responseData.data.name,
+        });
+      })
+      .catch((err) => {
+        console.log("Error getting product name");
+      });
+  }
+  // stars, filter reviews by rating, show characteristics, adding a question/review (XXXXL)
   // styled-components
-  // All reviews will be saved per product.  Specific styles will not be accounted for within the review module.
+
   // 39333 to 40343
+
   render () {
     return (<div>
-      <FlexContainer>
+      <Flex>
         <Ratings reviewsMetaData={this.state.reviewsMetaData}/>
-        <Reviews reviewsData={this.state.reviewsData} reviewsMetaData={this.state.reviewsMetaData} updateReviews={this.updateReviews}/>
-        </FlexContainer>
+        <Reviews reviewsData={this.state.reviewsData} reviewsMetaData={this.state.reviewsMetaData} getReviews={this.getReviews} updateReviews={this.updateReviews} name={this.state.name}/>
+      </Flex>
     </div>)
   }
 }
 
-const FlexContainer = styled.div`
+const Flex = styled.div`
   display: flex;
   padding: 10px;
-  gap: 100px;
-  `;
+  gap: 20px;
+`;
 
 export default Overview;

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import axios from 'axios';
 import styled from 'styled-components';
-import handler from '../../helpers/reviewhandler.js';
+import handler from '../Shared/reviewhandler.js';
 
 class ReviewsSort extends React.Component {
   constructor(props) {
@@ -14,12 +14,10 @@ class ReviewsSort extends React.Component {
     this.handleSortChange = this.handleSortChange.bind(this);
   }
 
-  componentDidMount() {
-
-  }
   handleSortChange(e) {
+    console.log('e.target.value', e.target.value);
     this.setState({ sort: e.target.value }, () => {
-      this.props.updateReviews(sort)
+      this.props.getReviews(this.state.sort);
   })
 }
 
