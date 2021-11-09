@@ -3,14 +3,18 @@ import styled from 'styled-components';
 
 
 
+
 const Characteristics = ({ entry }) => {
 
   console.log('entry >>>>', entry);
 
+
+
     return (
     <div>
-      {entry[0]}: {entry[1].value}
+      {entry[0]}:
       <Container>
+        {entry && <Triangle style={{marginLeft: `${200 * entry[1].value / 5}px`}}></Triangle>}
         <Bars>&nbsp;</Bars>
         <Bars>&nbsp;</Bars>
         <Bars>&nbsp;</Bars>
@@ -25,33 +29,42 @@ const Characteristics = ({ entry }) => {
     )
 } // labels, triangle
 
+  const Triangle = styled.div`
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid #054308;
+  position: absolute;
+
+  `
+
 const Container = styled.div`
   display: flex;
   gap: 5px;
-  width: 80%;
+  width: 210px;
 `
 
 const LabelContainer = styled.div`
   display: flex;
   font-size: 12px;
   justify-content: space-between;
-  width: 80%;
+  width: 210px;
 `
 
 const Bars = styled.div`
   color: lightgray;
   background-color: lightgray;
-  width: 33%;
+  width: 33.3%;
   height: 8px;
-  position: aboslute;
+
 `;
 
 const Labels = styled.div`
-  width: 33%;
+  width: 33.3%;
 `
 
-const Triangle = styled.div`
-`
+
 
 const characteristicLabels = {
   Size: {

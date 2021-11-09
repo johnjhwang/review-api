@@ -43,24 +43,33 @@ class NewReview extends React.Component {
   render () {
     if (this.state.show) {
       return (
-        <div>
         <Background>
           <ModalWrapper>
-            <h2>Write Your Review</h2>
-            <h3>About the {this.props.name}</h3>
-        Submission form line 1         Submission form line 1        Submission form line 1         Submission form line 1        Submission form line 1
-        <br />
-        Submission form line 2         Submission form line 2        Submission form line 2         Submission form line 2        Submission form line 2
-        <br />
-        <div style={{display: 'inline'}}><Button style={{cursor: 'pointer'}} onClick={this.toggleModal}>Close</Button>&nbsp; &nbsp; &nbsp;<Button style={{cursor: 'pointer'}} onClick={this.submitReview}>Submit Review</Button></div>
-        </ModalWrapper>
+            <ExitButton>
+              <button onClick={this.toggleModal}>x</button>
+            </ExitButton>
+            <div style={{ justifyContent: 'center', textAlign: 'center' }}>
+              <h2>Write Your Review</h2>
+              <h3>About the {this.props.name}</h3>
+            </div>
+           Submission form line 1
+            <br />
+           Submission form line 2
+
+
+
+
+
+
+            <br />
+            <div style={{display: 'inline'}}><Button onClick={this.toggleModal}>Close</Button>&nbsp; &nbsp; &nbsp;<Button style={{cursor: 'pointer'}} onClick={this.submitReview}>Submit Review</Button></div>
+          </ModalWrapper>
         </Background>
-        </div>
         );
     } else {
         return (<div>
-        <button style={{cursor: 'pointer'}} onClick={this.toggleModal}>Add a Review</button>
-        </div>)
+          <button style={{cursor: 'pointer'}} onClick={this.toggleModal}>Add a Review</button>
+          </div>)
     }
   }
 }
@@ -95,5 +104,13 @@ const ModalWrapper = styled.div`
   flex-direction: column;
   padding: 25px;
 `;
+
+const ExitButton = styled.div`
+display: flex;
+justify-content: flex-end;
+cursor: pointer;
+
+`
+
 
 export default NewReview;

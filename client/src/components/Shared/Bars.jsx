@@ -14,7 +14,7 @@ const Bars = ({count, total}) => {
   }
 
   const filledStyle = {
-    backgroundColor: '#268246',
+    backgroundColor: '#054308',
     height: '0.8%',
     width: `${12 * percentage}%`,
     position: 'absolute',
