@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import handler from '../Shared/reviewhandler.js';
 import Stars from "../Shared/Stars.jsx";
 import Bars from "../Shared/Bars.jsx";
+import Characteristics from './Characteristics.jsx';
+
 
 
 const Ratings = ({ reviewsMetaData }) => {
@@ -50,19 +52,16 @@ const Ratings = ({ reviewsMetaData }) => {
         <br />
         {ratings && Object.entries(ratings).map((rating) => {
           return (<div>
-            <span onClick={e=>console.log(e)} value={rating[0]} style={{textDecoration: 'underline'}}>{rating[0]} stars </span>
+            <span style={{textDecoration: 'underline', cursor: 'pointer'}} onClick={e=>console.log(e.target.getAttribute('value'))} value={rating[0]}>{rating[0]} stars </span>
             <Bars count={rating[1]} total={getTotal()} />
-            <br />
             </div>)
           })
         }
         <br />
-        {characteristics && Object.entries(characteristics).map((characteristic) => {
-          return (
-            <div>{characteristic[0]}: {characteristic[1].value} </div>
-          )
-        })}
-    </div>
+        {characteristics && Object.entries(characteristics).map((entry) => (
+          <Characteristics entry={entry}/>
+        ))}
+     </div>
   )
 }
 

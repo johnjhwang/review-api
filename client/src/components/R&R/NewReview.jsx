@@ -52,14 +52,14 @@ class NewReview extends React.Component {
         <br />
         Submission form line 2         Submission form line 2        Submission form line 2         Submission form line 2        Submission form line 2
         <br />
-        <div style={{display: 'inline'}}><Button onClick={this.toggleModal}>Close</Button>&nbsp; &nbsp; &nbsp;<Button onClick={this.submitReview}>Submit Review</Button></div>
+        <div style={{display: 'inline'}}><Button style={{cursor: 'pointer'}} onClick={this.toggleModal}>Close</Button>&nbsp; &nbsp; &nbsp;<Button style={{cursor: 'pointer'}} onClick={this.submitReview}>Submit Review</Button></div>
         </ModalWrapper>
         </Background>
         </div>
         );
     } else {
         return (<div>
-        <button onClick={this.toggleModal}>Add a Review</button>
+        <button style={{cursor: 'pointer'}} onClick={this.toggleModal}>Add a Review</button>
         </div>)
     }
   }
