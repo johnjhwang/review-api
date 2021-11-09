@@ -2,12 +2,14 @@
 import React from 'react';
 import axios from 'axios';
 import QuestionEntry from './QuestionsEntry.jsx';
+import QuestionsSearchForm from './QuestionsSearchForm.jsx';
+
 
 class QuestionsAndAnswers extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      product_id: 39334,
+      product_id: 39335,
       questions: []
     }
     this.getQuestions = this.getQuestions.bind(this);
@@ -16,10 +18,6 @@ class QuestionsAndAnswers extends React.Component {
   componentDidMount() {
     this.getQuestions();
   }
-
-  // componentDidUpdate() {
-  //   this.getQuestions();
-  // }
 
   getQuestions() {
     const product_id = this.state.product_id;
@@ -36,7 +34,10 @@ class QuestionsAndAnswers extends React.Component {
     return (
       <div>
       {this.state.questions.length &&
-      <QuestionEntry questions={this.state.questions}/>}
+       <>
+      <QuestionsSearchForm questions={this.state.questions}/>
+      <QuestionEntry product_id={this.state.product_id} questions={this.state.questions}/>
+      </>}
     </div>
     )
   }

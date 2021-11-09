@@ -27,8 +27,8 @@ module.exports = {
     return axios({
       method: 'POST',
       url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-nyc/qa/questions/`,
-      body: {
-        question: body,
+      data: {
+        body,
         name: name,
         email: email,
         product_id: product_id
