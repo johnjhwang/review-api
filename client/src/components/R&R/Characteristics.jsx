@@ -21,7 +21,7 @@ const Characteristics = ({ entry }) => {
       </Container>
       <LabelContainer>
         <Labels>{characteristicLabels[entry[0]][1]}</Labels>
-        <Labels style={{textAlign: 'center' }}>{characteristicLabels[entry[0]][3]}</Labels>
+        <Labels style={{textAlign: 'center'}}>{characteristicLabels[entry[0]][3]}</Labels>
         <Labels style={{textAlign: 'right' }}>{characteristicLabels[entry[0]][5]}</Labels>
       </LabelContainer>
       <br/>
