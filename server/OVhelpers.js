@@ -2,7 +2,7 @@ const axios = require('axios');
 const config = require('../config.js');
 
 
-module.exports.helpers = {
+module.exports.OverHelpers = {
   getProducts: (id) => {
     console.log('hello');
     let options = {

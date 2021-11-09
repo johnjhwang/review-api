@@ -17,7 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static(__dirname + '/../client/dist'));
 
-let {helpers} = require('./overviewhelpers.js');
+let {OverHelpers} = require('./OVhelpers.js');
 
 // attach authorization header with API key imported in from config.js file here or in helper js
 // -------get questions-----
