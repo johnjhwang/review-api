@@ -1,10 +1,4 @@
-
 // use this file or create your own helper js file in this folder
-const config = require('../config.js');
-const API_KEY = config.API_KEY;
-const axios = require('axios');
-
+const config = require('../config.js');const API_KEY = config.API_KEY;const axios = require('axios');
 /////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////

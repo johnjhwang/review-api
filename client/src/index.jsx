@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import axios from 'axios';
+// import Subcomponent from './components/Subcomponent.jsx';
+import QA from './components/Q&A/Q&AIndex.jsx';
 import styled from 'styled-components';
 import Overview from './components/R&R/Overview.jsx';
 import RPList from './components/RI&C/RPList.jsx';
@@ -20,7 +22,6 @@ class App extends React.Component {
   handleProductChange(id) {
     this.setState({ product_id: id })
   }
-
   render () {
 
 
@@ -28,10 +29,12 @@ class App extends React.Component {
     <div>
         {/* <RPList productId={this.state.product_id} handleProductChange={this.handleProductChange}/>
         <OutfitList productId={this.state.product_id}/> */}
-         <h3>RATINGS & REVIEWS</h3>
+        <QA />
         <Overview product_id={this.state.product_id}/>
     </div>)
   }
 }
 
 ReactDOM.render(<App />, document.getElementById('app'));
+
+
