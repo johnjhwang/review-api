@@ -41,7 +41,7 @@ class ReviewTile extends React.Component {
       <div>
         <br/>
         <div><Stars rating={review.rating}/></div>
-        <div style={{ float: 'right' }}>{review.reviewer_name}, {dateFormatter(review.date)}</div>
+        <div style={{ float: 'right', marginRight: '5px' }}>{review.reviewer_name}, {dateFormatter(review.date)}</div>
         <h3>{review.summary}</h3>
         {review.body}
         <br/>

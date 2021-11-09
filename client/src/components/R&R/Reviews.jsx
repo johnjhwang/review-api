@@ -55,10 +55,11 @@ class Reviews extends React.Component {
           <MoreReviews total={this.state.reviews && this.state.reviews.length} visible={this.state.visible} showMoreReviews={this.showMoreReviews}/>
           <NewReview name={this.props.name}/>
         </ButtonsStyle>
-
     </div>)
   }
 }
+
+
 
 const ButtonsStyle = styled.div`
 display: flex;

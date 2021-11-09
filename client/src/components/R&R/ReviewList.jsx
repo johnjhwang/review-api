@@ -9,14 +9,17 @@ const ReviewList = ({ reviews, visible, updateReviews }) => {
 
   const visibleReviews = reviews && reviews.slice(0, visible);
 
-    return (<div>
+    return (<Scroll>
       {visibleReviews && visibleReviews.map((review, key) => (
         <ReviewTile review={review} key={key} updateReviews={updateReviews}/>
       ))}
-    </div>
+    </Scroll>
     )
 }
 
-
+const Scroll = styled.div`
+max-height: 70vh;
+overflow-y: scroll;
+`
 
 export default ReviewList;
