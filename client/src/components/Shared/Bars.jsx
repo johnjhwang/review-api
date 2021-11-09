@@ -9,7 +9,7 @@ const Bars = ({count, total}) => {
     height: '0.8%',
     backgroundColor: '#cccccc',
     marginLeft: '0.5%',
-    marginTop: '5px',
+    marginTop: '6px',
     position: 'absolute',
   }
 
@@ -19,7 +19,7 @@ const Bars = ({count, total}) => {
     width: `${12 * percentage}%`,
     position: 'absolute',
     marginLeft: '0.5%',
-    marginTop: '5px',
+    marginTop: '6px',
   }
 
   return (

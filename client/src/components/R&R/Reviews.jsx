@@ -26,7 +26,10 @@ class Reviews extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.state.reviews !== this.props.reviewsData.results){
+    if (prevProps.filters !== this.props.filters) {
+      this.applyFilters();
+    }
+    if (prevProps.reviewsData !== this.props.reviewsData){
       this.setState({
         reviews: this.props.reviewsData.results,
         visible: 2
@@ -42,8 +45,17 @@ class Reviews extends React.Component {
 
   applyFilters() {
     let result = [];
-
-
+    if (this.props.filters.length > 0) {
+      console.log('reviewdata >>>>', this.props.reviewsData)
+      this.props.reviewsData.results.forEach((review) => {
+        if (this.props.filters.indexOf(JSON.stringify(review.rating)) !== -1) {
+          result.push(review);
+        }
+      })
+      this.setState({ reviews: result}, () => console.log('reviewsdata is now:', this.state.reviews));
+      return;
+    }
+    this.setState({ reviews: this.props.reviewsData.results });
   }
 
   // stars, loading more questions/reviews, adding a question/review,
