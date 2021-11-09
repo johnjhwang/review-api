@@ -99,12 +99,12 @@ class RPList extends React.Component {
       }
     })
     return (
-      <div>
+      <div id="RPList">
         <Title>RELATED PRODUCTS</Title>
         <ListContainer>
         <ButtonContainer>{this.state.showLeft && <LeftArrow onClick={this.moveToPrev}>˱</LeftArrow>}</ButtonContainer>
           <CarouserContainerInner ref={this.myRef}>
-        {relatedProductId.slice(leftCount).map((id) => {
+        {relatedProductId.slice(leftCount).map((id, i) => {
           return <ProductCard relatedProductId={id} key={id} productInfo={this.state.currentProductInfo} rp={true} handleProductChange={this.props.handleProductChange}/>
         })}
         </CarouserContainerInner>
