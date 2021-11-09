@@ -40,6 +40,12 @@ class Reviews extends React.Component {
     })
   }
 
+  applyFilters() {
+    let result = [];
+
+
+  }
+
   // stars, loading more questions/reviews, adding a question/review,
   // styled-components
   // All reviews will be saved per product.  Specific styles will not be accounted for within the review module.
@@ -50,21 +56,22 @@ class Reviews extends React.Component {
     return (<div>
         <ReviewsSort total={this.state.reviews && this.state.reviews.length} getReviews={this.props.getReviews}/>
         <ReviewList reviews={this.state.reviews} visible={this.state.visible} updateReviews={this.props.updateReviews}/>
-        <Flex>
+        <br/>
+        <ButtonsStyle>
           <MoreReviews total={this.state.reviews && this.state.reviews.length} visible={this.state.visible} showMoreReviews={this.showMoreReviews}/>
-        </Flex><Flex>
           <NewReview name={this.props.name}/>
-        </Flex>
+        </ButtonsStyle>
     </div>)
   }
 }
 
-const Flex = styled.div`
-  display: inline-block;
-  padding: 1px;
-  gap: 5px;
-  justify-content: left;
-  `;
+
+
+const ButtonsStyle = styled.div`
+display: flex;
+justify-content: flex-start;
+gap: 5px;
+`
 
 export default Reviews;
 

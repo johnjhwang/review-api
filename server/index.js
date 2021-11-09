@@ -8,7 +8,7 @@ const morgan = require('morgan');
 const config = require('../config.js');
 const API_KEY = config.API_KEY;
 const url = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-nyc';
-const helpers = require('./helpers.js');
+// const helpers = require('./helpers.js');
 
 
 app.use(morgan('dev'));
@@ -315,13 +315,13 @@ app.get(`/products/:productid`, function (req, res) {
       res.status(200).send(end);
     })
   })
-  
-  
+
+
 });
 
 app.post(`/cart/:sku_id`, function (req, res) {
   // TODO - your code here!
-  
+
   let product = req.params.sku_id;
 
   console.log('Hi there, cart', product);
