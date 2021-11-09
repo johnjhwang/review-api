@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import axios from 'axios';
-// import Subcomponent from './components/Subcomponent.jsx';
 import QA from './components/Q&A/Q&AIndex.jsx';
 import styled from 'styled-components';
 import Overview from './components/R&R/Overview.jsx';
@@ -28,8 +27,8 @@ class App extends React.Component {
     return (
     <div>
         {/* <RPList productId={this.state.product_id} handleProductChange={this.handleProductChange}/>
-        <OutfitList productId={this.state.product_id}/> */}
-        <QA />
+        <OutfitList productId={this.state.product_id}/>
+        <QA /> */}
         <Overview product_id={this.state.product_id}/>
     </div>)
   }
