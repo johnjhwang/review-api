@@ -1,7 +1,7 @@
 // Overview
 
 import React from "react";
-
+import styled from "styled-components";
 import axios from "axios";
 import StyleSelector from "./components/StyleSelector.jsx";
 import ImageGallery from "./components/ImageGallery.jsx";
@@ -94,7 +94,8 @@ class Overview extends React.Component {
 
   }
 
-  sendToCart (id) {
+  sendToCart () {
+    let id = this.state.sku;
     console.log(id);
     if (id !== 0) {
       axios.post(`/cart/${id}`).then((data) => {
@@ -108,9 +109,14 @@ class Overview extends React.Component {
 
   render () {
     return (
-      <div>
+      <OverDiv>
         <h1>{this.state.productSelected.name}</h1>
         <h2>{this.state.productStyles[this.state.styleSelected].name}</h2>
+        <ImageGallery 
+        pics={this.state.productStyles[this.state.styleSelected].photos || null} 
+        currentPic={this.state.picIndex} 
+        picChangeHandler={this.handlePictureChange.bind(this)} 
+        />
         <p>{this.state.productSelected.description}</p>
         <StyleSelector 
         styles={this.state.productStyles} 
@@ -119,19 +125,27 @@ class Overview extends React.Component {
         priceHandler={this.handlePriceChange.bind(this)}
         currentStyle={this.state.styleSelected} 
         quantity={this.state.quantity} 
+        price={this.state.chosenAmount * this.state.productPrice}
+        cartHandle={this.sendToCart.bind(this)}
         />
-        <p>Total is: {this.state.chosenAmount * this.state.productPrice}</p>
-        <ImageGallery 
-        pics={this.state.productStyles[this.state.styleSelected].photos || null} 
-        currentPic={this.state.picIndex} 
-        picChangeHandler={this.handlePictureChange.bind(this)} 
-        />
-        <button onClick={(e) => {this.sendToCart(this.state.sku)}}>Add to Cart</button>
-      </div>
+        
+      </OverDiv>
       
     )
   }
 }
+
+const OverDiv = styled.div`
+width: 1000px;
+height: 1000px;
+box-shadow: 0 0.5em 1em -0.125em rgb(10 10 10 / 10%), 0 0 0 1px rgb(10 10 10 / 2%);
+border-radius: 0.25rem;
+margin: 8px;
+border: 1px solid grey;
+float: left;
+`;
+
+
 
 export default Overview;
 

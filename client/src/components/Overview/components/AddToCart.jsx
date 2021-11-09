@@ -44,4 +44,6 @@ const AddToCart = (props) => {
   </div>)
 }
 
+
+
 export default AddToCart;
