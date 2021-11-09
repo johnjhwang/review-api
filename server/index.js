@@ -255,11 +255,6 @@ app.get('/products/:product_id', (req, res) => {
     })
 })
 
-<<<<<<< HEAD
-// app.get('/products', function (req, res) {
-
-// })
-=======
 //request handler for get related product id
 app.get('/products/:product_id/related', (req, res) => {
   //console.log('REQ.PARAMS: ', req.params);
@@ -290,7 +285,6 @@ app.get('/products/:product_id/styles', (req, res) => {
       console.log('Error in getting individual product information: ', err);
     })
 })
->>>>>>> dev
 
 //request handler for get product ratings
 app.get('/reviews/meta/:product_id', (req, res) => {
