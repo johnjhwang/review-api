@@ -174,15 +174,15 @@ app.get('/reviews/meta/:product_id', (req, res) => {
 
 // ==================== Ratings & Reviews =========================
 
-app.get('/reviews/:product_id', (req, res) => {
-  console.log('req.params >>>>>', req.params)
-  axios.get(`${url}/reviews?product_id=${req.params.product_id}`, { // refactor to use params obj?
+app.get('/reviews/:product_id/:sort', (req, res) => {
+  console.log('req.params for sort >>>>>', req.params)
+  axios.get(`${url}/reviews?product_id=${req.params.product_id}&sort=${req.params.sort}&page=1&count=1000`, { // refactor to use params obj?
     headers: {
       Authorization: API_KEY,
     }
   })
     .then((responseData) => {
-      console.log('server responseData.data >>>', responseData.data);
+      // console.log('server responseData.data >>>', responseData.data);
       res.status(200).send(responseData.data)
     })
     .catch((err) => {
@@ -206,6 +206,20 @@ app.get('/reviews/meta/:product_id', (req, res) => {
     })
 })
 
+app.put('/reviews/:review_id/:action', (req, res) => {
+  axios.put(`${url}/reviews/${req.params.review_id}/${req.params.action}`, {}, {
+    headers: {
+      Authorization: API_KEY,
+    }
+  })
+    .then((responseData) => {
+      console.log('server put response>>>', responseData.data);
+      res.status(204).send(responseData.data)
+    })
+    .catch((err) => {
+      console.log('error on PUT server side >>>', err);
+    })
+})
 
 // ================================================================
 
@@ -285,10 +299,6 @@ app.get('/reviews/meta/:product_id', (req, res) => {
 })
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
 
 
 

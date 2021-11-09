@@ -4,8 +4,9 @@ const axios = require('axios');
 //review helper functions that make the call to our server
 
 module.exports = {
-  get: function (product_id, callback) {
-    axios.get(`/reviews/${product_id}`)
+  get: function (product_id, sort, callback) {
+
+    axios.get(`/reviews/${product_id}/${sort}`)
       .then((responseData) => {
         console.log('handler responseData >>>', responseData);
         callback(responseData.data);
@@ -30,7 +31,15 @@ module.exports = {
 
   },
 
-  update: { // mark review as helpful and report review (PUT /reviews/:review_id/helpful) (PUT /reviews/:review_id/report)
-
+  update: function (review_id, action, callback) { // mark review as helpful and report review (PUT /reviews/:review_id/helpful) (PUT /reviews/:review_id/report)
+    console.log('review id/action >>>', review_id, action);
+    axios.put(`/reviews/${review_id}/${action}`)
+    .then((responseData) => {
+      console.log('put data >>>', responseData);
+      callback(responseData);
+    })
+    .catch((err) => {
+      console.log('put handler error >>>>>', err);
+    })
   }
 }
