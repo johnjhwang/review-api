@@ -53,9 +53,9 @@ class Reviews extends React.Component {
         }
       })
       this.setState({ reviews: result}, () => console.log('reviewsdata is now:', this.state.reviews));
-      return;
+    } else {
+      this.setState({ reviews: this.props.reviewsData.results, visible: 2 });
     }
-    this.setState({ reviews: this.props.reviewsData.results });
   }
 
   // stars, loading more questions/reviews, adding a question/review,

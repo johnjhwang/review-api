@@ -117,11 +117,11 @@ const Flex = styled.div`
 `
 
 const RatingsStyle = styled.div`
-  padding-left: 10px;
-  flex: 1 0 18%;
+  padding-left: 20px;
+  flex: 1 0 20%;
 `
 const ReviewsStyle = styled.div`
-  flex: 0 1 82%;
+  flex: 0 1 80%;
 `
 
 
