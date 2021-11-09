@@ -40,6 +40,12 @@ class Reviews extends React.Component {
     })
   }
 
+  applyFilters() {
+    let result = [];
+
+
+  }
+
   // stars, loading more questions/reviews, adding a question/review,
   // styled-components
   // All reviews will be saved per product.  Specific styles will not be accounted for within the review module.

@@ -22,6 +22,7 @@ class Overview extends React.Component {
     this.getReviewsMeta = this.getReviewsMeta.bind(this);
     this.updateReviews = this.updateReviews.bind(this);
     this.getProductName = this.getProductName.bind(this);
+    this.updateFilters = this.updateFilters.bind(this);
   }
 
   componentDidMount() {
@@ -75,19 +76,25 @@ class Overview extends React.Component {
       });
   }
 
-  addFilter(e){
-    let starFilter = e.target.getAttribute('value');
+  updateFilters(e){
+    let clickedRating = e.target.getAttribute('value');
+    console.log('clicked >>>', clickedRating);
+    let i = this.state.filters.indexOf(clickedRating);
+    if (i === -1) {
+      this.setState((prevState) => ({ filters: [...prevState.filters, clickedRating] }), () => console.log('filters >>>', this.state.filters));
+    } else {
+      this.setState((prevState) => ({ filters: [...prevState.filters.slice(0, i), ...prevState.filters.slice(i + 1)]}), () => console.log('filters >>>', this.state.filters));
+    }
   }
-  // stars, filter reviews by rating, show characteristics, adding a question/review (XXXXL)
-  // styled-components
-
+  // filter reviews by rating, show characteristics, adding a question/review (XXXXL)
   // 39333 to 40343
 
   render () {
     return (
       <Flex>
-        <RatingsStyle><Ratings reviewsMetaData={this.state.reviewsMetaData}/></RatingsStyle>
-        <ReviewsStyle><Reviews reviewsData={this.state.reviewsData} reviewsMetaData={this.state.reviewsMetaData} getReviews={this.getReviews} updateReviews={this.updateReviews} name={this.state.name}/></ReviewsStyle>
+        <RatingsStyle><Ratings reviewsMetaData={this.state.reviewsMetaData} updateFilters={this.updateFilters} filters={this.state.filters}/></RatingsStyle>
+        <ReviewsStyle><Reviews reviewsData={this.state.reviewsData} reviewsMetaData={this.state.reviewsMetaData} getReviews={this.getReviews}
+        updateReviews={this.updateReviews} name={this.state.name} filters={this.state.filters}/></ReviewsStyle>
       </Flex>
     )
   }

@@ -8,11 +8,11 @@ import Characteristics from './Characteristics.jsx';
 
 
 
-const Ratings = ({ reviewsMetaData }) => {
+const Ratings = ({ reviewsMetaData, updateFilters, filters }) => {
 
   let { ratings, recommended, characteristics } = reviewsMetaData;
 
-  console.log('ratings', recommended);
+  console.log('ratings', characteristics);
 
   const getTotal = () => {
     let total = 0;
@@ -52,7 +52,7 @@ const Ratings = ({ reviewsMetaData }) => {
         <br />
         {ratings && Object.entries(ratings).map((rating) => {
           return (<div>
-            <span style={{textDecoration: 'underline', cursor: 'pointer'}} onClick={e=>console.log(e.target.getAttribute('value'))} value={rating[0]}>{rating[0]} stars </span>
+            <span style={{textDecoration: 'underline', cursor: 'pointer'}} onClick={updateFilters} value={rating[0]}>{rating[0]} stars </span>
             <Bars count={rating[1]} total={getTotal()} />
             </div>)
           })

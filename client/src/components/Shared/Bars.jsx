@@ -6,7 +6,7 @@ const Bars = ({count, total}) => {
 
   const backgroundStyle = {
     width: '12%',
-    height: '1%',
+    height: '0.8%',
     backgroundColor: '#cccccc',
     marginLeft: '0.5%',
     marginTop: '5px',
@@ -15,7 +15,7 @@ const Bars = ({count, total}) => {
 
   const filledStyle = {
     backgroundColor: '#268246',
-    height: '1%',
+    height: '0.8%',
     width: `${12 * percentage}%`,
     position: 'absolute',
     marginLeft: '0.5%',
@@ -27,8 +27,6 @@ const Bars = ({count, total}) => {
       <span style={backgroundStyle}></span>
       <span style={filledStyle}></span>
     </span>
-
-
   )
 }
 
