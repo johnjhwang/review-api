@@ -1,8 +1,9 @@
 const express = require('express');
 const app = express();
 const PORT = 3000;
-const morgan = require('morgan');
 const axios = require('axios');
+const QAhelpers = require('./QAhelpers.js');
+const morgan = require('morgan');
 const config = require('../config.js');
 const API_KEY = config.API_KEY;
 const url = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-nyc';
@@ -15,7 +16,72 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static(__dirname + '/../client/dist'));
 
-// attach authorization header with API key imported in from config.js file here or in helper js
+// -------get questions-----
+app.get('/qa/questions', (req, res) => {
+  QAhelpers.getQuestion(req.query.product_id)
+  .then((questions) => {
+    res.json(questions.data)
+  })
+  .catch((err) => {
+    console.log(err);
+  })
+})
+// ----- getAnswers------
+app.get('/qa/answers', (req, res) => {
+  QAhelpers.getAnswers(question_id)
+  .then((answers) => {
+    res.json(answers.data)
+  })
+  .catch((err) => {
+    console.log(err)
+  })
+})
+// ----post questions-----
+app.post('/qa/questions', (req, res) => {
+  console.log(req.body)
+  let body = req.body.body;
+  let name = req.body.name;
+  let email = req.body.email;
+  let product_id = req.body.product_id;
+  QAhelpers.createQuestion(body, name, email, product_id)
+  .then((question) => {
+    res.sendStatus(200)
+  })
+  .catch((err) => {
+    console.log(err);
+  })
+})
+
+// ---- post answers------
+
+app.post('/qa/answers', (req, res) =>
+{
+  req.body.question_id = question_id;
+  req.body.body = body;
+  req.body.name = name;
+  req.body.email = email;
+  req.body.product_id = product_id;
+  QAhelpers.createAnswer(body, name, email, product_id)
+  .then((answer) => {
+    console.log(answer)
+  })
+  .catch((err) => {
+    console.log(err);
+  })
+})
+
+// ---- add to the Question helpfulness count ----
+
+
+
+// --- report question ------
+
+
+// ---- report answer -------
+
+
+
+
 
 ///////////////////////////////Related Product and Comparison////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////
