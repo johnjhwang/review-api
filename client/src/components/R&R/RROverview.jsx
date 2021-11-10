@@ -112,7 +112,7 @@ const Flex = styled.div`
   display: flex;
   flex-wrap: nowrap;
   padding: 10px;
-  gap: 10px;
+  gap: 5px;
   width: 95%;
 `
 

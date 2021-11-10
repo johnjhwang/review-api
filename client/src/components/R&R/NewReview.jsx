@@ -29,10 +29,6 @@ class NewReview extends React.Component {
     this.submitReview = this.submitReview.bind(this);
   }
 
-  componentDidMount(){
-
-  }
-
 
   handleInputChange(e) {
     const name = e.target.getAttribute('name');
@@ -44,7 +40,7 @@ class NewReview extends React.Component {
 
 
   submitReview() {
-    console.log('submit button clicked, current state >>>>', this.state)
+    console.log('submit button clicked, current state >>>>')
   }
 
   toggleModal() {
@@ -100,44 +96,6 @@ class NewReview extends React.Component {
               <label>
                 <h4>Characteristics</h4>
               </label>
-
-              <label>
-                <h4>Review Summary</h4>
-                <input
-                  style={{width: '50%'}}
-                  type="text"
-                  value={this.state.summary}
-                  name="summary"
-                  onChange={this.handleInputChange}
-                  placeholder="Example: Best purchase ever!"
-                  maxLength="60"
-                  />
-              </label>
-              <label>
-                <h4>Review Body</h4>
-                <textarea
-                style={{width: '95%'}}
-                rows="6"
-                name="body"
-                placeholder="Why did you like the product or not?"
-                value={this.state.body}
-                onChange={this.handleInputChange}/>
-              </label>
-
-              <label>
-                <Button style={{cursor: 'pointer'}} onClick={this.handlePhotos}>Upload Photos</Button>
-              </label>
-              {/* <form method="post" enctype="multipart/form-data" action='/api/csv'>
-              <div>
-                <label for="csv">Upload CSV here:</label>
-                <input type="file" id="csv" name="csv" accept=".csv"/>
-              </div>
-              <div>
-                <button>Submit</button>
-              </div>
-            </form> */}
-
-
               <label>
                 <h4>Nickname</h4>
                 <input
@@ -164,10 +122,39 @@ class NewReview extends React.Component {
                   />
                   <br/>{'For authetication reasons, you will not be emailed'}
               </label>
+
+              <label>
+                <h4>Review Summary</h4>
+                <input
+                  style={{width: '50%'}}
+                  type="text"
+                  value={this.state.summary}
+                  name="summary"
+                  onChange={this.handleInputChange}
+                  placeholder="Example: Best purchase ever!"
+                  maxLength="60"
+                  />
+              </label>
+              <label>
+                <h4>Review Body</h4>
+                <textarea
+                style={{width: '95%'}}
+                rows="6"
+                name="body"
+                placeholder="Why did you like the product or not?"
+                value={this.state.body}
+                onChange={this.handleInputChange}/>
+              </label>
+
+              <label>
+                <Button style={{cursor: 'pointer'}}>Upload Photos</Button>
+              </label>
+
+
             </form>
 
             <br />
-            <div style={{display: 'inline'}}><Button style={{cursor: 'pointer'}} onClick={this.toggleModal}>Close</Button>&nbsp; &nbsp; &nbsp;<Button style={{cursor: 'pointer'}} onClick={this.submitReview}>Submit Review</Button></div>
+            <div style={{display: 'inline'}}><Button style={{cursor: 'pointer'}} onClick={this.toggleModal}>Cancel</Button>&nbsp; &nbsp; &nbsp;<Button style={{cursor: 'pointer'}} onClick={this.submitReview}>Submit Review</Button></div>
           </ModalWrapper>
         </Background>
         );

@@ -12,7 +12,7 @@ const Characteristics = ({ entry }) => {
     <div>
       {entry[0]}:
       <Container>
-        {entry && <Triangle style={{marginLeft: `${200 * entry[1].value / 5}px`}}></Triangle>}
+        {entry && <Triangle style={{marginLeft: `${260 * entry[1].value / 5}px`}}></Triangle>}
         <Bars>&nbsp;</Bars>
         <Bars>&nbsp;</Bars>
         <Bars>&nbsp;</Bars>
@@ -40,14 +40,14 @@ const Characteristics = ({ entry }) => {
 const Container = styled.div`
   display: flex;
   gap: 5px;
-  width: 210px;
+  width: 270px;
 `
 
 const LabelContainer = styled.div`
   display: flex;
   font-size: 12px;
   justify-content: space-between;
-  width: 210px;
+  width: 270px;
 `
 
 const Bars = styled.div`
