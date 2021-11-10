@@ -66,14 +66,14 @@ const OutfitList = (props) => {
 
   //render() {
     return(
-      <div>
+      <div id="OutfitList">
         <Title>YOUR OUTFIT</Title>
         <ListContainer>
         <ButtonContainer>{showLeft && <LeftArrow onClick={moveToPrev}>˱</LeftArrow>}</ButtonContainer>
           <Card><PlusButton onClick={handlePlusButtonClick}>+</PlusButton></Card>
           <CarouserContainerInner ref={ref}>
-            {storageOutfits.slice(leftCount).map((id) => {
-              return <ProductCard relatedProductId={id} key={id} outfit={true} deleteOutfit={deleteOutfit}/>
+            {storageOutfits.slice(leftCount).map((id, i) => {
+              return <ProductCard relatedProductId={id} key={i} outfit={true} deleteOutfit={deleteOutfit}/>
             })}
         </CarouserContainerInner>
         <ButtonContainer>{showRight && <RightArrow onClick={moveToNext}>˲</RightArrow>}</ButtonContainer>
