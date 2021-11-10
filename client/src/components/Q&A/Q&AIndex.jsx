@@ -14,6 +14,7 @@ class QuestionsAndAnswers extends React.Component {
     }
     this.getQuestions = this.getQuestions.bind(this);
     this.updateQuestions = this.updateQuestions.bind(this);
+    this.updateHelpfulness = this.updateHelpfulness.bind(this);
   }
 
   componentDidMount() {
@@ -36,14 +37,33 @@ class QuestionsAndAnswers extends React.Component {
     this.getQuestions();
   }
 
+  updateHelpfulness(question_id) {
+    const updatedQuestions = this.state.questions.map((question => {
+      if (question.question_id === question_id) {
+        question.question_helpfulness = question.question_helpfulness + 1
+      }
+      return question
+    }))
+    this.setState({
+      questions: updatedQuestions
+    })
+  }
+
+
+
   render() {
-    console.log('updatedQUestions', this.state.questions);
+    console.log(this.state)
     return (
       <div>
       {this.state.questions.length &&
        <>
       <QuestionsSearchForm questions={this.state.questions}/>
-      <QuestionEntry updateQuestions={this.updateQuestions}getQuestions={this.getQuestions} product_id={this.state.product_id} questions={this.state.questions}/>
+      <QuestionEntry updateQuestions={this.updateQuestions}
+      getQuestions={this.getQuestions}
+      product_id={this.state.product_id}
+      questions={this.state.questions}
+      updateHelpfulness={this.updateHelpfulness}
+      />
       </>}
     </div>
     )

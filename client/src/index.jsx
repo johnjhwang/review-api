@@ -6,7 +6,7 @@ import QA from './components/Q&A/Q&AIndex.jsx';
 import styled from 'styled-components';
 import Overview from './components/Overview/OverviewIndex.jsx';
 import RPList from './components/RI&C/RPList.jsx';
-import OutfitList from './components/RI&C/OutfitList.jsx'
+import OutfitList from './components/RI&C/OutfitList.jsx';
 import RROverview from './components/R&R/RROverview.jsx';
 
 
@@ -26,11 +26,7 @@ class App extends React.Component {
   render () {
     return (
     <div>
-       <Overview />
-        {/* <RPList productId={this.state.product_id} handleProductChange={this.handleProductChange}/>
-        <OutfitList productId={this.state.product_id}/>
-        <QA /> */}
-        <RROverview product_id={this.state.product_id}/>
+      <QA />
     </div>)
   }
 }

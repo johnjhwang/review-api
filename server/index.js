@@ -75,6 +75,19 @@ app.post('/qa/answers', (req, res) =>
 
 // ---- add to the Question helpfulness count ----
 
+app.put('/qa/questions/:product_id/helpful', (req, res) => {
+  console.log('i got hit');
+  const { product_id } = req.params
+  QAhelpers.addToHelpfulness(product_id)
+  .then((response) => {
+    console.log("🚀 ~ file: index.js ~ line 84 ~ .then ~ response", response)
+    res.sendStatus(204)
+  })
+  .catch((error) => {
+    console.log("🚀 ~ file: index.js ~ line 87 ~ app.put ~ error", error)
+  })
+})
+
 
 
 // --- report question ------

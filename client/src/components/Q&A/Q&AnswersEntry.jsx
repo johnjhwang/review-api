@@ -9,7 +9,8 @@ class AnswersEntry extends React.Component {
       answerids: [],
       indexDisplayed: 0,
       helpfulnessClicked: false,
-      isReported: false
+      isReported: false,
+      showAnswerModal: false
     }
 
     this.handleAnswerHelpfulnessClick = this.handleAnswerHelpfulnessClick.bind(this);
@@ -25,6 +26,7 @@ class AnswersEntry extends React.Component {
 
   makeAnswersState() {
     const answers = this.props.answer;
+    const photos = this.state.photos
     for (var key in answers) {
       this.state.answers.push(answers[key]);
     }
@@ -68,6 +70,15 @@ class AnswersEntry extends React.Component {
           return(
             <>
             <h4>A:{answer.body}</h4>
+            {answer.photos.length &&
+            answer.photos.map((image => {
+              return(
+                <>
+                <img src={image} />
+                </>
+              )
+            }))
+            }
             <h6>by :{answer.answerer_name} date: {answer.date} | Helpful?
             <button onClick={this.handleAnswerHelpfulnessClick}>YES({answer.helpfulness})</button> | <button onClick={this.handleReportButtonClick}>{reportButtonText}</button></h6>
             </>

@@ -55,14 +55,14 @@ module.exports = {
       }
     })
   },
-  // addToHelpfulness: function(product_id) {
-  //   return axios({
-  //     method: 'GET',
-  //     url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-nyc/qa/questions?product_id=${product_id}`,
-  //     headers: {
-  //       'User-Agent': 'request',
-  //       'Authorization': `${config.API_KEY}`
-  //     }
-  //   })
-  // }
+  addToHelpfulness: function(product_id) {
+    return axios({
+      method: 'PUT',
+      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-nyc/qa/questions/${product_id}/helpful`,
+      headers: {
+        'User-Agent': 'request',
+        'Authorization': `${config.API_KEY}`
+      }
+    })
+  }
 }

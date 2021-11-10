@@ -2,18 +2,19 @@ import React from 'react';
 import axios from 'axios';
 import styled from "styled-components";
 
-class AddQuestion extends React.Component {
+class AddAnswer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       body: "",
       nickname: "",
       email: "",
-      product_id: this.props.product_id,
+      photos: [],
+      question_id: null,
       showModal: false
     }
     this.handleChange = this.handleChange.bind(this);
-    this.updateQuestions = this.updateQuestions.bind(this);
+    this.updateAnswers = this.updateAnswers.bind(this);
     this.onClose = this.onClose.bind(this);
   }
 
@@ -26,16 +27,14 @@ class AddQuestion extends React.Component {
     this.setState({ showModal: !this.state.showModal })
   }
 
-  updateQuestions(e) {
+  updateAnswers(e, question_id) {
     e.preventDefault();
-    axios.post('/qa/questions', {
-      body: this.state.body,
-      name: this.state.nickname,
-      email: this.state.email,
-      product_id: this.state.product_id
+    let question_id = question_id;
+    axios.put('/qa/questions', {
+      question_id: question_id
     })
     .then((res) => {
-      this.props.updateQuestions()
+      this.props.updateAnswers()
     })
     .catch((err) => {
       console.log(err);
@@ -48,8 +47,8 @@ class AddQuestion extends React.Component {
         <Background>
           <ModalWrapper>
             <CloseButton><button onClick={()=> {this.props.show()}}>X</button></CloseButton>
-        <form onSubmit={(e) => {this.updateQuestions(e); this.props.show()}}>
-          <input type="text" value={this.state.body} name="body" onChange={this.handleChange} placeholder= "Why did you like the product or not?"></input>
+        <form onSubmit={(e) => {this.updateAnswers(e); this.props.show()}}>
+          <input type="text" value={this.state.body} name="body" onChange={this.handleChange} placeholder= "What is your answer?"></input>
           <input type="text" value={this.state.nickname} placeholder="Example: jacskon11!" name="nickname" onChange={this.handleChange}></input>
           <input type="text" value={this.state.email} name="email"
            placeholder="Example: gman@gmail.com" onChange={this.handleChange}></input>
@@ -93,4 +92,4 @@ const CloseButton = styled.div`
   justify-content: flex-end;
 `;
 
-export default AddQuestion;
+export default AddAnswer;
