@@ -8,8 +8,6 @@ const Characteristics = ({ entry }) => {
 
   console.log('entry >>>>', entry);
 
-
-
     return (
     <div>
       {entry[0]}:
@@ -27,7 +25,7 @@ const Characteristics = ({ entry }) => {
       <br/>
     </div>
     )
-} // labels, triangle
+}
 
   const Triangle = styled.div`
   width: 0;
@@ -63,8 +61,6 @@ const Bars = styled.div`
 const Labels = styled.div`
   width: 33.3%;
 `
-
-
 
 const characteristicLabels = {
   Size: {
