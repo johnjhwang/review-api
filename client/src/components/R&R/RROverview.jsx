@@ -91,10 +91,10 @@ class Overview extends React.Component {
     this.setState({ filters: [] });
   }
   // filter reviews by rating, show characteristics, adding a question/review (XXXXL)
-  // 39333 to 40343
+  // 39333 to 40343 (39346) 40125
 
   render () {
-    const characteristics = this.state.reviewsMetaData.characteristics && Object.keys(this.state.reviewsMetaData.characteristics);
+    const characteristics = this.state.reviewsMetaData.characteristics;
 
     return (
       <Flex>
@@ -102,7 +102,7 @@ class Overview extends React.Component {
           <Ratings reviewsMetaData={this.state.reviewsMetaData} updateFilters={this.updateFilters} filters={this.state.filters} clearFilters={this.clearFilters}/>
         </RatingsStyle>
         <ReviewsStyle>
-          <Reviews reviewsData={this.state.reviewsData} reviewsMetaData={this.state.reviewsMetaData} getReviews={this.getReviews}
+          <Reviews reviewsData={this.state.reviewsData} reviewsMetaData={this.state.reviewsMetaData} getReviews={this.getReviews} pid={this.props.product_id}
           updateReviews={this.updateReviews} name={this.state.name} filters={this.state.filters} characteristics={characteristics}/>
         </ReviewsStyle>
       </Flex>

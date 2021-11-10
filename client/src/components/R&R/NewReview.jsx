@@ -13,14 +13,14 @@ class NewReview extends React.Component {
     this.state = {
       show: false,
       stars: null,
-      recommend: null,
+      recommend: true,
       characteristics: {},
       summary: '',
       body: '',
       images: [],
       nickname: '',
       email: '',
-      count: 60,
+      count: `Minimum required characters left: 50`,
       imgWindow: false,
     };
 
@@ -28,20 +28,60 @@ class NewReview extends React.Component {
     this.toggleModal = this.toggleModal.bind(this);
     this.toggleImgWindow = this.toggleImgWindow.bind(this);
     this.submitReview = this.submitReview.bind(this);
+    this.characterCounter = this.characterCounter.bind(this);
+    this.processCharSelection = this.processCharSelection.bind(this);
   }
 
+  characterCounter(e) {
+    let charsLeft = 50 - e.target.value.length;
+    if (charsLeft > 0) {
+       this.setState({ count: `Minimum required characters left: ${charsLeft}` });
+    } else {
+      this.setState({ count: 'Minimum reached' });
+    }
+  }
 
-  handleInputChange(e) {
+  handleInputChange(e, callback = () => {}) {
     const name = e.target.getAttribute('name');
     const value = e.target.value || e.target.getAttribute('value');
 
     console.log('e.target >>>>', e.target);
-    this.setState({ [name]: value }, () => console.log(`${name} in state is now: `, this.state[name]));
+    this.setState({ [name]: value }, () => console.log(`${name} in state is now: `, this.state[name]), callback(e));
   }
 
+  processCharSelection(name, value) {
+    console.log('this.props.characteristics >>>', this.props.characteristics);
+
+    const charId = this.props.characteristics[name].id
+    const update = {...this.state.characteristics, [charId]: Number(value) };
+    this.setState({characteristics: update}, () => console.log('state characteristics Obj >>>', this.state.characteristics));
+
+  }
 
   submitReview() {
-    console.log('submit button clicked, current state >>>>')
+    // this.dataValidator();
+    const body = this.reviewConstructor();
+    handler.post(body, () => console.log('Posted successfully'));
+  }
+
+  reviewConstructor(data) {
+    console.log('current state >>>>', this.state)
+    const reqBody = {
+      product_id: this.props.pid,
+      rating: Number(this.state.stars),
+      summary: this.state.summary,
+      body: this.state.body,
+      recommend: Boolean(this.state.recommend),
+      name: this.state.nickname,
+      email: this.state.email,
+      characteristics: this.state.characteristics
+    }
+    console.log('reqbody >>>>', reqBody);
+    return reqBody;
+  }
+
+  dataValidator(data) {
+    console.log('current state >>>>', this.state)
   }
 
   toggleImgWindow(e) {
@@ -62,6 +102,7 @@ class NewReview extends React.Component {
   // 39333 to 40343
   render () {
     let ratingArr = ['Poor', 'Fair', 'Average', 'Good', 'Great'];
+    let charNames = this.props.characteristics && Object.keys(this.props.characteristics);
 
     if (this.state.show) {
       return (
@@ -104,8 +145,8 @@ class NewReview extends React.Component {
 
               <label>
                 <h4>Characteristics</h4>
-                {this.props.characteristics.map((char, key) =>
-                <NewReviewChars key={key} characteristics={char} />)}
+                {charNames.map((char, key) =>
+                <NewReviewChars key={key} characteristics={char} processCharSelection={this.processCharSelection}/>)}
               </label>
               <label>
                 <h4>Nickname</h4>
@@ -118,7 +159,7 @@ class NewReview extends React.Component {
                   placeholder="Example: jackson11!"
                   maxLength="60"
                   />
-                  <br/>{'For privacy reasons, do not use your full name or email address'}
+                  <br/><small style={{fontStyle: 'italic'}}>{'For privacy reasons, do not use your full name or email address'}</small>
               </label>
               <label>
                 <h4>Email</h4>
@@ -131,7 +172,7 @@ class NewReview extends React.Component {
                   placeholder="Example: jackson11@email.com"
                   maxLength="60"
                   />
-                  <br/>{'For authetication reasons, you will not be emailed'}
+                  <br/><small style={{fontStyle: 'italic'}}>{'For authetication reasons, you will not be emailed'}</small>
               </label>
 
               <label>
@@ -154,16 +195,15 @@ class NewReview extends React.Component {
                 name="body"
                 placeholder="Why did you like the product or not?"
                 value={this.state.body}
-                onChange={this.handleInputChange}/>
+                onChange={e => this.handleInputChange(e, this.characterCounter)}/>
               </label>
-
+              <br/><small>{this.state.count}</small>
+              <br/>
               <label>
-                <Button onClick={this.toggleImgWindow}>Upload Photos</Button>
+                <br/><Button onClick={this.toggleImgWindow}>Upload Photos</Button>
               </label>
-
 
             </form>
-
             <br />
             <div style={{display: 'inline'}}><Button onClick={this.toggleModal}>Cancel</Button>&nbsp; &nbsp; &nbsp;<Button onClick={this.submitReview}>Submit Review</Button></div>
           </ModalWrapper>
@@ -199,8 +239,8 @@ const Background = styled.div`
 `;
 
 const ModalWrapper = styled.div`
-  width: 70%;
-  height: 80%;
+  width: 75%;
+  height: 90%;
   border-radius: 12px;
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;

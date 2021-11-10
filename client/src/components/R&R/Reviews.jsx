@@ -63,7 +63,7 @@ class Reviews extends React.Component {
   // All reviews will be saved per product.  Specific styles will not be accounted for within the review module.
 
   render () {
-    const { reviewsData, characteristics } = this.props;
+    const { reviewsData, characteristics, pid } = this.props;
 
     return (<div>
         <ReviewsSort total={this.state.reviews && this.state.reviews.length} getReviews={this.props.getReviews}/>
@@ -71,7 +71,7 @@ class Reviews extends React.Component {
         <br/>
         <ButtonsStyle>
           <MoreReviews total={this.state.reviews && this.state.reviews.length} visible={this.state.visible} showMoreReviews={this.showMoreReviews}/>
-          <NewReview name={this.props.name} characteristics={characteristics}/>
+          <NewReview name={this.props.name} characteristics={characteristics} pid={pid}/>
         </ButtonsStyle>
     </div>)
   }

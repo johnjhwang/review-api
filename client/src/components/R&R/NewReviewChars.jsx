@@ -7,85 +7,92 @@ class NewReviewChars extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      show: false,
-      stars: null,
-      recommend: null,
-      characteristics: [],
-    };
 
+    };
+    this.handleChange = this.handleChange.bind(this);
   }
 
 
-  // handleInputChange(e) {
-  //   const name = e.target.getAttribute('name');
-  //   const value = e.target.value || e.target.getAttribute('value');
+  handleChange(e) {
+    const name = e.target.name;
+    const value = e.target.value;
 
-  //   console.log('e.target >>>>', e.target);
-  //   this.setState({ [name]: value }, () => console.log(`${name} in state is now: `, this.state[name]));
-  // }
+    console.log('e.target >>>>', name, value);
+    this.setState({ [name]: value }, () => console.log(`${name} in state is now: `, this.state[name]), this.props.processCharSelection(name, value));
+  }
 
-
-  // submitReview() {
-  //   console.log('submit button clicked, current state >>>>')
-  // }
-
-  // toggleImgWindow(e) {
-  //   e.preventDefault(); // prevent reload of page
-  //   this.setState({
-  //     imgWindow: !this.state.imgWindow,
-  //   }, () => console.log('submit IMG button clicked, current state >>>>', this.state.imgWindow));
-  // }
-
-  // toggleModal() {
-  //   this.setState({
-  //     show: !this.state.show,
-  //     stars: null,
-  //     imgWindow: false,
-  //   })
-  // }
 
   render () {
+    let {characteristics} = this.props;
 
       return (
-        <div>
-          {this.props.characteristics}
-       </div>)
+          <div onChange={this.handleChange}>
+          {characteristics}
+          <label><input type="radio" name={characteristics} value="1" /><span style={{ width: '8px', display: 'inline-block' }} />
+          {characteristicLabels[characteristics][1]}
+          </label>
+          <label><input type="radio" name={characteristics} value="2" /><span style={{ width: '8px', display: 'inline-block' }} />
+          {characteristicLabels[characteristics][2]}
+          </label>
+          <label><input type="radio" name={characteristics} value="3" /><span style={{ width: '8px', display: 'inline-block' }} />
+          {characteristicLabels[characteristics][3]}
+          </label>
+          <label><input type="radio" name={characteristics} value="4" /><span style={{ width: '8px', display: 'inline-block' }} />
+          {characteristicLabels[characteristics][4]}
+          </label>
+          <label><input type="radio" name={characteristics} value="5" /><span style={{ width: '8px', display: 'inline-block' }} />
+          {characteristicLabels[characteristics][5]}
+          </label>
+        </div>)
 }
+
+
 }
 
-const Button = styled.button`
-  display: inline-block;
-  border-radius: 3px;
-  width: 10rem;
-  color: black;
-  cursor: pointer;
-  border: 1px solid black;
-`
-
-const Background = styled.div`
-  position: fixed;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const ModalWrapper = styled.div`
-  width: 70%;
-  height: 80%;
-  border-radius: 12px;
-  background-color: white;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-  overflow-y: scroll;
-`;
-
+const characteristicLabels = {
+  Size: {
+    1: 'A size too small',
+    2: '½ a size too small ',
+    3: 'Perfect',
+    4: '½ a size too big',
+    5: 'A size too wide',
+  },
+  Width: {
+    1: 'Too narrow',
+    2: 'Slightly narrow',
+    3: 'Perfect',
+    4: 'Slightly wide',
+    5: 'Too wide',
+  },
+  Comfort: {
+    1: 'Uncomfortable',
+    2: 'Slightly uncomfortable',
+    3: 'Ok',
+    4: 'Comfortable',
+    5: 'Perfect',
+  },
+  Quality: {
+    1: 'Poor',
+    2: 'Below average',
+    3: 'What I expected',
+    4: 'Pretty great',
+    5: 'Perfect',
+  },
+  Length: {
+    1: 'Runs Short',
+    2: 'Runs slightly short',
+    3: 'Perfect',
+    4: 'Runs slightly long',
+    5: 'Runs long',
+  },
+  Fit: {
+    1: 'Runs tight',
+    2: 'Runs slightly tight',
+    3: 'Perfect',
+    4: 'Runs slightly long',
+    5: 'Runs long',
+  },
+}
 
 
 
