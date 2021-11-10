@@ -5,8 +5,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 import handler from '../Shared/reviewhandler.js';
 import StarRating from './InteractiveStars.jsx';
-
-
+import NewReviewChars from './NewReviewChars.jsx';
 
 class NewReview extends React.Component {
   constructor(props) {
@@ -15,17 +14,19 @@ class NewReview extends React.Component {
       show: false,
       stars: null,
       recommend: null,
-      characteristics: null,
+      characteristics: {},
       summary: '',
       body: '',
       images: [],
       nickname: '',
       email: '',
       count: 60,
+      imgWindow: false,
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
+    this.toggleImgWindow = this.toggleImgWindow.bind(this);
     this.submitReview = this.submitReview.bind(this);
   }
 
@@ -43,10 +44,18 @@ class NewReview extends React.Component {
     console.log('submit button clicked, current state >>>>')
   }
 
+  toggleImgWindow(e) {
+    e.preventDefault(); // prevent reload of page
+    this.setState({
+      imgWindow: !this.state.imgWindow,
+    }, () => console.log('submit IMG button clicked, current state >>>>', this.state.imgWindow));
+  }
+
   toggleModal() {
     this.setState({
       show: !this.state.show,
       stars: null,
+      imgWindow: false,
     })
   }
 
@@ -95,6 +104,8 @@ class NewReview extends React.Component {
 
               <label>
                 <h4>Characteristics</h4>
+                {this.props.characteristics.map((char, key) =>
+                <NewReviewChars key={key} characteristics={char} />)}
               </label>
               <label>
                 <h4>Nickname</h4>
@@ -147,14 +158,14 @@ class NewReview extends React.Component {
               </label>
 
               <label>
-                <Button style={{cursor: 'pointer'}}>Upload Photos</Button>
+                <Button onClick={this.toggleImgWindow}>Upload Photos</Button>
               </label>
 
 
             </form>
 
             <br />
-            <div style={{display: 'inline'}}><Button style={{cursor: 'pointer'}} onClick={this.toggleModal}>Cancel</Button>&nbsp; &nbsp; &nbsp;<Button style={{cursor: 'pointer'}} onClick={this.submitReview}>Submit Review</Button></div>
+            <div style={{display: 'inline'}}><Button onClick={this.toggleModal}>Cancel</Button>&nbsp; &nbsp; &nbsp;<Button onClick={this.submitReview}>Submit Review</Button></div>
           </ModalWrapper>
         </Background>
         );
@@ -171,6 +182,7 @@ const Button = styled.button`
   border-radius: 3px;
   width: 10rem;
   color: black;
+  cursor: pointer;
   border: 1px solid black;
 `
 

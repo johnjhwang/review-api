@@ -94,6 +94,8 @@ class Overview extends React.Component {
   // 39333 to 40343
 
   render () {
+    const characteristics = this.state.reviewsMetaData.characteristics && Object.keys(this.state.reviewsMetaData.characteristics);
+
     return (
       <Flex>
         <RatingsStyle>
@@ -101,7 +103,7 @@ class Overview extends React.Component {
         </RatingsStyle>
         <ReviewsStyle>
           <Reviews reviewsData={this.state.reviewsData} reviewsMetaData={this.state.reviewsMetaData} getReviews={this.getReviews}
-          updateReviews={this.updateReviews} name={this.state.name} filters={this.state.filters}/>
+          updateReviews={this.updateReviews} name={this.state.name} filters={this.state.filters} characteristics={characteristics}/>
         </ReviewsStyle>
       </Flex>
     )
