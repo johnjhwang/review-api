@@ -18,7 +18,7 @@ app.use(express.static(__dirname + '/../client/dist'));
 
 // -------get questions-----
 app.get('/qa/questions', (req, res) => {
-  QAhelpers.getQuestion(req.query.product_id)
+  QAhelpers.getQuestion(req.query.product_id, req.query.count)
   .then((questions) => {
     res.json(questions.data)
   })
@@ -38,7 +38,6 @@ app.get('/qa/answers', (req, res) => {
 })
 // ----post questions-----
 app.post('/qa/questions', (req, res) => {
-  console.log(req.body)
   let body = req.body.body;
   let name = req.body.name;
   let email = req.body.email;

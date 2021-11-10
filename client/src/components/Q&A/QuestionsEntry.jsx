@@ -6,30 +6,31 @@ class QuestionEntry extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      questions: props.questions,
+      // questions: props.questions,
       displayedQuestions: [],
       indexDisplayed: 0,
       helpfulButtonClicked: false,
       addAnswerButtonClicked: false,
-      showQuestionModal: false
+      showQuestionModal: false,
+      product_id: this.props.product_id
     }
-    this.showNext2Questions = this.showNext2Questions.bind(this);
+    this.showNextQuestions = this.showNextQuestions.bind(this);
     this.onHelpfulClick = this.onHelpfulClick.bind(this);
     this.createNewQuestion = this.createNewQuestion.bind(this);
+    this.onQuestionModalClose = this.onQuestionModalClose.bind(this);
   }
 
   componentDidMount() {
-    this.showNext2Questions();
+    this.showNextQuestions();
   }
 
   // function that displays 2 more questions
-  showNext2Questions () {
+  showNextQuestions () {
     let displayedQuestions = this.state.displayedQuestions;
     let indexDisplayed = this.state.indexDisplayed;
-    let questions = this.state.questions;
-
+    let questions = [...this.props.questions];
     if (questions.length <= 4) {
-      for (let i = indexDisplayed; i <= indexDisplayed + 1; i++) {
+      for (let i = indexDisplayed; i <= questions.length; i++) {
         displayedQuestions.push(questions[i]);
       }
     } else {
@@ -50,13 +51,16 @@ class QuestionEntry extends React.Component {
     console.log('clicked')
   }
 
+  onQuestionModalClose() {
+
+  }
+
   createNewQuestion() {
     this.setState(PrevState => ({showQuestionModal: true}));
   }
 
-
-
   render() {
+    console.log('render', this.state)
     return (
       <div>
         {this.state.displayedQuestions.map(indQuestion => {
@@ -68,11 +72,11 @@ class QuestionEntry extends React.Component {
             </>
           )
         })}
-        {this.state.questions.length > 2 &&
+        {this.props.questions.length > 2 &&
         <>
-        <button onClick={this.showNext2Questions}>More Answered Questions</button>
+        <button onClick={this.showNextQuestions}>More Answered Questions</button>
         <button onClick={this.createNewQuestion}>Add Question</button>
-        <AddQuestion product_id={this.props.product_id} show={this.state.showQuestionModal}/>
+        <AddQuestion updateQuestions={this.props.updateQuestions}showNextQuestions={this.showNextQuestions}displayedQuestions={this.state.displayedQuestions} indexDisplayed={this.state.indexDisplayed} getQuestions={this.props.getQuestions}product_id={this.props.product_id} show={this.state.showQuestionModal}/>
         </>}
       </div>
     )

@@ -28,8 +28,6 @@ class QuestionsSearchForm extends React.Component {
         }
       })
     }
-
-
   }
 
   render() {
