@@ -10,7 +10,9 @@ const MoreReviews = ({ total, visible, showMoreReviews }) => {
 
   if (total > visible) {
     return (
-      <button onClick={showMoreReviews}>More Reviews</button>
+      <div>
+      <button style={{cursor: 'pointer'}} onClick={showMoreReviews}>More Reviews</button>
+      </div>
     )
   } else {
     return null;

@@ -1,22 +1,37 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
-import helpers from '../../helpers/reviewhandler.js';
+import handler from '../Shared/reviewhandler.js';
+import Stars from "../Shared/Stars.jsx";
+import Bars from "../Shared/Bars.jsx";
+import Characteristics from './Characteristics.jsx';
 
-const Ratings = ({ reviewsMetaData }) => {
+
+
+const Ratings = ({ reviewsMetaData, updateFilters, filters }) => {
 
   let { ratings, recommended, characteristics } = reviewsMetaData;
 
-  console.log('ratings', recommended);
+  console.log('ratings', characteristics);
 
-  const getAverageRating = () => {
-    let count = 0;
+  const getTotal = () => {
     let total = 0;
     for (let key in ratings) {
-      total += Number(key) * Number(ratings[key]);
-      count += Number(ratings[key]);
+      total += Number(ratings[key]);
     }
-    return (total / count).toFixed(1);
+    return total;
+  }
+
+  const getAverageRating = () => {
+    let sum = 0;
+    for (let key in ratings) {
+      sum += Number(key) * Number(ratings[key]);
+    }
+    if (ratings !== undefined){
+
+      console.log('Object.entries >>>', Object.entries(ratings))
+    }
+    return (sum / getTotal()).toFixed(1);
   };
 
   const getRecPercentage = () => {
@@ -32,21 +47,29 @@ const Ratings = ({ reviewsMetaData }) => {
 
   return (
      <div>
-        Ratings & Reviews
-        <div>Average Rating: {getAverageRating()}</div>
+        <div style={{fontSize: '50px', textDecoration: 'bold', display: 'inline'}}>{getAverageRating()}</div><div style={{display: 'inline'}}><Stars rating={getAverageRating()}/></div>
         {recommended && <div>{getRecPercentage()}% of Users recommend this product</div>}
-
+        <br />
         {ratings && Object.entries(ratings).map((rating) => {
-          return (<div>{rating[0]} stars given by {rating[1]} people</div>)})}
-
-        {characteristics && Object.entries(characteristics).map((characteristic) => {
-          return (
-            <div>{characteristic[0]} characteristic: {characteristic[1].value} </div>
-          )
-        })}
-    </div>
+          return (<div>
+            <span style={{textDecoration: 'underline', cursor: 'pointer'}} onClick={updateFilters} value={rating[0]}>{rating[0]} stars </span>
+            <Bars count={rating[1]} total={getTotal()} />
+            </div>)
+          })
+        }
+        <br />
+        {characteristics && Object.entries(characteristics).map((entry) => (
+          <Characteristics entry={entry}/>
+        ))}
+     </div>
   )
 }
+
+
+const barStyle = styled.div`
+  display: flex;
+  align-items: left;
+`
 
 export default Ratings;
 

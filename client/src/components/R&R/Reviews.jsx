@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import axios from 'axios';
 import styled from 'styled-components';
-import handler from '../../helpers/reviewhandler.js';
+import handler from '../Shared/reviewhandler.js';
 import ReviewsSort from './ReviewsSort.jsx';
 import ReviewList from './ReviewList.jsx';
 import MoreReviews from './MoreReviews.jsx';
@@ -27,9 +27,10 @@ class Reviews extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (this.state.reviews !== this.props.reviewsData.results){
-      this.setState(
-        { reviews: this.props.reviewsData.results }
-      )
+      this.setState({
+        reviews: this.props.reviewsData.results,
+        visible: 2
+      })
     }
   }
 
@@ -37,6 +38,12 @@ class Reviews extends React.Component {
     this.setState({
       visible: this.state.visible + 2
     })
+  }
+
+  applyFilters() {
+    let result = [];
+
+
   }
 
   // stars, loading more questions/reviews, adding a question/review,
@@ -47,14 +54,24 @@ class Reviews extends React.Component {
     const { reviewsData } = this.props;
 
     return (<div>
-        <ReviewsSort total={this.state.reviews && this.state.reviews.length} updateReviews={this.props.updateReviews}/>
-        <ReviewList reviews={this.state.reviews} visible={this.state.visible}/>
-        <MoreReviews total={this.state.reviews && this.state.reviews.length} visible={this.state.visible} showMoreReviews={this.showMoreReviews}/>
-        <NewReview/>
+        <ReviewsSort total={this.state.reviews && this.state.reviews.length} getReviews={this.props.getReviews}/>
+        <ReviewList reviews={this.state.reviews} visible={this.state.visible} updateReviews={this.props.updateReviews}/>
+        <br/>
+        <ButtonsStyle>
+          <MoreReviews total={this.state.reviews && this.state.reviews.length} visible={this.state.visible} showMoreReviews={this.showMoreReviews}/>
+          <NewReview name={this.props.name}/>
+        </ButtonsStyle>
     </div>)
   }
 }
 
+
+
+const ButtonsStyle = styled.div`
+display: flex;
+justify-content: flex-start;
+gap: 5px;
+`
 
 export default Reviews;
 
