@@ -70,7 +70,19 @@ class NewReview extends React.Component {
     } else if (!this.state.submitted) {
       const body = this.reviewConstructor();
       handler.post(body, () => {
-        this.setState({ submit: true });
+        this.setState({
+          // show: false,
+          stars: null,
+          recommend: true,
+          characteristics: {},
+          summary: '',
+          body: '',
+          images: [],
+          nickname: '',
+          email: '',
+          count: `Minimum required characters left: 50`,
+          submitted: true,
+        });
       });
     }
   }
@@ -99,9 +111,8 @@ class NewReview extends React.Component {
     if (stars === null) { errors.rating = ('Please select Overall Rating'); }
     if (Object.keys(characteristics).length === 0) { errors.characteristics = ('Please rate product characteristics'); }
     if (nickname.length === 0) { errors.nickname = ('Please provide your nickname'); }
-    if (email.length === 0) { errors.email = ('Please provide your email'); }
+    if (email.length === 0) { errors.email = ('Please provide your email'); } // email format, images
     if (body.length < 50) { errors.body = ('Please make sure the Review Body is at least 50 characters'); }
-
 
     return errors;
   }
@@ -234,7 +245,7 @@ class NewReview extends React.Component {
             </form>
             <br />
             <div style={{display: 'inline'}}><Button onClick={this.toggleModal}>Cancel</Button>&nbsp; &nbsp; &nbsp;<Button onClick={this.submitReview}>Submit Review</Button></div>
-            {this.state.submitted && <div>Review successfully submitted</div>}
+            {this.state.submitted && <div>Review successfully submitted, thank you!</div>}
           </ModalWrapper>
         </Background>
         );
