@@ -73,15 +73,15 @@ class NewReview extends React.Component {
       handler.post(body, () => {
         this.setState({
           // show: false,
-          stars: null,
-          recommend: true,
-          characteristics: {},
-          summary: '',
-          body: '',
-          images: [],
-          nickname: '',
-          email: '',
-          count: `Minimum required characters left: 50`,
+          // stars: null,
+          // recommend: true,
+          // characteristics: {},
+          // summary: '',
+          // body: '',
+          // images: [],
+          // nickname: '',
+          // email: '',
+          // count: `Minimum required characters left: 50`,
           submitted: true,
         });
       });
@@ -131,7 +131,16 @@ class NewReview extends React.Component {
       show: !this.state.show,
       imgWindow: false,
       errors: {},
-      showError: false
+      showError: false,
+      stars: null,
+      recommend: true,
+      characteristics: {},
+      summary: '',
+      body: '',
+      images: [],
+      nickname: '',
+      email: '',
+      count: `Minimum required characters left: 50`,
     })
   }
 
@@ -145,7 +154,7 @@ class NewReview extends React.Component {
         <Background>
           <ModalWrapper>
             <ExitButton>
-              <button onClick={this.toggleModal}>x</button>
+              <button style={{backgroundColor: 'red', color: 'white', cursor: 'pointer'}} onClick={this.toggleModal}>x</button>
             </ExitButton>
             <div style={{ justifyContent: 'center', textAlign: 'center' }}>
               <h2>Write your review about the {this.props.name}</h2>
@@ -214,7 +223,7 @@ class NewReview extends React.Component {
                   placeholder="Example: jackson11@email.com"
                   maxLength="60"
                   />
-                  <br/><small style={{fontStyle: 'italic'}}>{'For authetication reasons, you will not be emailed'}</small>
+                  <br/><small style={{fontStyle: 'italic'}}>{'For authetication reasons; you will not be emailed'}</small>
               </label>
               <br/>
               <br/>
@@ -254,7 +263,7 @@ class NewReview extends React.Component {
               {this.state.showError && (Object.values(this.state.errors).map((errors, key) => (
                 <Errors errors={errors} key={key} />
               )))}
-              {this.state.submitted && <div><br/>Review successfully submitted, thank you!</div>}
+              {this.state.submitted && <div style={{fontWeight: 'bold'}}><br/>Review successfully submitted, thank you!</div>}
 
             </form>
             <br />

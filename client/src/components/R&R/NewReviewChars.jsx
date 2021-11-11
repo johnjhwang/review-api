@@ -24,8 +24,7 @@ class NewReviewChars extends React.Component {
 
       return (
         <BigBlock>
-          <br/>
-          <LabelLabel>{characteristics}</LabelLabel>
+          <LabelLabel>&nbsp; &nbsp;{characteristics}</LabelLabel>
           <br/>
           <Container onChange={this.handleChange}>
             <RadioLabel><input type="radio" name={characteristics} value="1" /><span style={{ width: '8px', display: 'inline-block' }} />
@@ -55,7 +54,7 @@ display: inline;
 const Container = styled.div`
 display: grid;
 grid-template-columns: repeat(5, 1fr);
-grid-gap:15px;
+grid-gap: 10px;
 padding:5px;
 font-size: 15px;
 `;
@@ -68,7 +67,7 @@ const LabelLabel = styled.span`
 `;
 
 const RadioLabel = styled.label`
-
+font-size: 13px;
 `
 
 const characteristicLabels = {
