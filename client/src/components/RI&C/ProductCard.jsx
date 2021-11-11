@@ -17,12 +17,21 @@ class RPEntry extends React.Component {
     };
 
     this.toggleModal = this.toggleModal.bind(this);
+    this.getAvgRating = this.getAvgRating.bind(this);
   }
 
   componentDidMount() {
     this.getProductInfo(),
     this.getProductStyle(),
     this.getProductRating();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.relatedProductId !== prevProps.relatedProductId) {
+      this.getProductInfo(),
+      this.getProductStyle(),
+      this.getProductRating();
+    }
   }
 
 
@@ -81,15 +90,8 @@ class RPEntry extends React.Component {
     });
   }
 
-
-  //////////////////////////////////////////////////////////////////////////////////
-
-  render() {
-    const { category, name, default_price } = this.state.productInfo;
-    const results = this.state.productStyle.results;
-    const salePrice = results && results.sale_price;
+  getAvgRating() {
     const ratings = this.state.productRatings.ratings;
-    //console.log(ratings);
     let avgRating = 0;
     let length = 0;
     if (ratings) {
@@ -100,6 +102,16 @@ class RPEntry extends React.Component {
       }
       avgRating = sum / length;
     }
+    return avgRating;
+  }
+
+  //////////////////////////////////////////////////////////////////////////////////
+
+  render() {
+    const { category, name, default_price } = this.state.productInfo;
+    const results = this.state.productStyle.results;
+    const salePrice = results && results.sale_price;
+    const avgRating = this.getAvgRating();
 
     return (
       <div>
@@ -152,10 +164,13 @@ const ButtonContainer = styled.div`
 
 const Button = styled.button`
   border: none;
-  color: grey;
+  color: black;
   background-color: transparent;
   font-size: 20px;
   cursor: pointer;
+  &:hover {
+    color: white;
+  }
 `
 
 

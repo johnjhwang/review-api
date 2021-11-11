@@ -16,7 +16,8 @@ const OutfitList = (props) => {
   const ref = useRef()
 
   useEffect(() => { showArrow() })
-
+  useEffect(() => { moveToNext() })
+  useEffect(() => { moveToPrev() })
 
   const handlePlusButtonClick = () => {
     let copy = outfits;
@@ -92,7 +93,7 @@ const Title = styled.h3`
 `
 
 const ListContainer = styled.div`
-  //margin: auto;
+  margin-bottom: 30px;
   height: 320px;
   width: 71%;
   display: flex;

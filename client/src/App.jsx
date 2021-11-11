@@ -30,7 +30,7 @@ class App extends React.Component {
         {/* <RPList productId={this.state.product_id} handleProductChange={this.handleProductChange}/>
         <OutfitList productId={this.state.product_id}/> */}
         {/* <QA /> */}
-        <RROverview product_id={this.state.product_id}/>
+        {/* <RROverview product_id={this.state.product_id}/> */}
     </div>)
   }
 }
