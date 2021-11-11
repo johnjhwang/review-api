@@ -9,7 +9,7 @@ const Errors = ({ errors }) => {
 
     return (
     <Div>
-      {errors}
+      &nbsp;•{errors}
     </Div>
     )
 }
