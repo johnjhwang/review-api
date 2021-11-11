@@ -23,37 +23,48 @@ class NewReviewChars extends React.Component {
     let {characteristics} = this.props;
 
       return (
-        <Container onChange={this.handleChange}>
-          <LabelLabel>{characteristics}:</LabelLabel>
-          <RadioLabel><input type="radio" name={characteristics} value="1" /><span style={{ width: '8px', display: 'inline-block' }} />
-          {characteristicLabels[characteristics][1]}
-          </RadioLabel>
-          <RadioLabel><input type="radio" name={characteristics} value="2" /><span style={{ width: '8px', display: 'inline-block' }} />
-          {characteristicLabels[characteristics][2]}
-          </RadioLabel>
-          <RadioLabel><input type="radio" name={characteristics} value="3" /><span style={{ width: '8px', display: 'inline-block' }} />
-          {characteristicLabels[characteristics][3]}
-          </RadioLabel>
-          <RadioLabel><input type="radio" name={characteristics} value="4" /><span style={{ width: '8px', display: 'inline-block' }} />
-          {characteristicLabels[characteristics][4]}
-          </RadioLabel>
-          <RadioLabel><input type="radio" name={characteristics} value="5" /><span style={{ width: '8px', display: 'inline-block' }} />
-          {characteristicLabels[characteristics][5]}
-          </RadioLabel>
-        </Container>)
+        <BigBlock>
+          <br/>
+          <LabelLabel>{characteristics}</LabelLabel>
+          <br/>
+          <Container onChange={this.handleChange}>
+            <RadioLabel><input type="radio" name={characteristics} value="1" /><span style={{ width: '8px', display: 'inline-block' }} />
+            {characteristicLabels[characteristics][1]}
+            </RadioLabel>
+            <RadioLabel><input type="radio" name={characteristics} value="2" /><span style={{ width: '8px', display: 'inline-block' }} />
+            {characteristicLabels[characteristics][2]}
+            </RadioLabel>
+            <RadioLabel><input type="radio" name={characteristics} value="3" /><span style={{ width: '8px', display: 'inline-block' }} />
+            {characteristicLabels[characteristics][3]}
+            </RadioLabel>
+            <RadioLabel><input type="radio" name={characteristics} value="4" /><span style={{ width: '8px', display: 'inline-block' }} />
+            {characteristicLabels[characteristics][4]}
+            </RadioLabel>
+            <RadioLabel><input type="radio" name={characteristics} value="5" /><span style={{ width: '8px', display: 'inline-block' }} />
+            {characteristicLabels[characteristics][5]}
+            </RadioLabel>
+          </Container>
+        </BigBlock>)
   }
 }
 
+const BigBlock = styled.div`
+display: inline;
+`
+
 const Container = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 20px;
+display: grid;
+grid-template-columns: repeat(5, 1fr);
+grid-gap:15px;
+padding:5px;
+font-size: 15px;
 `;
 
-const LabelLabel = styled.div`
-  width: 10%;
+const LabelLabel = styled.span`
+  width: 5%;
   text-align: left;
+  font-weight: bold;
+  font-size: 13px;
 `;
 
 const RadioLabel = styled.label`

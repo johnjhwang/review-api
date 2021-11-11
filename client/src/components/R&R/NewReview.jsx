@@ -169,6 +169,7 @@ class NewReview extends React.Component {
                     onChange={this.handleInputChange}/>
                   Yes
                 </label>
+                &nbsp; &nbsp; &nbsp;
                 <label>
                   <input
                     name="recommend"
@@ -190,7 +191,7 @@ class NewReview extends React.Component {
               <label>
                 <Headers>Nickname (required)</Headers>
                 <input
-                  style={{width: '50%'}}
+                  style={{width: '30%'}}
                   type="text"
                   value={this.state.nickname}
                   name="nickname"
@@ -205,7 +206,7 @@ class NewReview extends React.Component {
               <label>
                 <Headers>Email (required)</Headers>
                 <input
-                  style={{width: '50%'}}
+                  style={{width: '30%'}}
                   type="text"
                   value={this.state.email}
                   name="email"
@@ -221,7 +222,7 @@ class NewReview extends React.Component {
               <label>
                 <Headers>Review Summary</Headers>
                 <input
-                  style={{width: '50%'}}
+                  style={{width: '30%'}}
                   type="text"
                   value={this.state.summary}
                   name="summary"
@@ -235,7 +236,7 @@ class NewReview extends React.Component {
               <label>
                 <Headers>Review Body (required)</Headers>
                 <textarea
-                style={{width: '95%'}}
+                style={{width: '65%'}}
                 rows="6"
                 name="body"
                 placeholder="Why did you like the product or not?"
@@ -243,7 +244,7 @@ class NewReview extends React.Component {
                 maxLength="1000"
                 onChange={e => this.handleInputChange(e, this.characterCounter)}/>
               </label>
-              <small>{this.state.count}</small>
+              <br/><small>{this.state.count}</small>
               <br/>
               <label>
                 <br/><Button onClick={this.toggleImgWindow}>Upload Photos</Button>
@@ -273,7 +274,7 @@ class NewReview extends React.Component {
 const Button = styled.button`
   display: inline-block;
   border-radius: 3px;
-  width: 10rem;
+  width: 45%;
   color: black;
   cursor: pointer;
   border: 1px solid black;
@@ -292,8 +293,8 @@ const Background = styled.div`
 `;
 
 const ModalWrapper = styled.div`
-  width: 75%;
-  height: 90%;
+  width: 50%;
+  height: 86%;
   border-radius: 12px;
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
