@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import handler from '../Shared/reviewhandler.js';
 import StarRating from './InteractiveStars.jsx';
 import NewReviewChars from './NewReviewChars.jsx';
+import Errors from './Errors.jsx';
 
 class NewReview extends React.Component {
   constructor(props) {
@@ -22,6 +23,9 @@ class NewReview extends React.Component {
       email: '',
       count: `Minimum required characters left: 50`,
       imgWindow: false,
+      submitted: false,
+      errors: {},
+      showError: false
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -59,13 +63,20 @@ class NewReview extends React.Component {
   }
 
   submitReview() {
-    // this.dataValidator();
-    const body = this.reviewConstructor();
-    handler.post(body, () => console.log('Posted successfully'));
+    let errors = this.dataValidator();
+    console.log('errors >>>', errors);
+    if (Object.keys(errors).length > 0) {
+      this.setState({ errors, showError: true });
+    } else if (!this.state.submitted) {
+      const body = this.reviewConstructor();
+      handler.post(body, () => {
+        this.setState({ submit: true });
+      });
+    }
   }
 
+
   reviewConstructor(data) {
-    console.log('current state >>>>', this.state)
     const reqBody = {
       product_id: this.props.pid,
       rating: Number(this.state.stars),
@@ -80,8 +91,19 @@ class NewReview extends React.Component {
     return reqBody;
   }
 
-  dataValidator(data) {
-    console.log('current state >>>>', this.state)
+  dataValidator() {
+    console.log('current state >>>>', this.state);
+    let { stars, recommend, characteristics, summary, body, nickname, email, images } = this.state;
+    let errors = {};
+
+    if (stars === null) { errors.rating = ('Please select Overall Rating'); }
+    if (Object.keys(characteristics).length === 0) { errors.characteristics = ('Please rate product characteristics'); }
+    if (nickname.length === 0) { errors.nickname = ('Please provide your nickname'); }
+    if (email.length === 0) { errors.email = ('Please provide your email'); }
+    if (body.length < 50) { errors.body = ('Please make sure the Review Body is at least 50 characters'); }
+
+
+    return errors;
   }
 
   toggleImgWindow(e) {
@@ -94,8 +116,9 @@ class NewReview extends React.Component {
   toggleModal() {
     this.setState({
       show: !this.state.show,
-      stars: null,
       imgWindow: false,
+      errors: {},
+      showError: false
     })
   }
 
@@ -117,13 +140,13 @@ class NewReview extends React.Component {
             </div>
             <form>
               <label>
-                <h4>Overall Rating</h4>
+                <h4>Overall Rating (required)</h4>
                 <div style={{display: 'flex'}}>
                   <StarRating handleInputChange={this.handleInputChange}/>&nbsp;{ratingArr[this.state.stars - 1]}
                 </div>
               </label>
               <label>
-                <h4>Do you recommend this product?</h4>
+                <h4>Do you recommend this product? (required)</h4>
                 <label>
                   <input
                     name="recommend"
@@ -144,12 +167,12 @@ class NewReview extends React.Component {
               </label>
 
               <label>
-                <h4>Characteristics</h4>
+                <h4>Characteristics (required)</h4>
                 {charNames.map((char, key) =>
                 <NewReviewChars key={key} characteristics={char} processCharSelection={this.processCharSelection}/>)}
               </label>
               <label>
-                <h4>Nickname</h4>
+                <h4>Nickname (required)</h4>
                 <input
                   style={{width: '50%'}}
                   type="text"
@@ -162,7 +185,7 @@ class NewReview extends React.Component {
                   <br/><small style={{fontStyle: 'italic'}}>{'For privacy reasons, do not use your full name or email address'}</small>
               </label>
               <label>
-                <h4>Email</h4>
+                <h4>Email (required)</h4>
                 <input
                   style={{width: '50%'}}
                   type="text"
@@ -188,13 +211,14 @@ class NewReview extends React.Component {
                   />
               </label>
               <label>
-                <h4>Review Body</h4>
+                <h4>Review Body (required)</h4>
                 <textarea
                 style={{width: '95%'}}
                 rows="6"
                 name="body"
                 placeholder="Why did you like the product or not?"
                 value={this.state.body}
+                maxLength="1000"
                 onChange={e => this.handleInputChange(e, this.characterCounter)}/>
               </label>
               <br/><small>{this.state.count}</small>
@@ -202,10 +226,15 @@ class NewReview extends React.Component {
               <label>
                 <br/><Button onClick={this.toggleImgWindow}>Upload Photos</Button>
               </label>
-
+              <br/>
+              {this.state.showError && <div style={{color: 'red'}}> SUBMISSION ERROR. Please fix the below issues </div>}
+              {this.state.showError && (Object.values(this.state.errors).map((errors, key) => (
+                <Errors errors={errors} key={key} />
+              )))}
             </form>
             <br />
             <div style={{display: 'inline'}}><Button onClick={this.toggleModal}>Cancel</Button>&nbsp; &nbsp; &nbsp;<Button onClick={this.submitReview}>Submit Review</Button></div>
+            {this.state.submitted && <div>Review successfully submitted</div>}
           </ModalWrapper>
         </Background>
         );
