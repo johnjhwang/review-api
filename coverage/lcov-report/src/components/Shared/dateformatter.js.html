@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/components/R&amp;R/MoreReviews.jsx</title>
+    <title>Code coverage report for src/components/Shared/dateformatter.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../../prettify.css" />
     <link rel="stylesheet" href="../../../base.css" />
@@ -19,20 +19,20 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/components/R&R</a> MoreReviews.jsx</h1>
+        <h1><a href="../../../index.html">All files</a> / <a href="index.html">src/components/Shared</a> dateformatter.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">25% </span>
+                <span class="strong">16.66% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>1/4</span>
+                <span class='fraction'>1/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>0/0</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">25% </span>
+                <span class="strong">16.66% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>1/4</span>
+                <span class='fraction'>1/6</span>
             </div>
         
             
@@ -71,30 +71,13 @@
 <a name='L12'></a><a href='#L12'>12</a>
 <a name='L13'></a><a href='#L13'>13</a>
 <a name='L14'></a><a href='#L14'>14</a>
-<a name='L15'></a><a href='#L15'>15</a>
-<a name='L16'></a><a href='#L16'>16</a>
-<a name='L17'></a><a href='#L17'>17</a>
-<a name='L18'></a><a href='#L18'>18</a>
-<a name='L19'></a><a href='#L19'>19</a>
-<a name='L20'></a><a href='#L20'>20</a>
-<a name='L21'></a><a href='#L21'>21</a>
-<a name='L22'></a><a href='#L22'>22</a>
-<a name='L23'></a><a href='#L23'>23</a>
-<a name='L24'></a><a href='#L24'>24</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L15'></a><a href='#L15'>15</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -102,31 +85,21 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React from 'react';
-import ReactDOM from 'react-dom';
-import styled from 'styled-components';
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const dateFormatter = <span class="fstat-no" title="function not covered" >(s</span>tring) =&gt; {
+&nbsp;
+  const months = <span class="cstat-no" title="statement not covered" >['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];</span>
+&nbsp;
+    let year = <span class="cstat-no" title="statement not covered" >string.slice(0, 4);</span>
+    let month = <span class="cstat-no" title="statement not covered" >months[Number(string.slice(5, 7)) - 1];</span>
+    let date = <span class="cstat-no" title="statement not covered" >string.slice(8, 10);</span>
 &nbsp;
 &nbsp;
-&nbsp;
-&nbsp;
-&nbsp;
-const MoreReviews = <span class="fstat-no" title="function not covered" >({</span> total, visible, showMoreReviews }) =&gt; {
-&nbsp;
-<span class="cstat-no" title="statement not covered" >  if (total &gt; visible) {</span>
-<span class="cstat-no" title="statement not covered" >    return (</span>
-      &lt;div&gt;
-      &lt;button style={{cursor: 'pointer'}} onClick={showMoreReviews}&gt;More Reviews&lt;/button&gt;
-      &lt;/div&gt;
-    )
-  } else {
-<span class="cstat-no" title="statement not covered" >    return null;</span>
-  }
+<span class="cstat-no" title="statement not covered" >    return `${month} ${date}, ${year}`;</span>
 }
 &nbsp;
+//'2021-04-28T00:00:00.000Z
 &nbsp;
-export default MoreReviews;
-&nbsp;</pre></td></tr></table></pre>
+export default dateFormatter;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
