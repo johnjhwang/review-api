@@ -15,7 +15,7 @@ const Errors = ({ errors }) => {
 }
 
   const Div = styled.div`
-    text-decoration: underline;
+    font-weight: bold;
     color: red;
   `
 

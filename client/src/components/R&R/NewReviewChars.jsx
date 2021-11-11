@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 
-
 class NewReviewChars extends React.Component {
   constructor(props) {
     super(props);
@@ -12,7 +11,6 @@ class NewReviewChars extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-
   handleChange(e) {
     const name = e.target.name;
     const value = e.target.value;
@@ -21,33 +19,46 @@ class NewReviewChars extends React.Component {
     this.setState({ [name]: value }, () => console.log(`${name} in state is now: `, this.state[name]), this.props.processCharSelection(name, value));
   }
 
-
   render () {
     let {characteristics} = this.props;
 
       return (
-          <div onChange={this.handleChange}>
-          {characteristics}
-          <label><input type="radio" name={characteristics} value="1" /><span style={{ width: '8px', display: 'inline-block' }} />
+        <Container onChange={this.handleChange}>
+          <LabelLabel>{characteristics}:</LabelLabel>
+          <RadioLabel><input type="radio" name={characteristics} value="1" /><span style={{ width: '8px', display: 'inline-block' }} />
           {characteristicLabels[characteristics][1]}
-          </label>
-          <label><input type="radio" name={characteristics} value="2" /><span style={{ width: '8px', display: 'inline-block' }} />
+          </RadioLabel>
+          <RadioLabel><input type="radio" name={characteristics} value="2" /><span style={{ width: '8px', display: 'inline-block' }} />
           {characteristicLabels[characteristics][2]}
-          </label>
-          <label><input type="radio" name={characteristics} value="3" /><span style={{ width: '8px', display: 'inline-block' }} />
+          </RadioLabel>
+          <RadioLabel><input type="radio" name={characteristics} value="3" /><span style={{ width: '8px', display: 'inline-block' }} />
           {characteristicLabels[characteristics][3]}
-          </label>
-          <label><input type="radio" name={characteristics} value="4" /><span style={{ width: '8px', display: 'inline-block' }} />
+          </RadioLabel>
+          <RadioLabel><input type="radio" name={characteristics} value="4" /><span style={{ width: '8px', display: 'inline-block' }} />
           {characteristicLabels[characteristics][4]}
-          </label>
-          <label><input type="radio" name={characteristics} value="5" /><span style={{ width: '8px', display: 'inline-block' }} />
+          </RadioLabel>
+          <RadioLabel><input type="radio" name={characteristics} value="5" /><span style={{ width: '8px', display: 'inline-block' }} />
           {characteristicLabels[characteristics][5]}
-          </label>
-        </div>)
+          </RadioLabel>
+        </Container>)
+  }
 }
 
+const Container = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+`;
 
-}
+const LabelLabel = styled.div`
+  width: 10%;
+  text-align: left;
+`;
+
+const RadioLabel = styled.label`
+
+`
 
 const characteristicLabels = {
   Size: {
@@ -93,8 +104,5 @@ const characteristicLabels = {
     5: 'Runs long',
   },
 }
-
-
-
 
 export default NewReviewChars;
