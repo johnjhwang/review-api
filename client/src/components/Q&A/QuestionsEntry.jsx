@@ -14,12 +14,14 @@ class QuestionEntry extends React.Component {
       addAnswerButtonClicked: false,
       showQuestionModal: false,
       showAddAnswerModal: false,
+      isReported: false,
       product_id: this.props.product_id
     }
     console.log('questions entry props',this.props)
     this.showNextQuestions = this.showNextQuestions.bind(this);
     this.onHelpfulClick = this.onHelpfulClick.bind(this);
     this.showQuestionModal = this.showQuestionModal.bind(this);
+    this.handleReportButtonClick = this.handleReportButtonClick.bind(this);
   }
 
   componentDidMount() {
@@ -68,9 +70,14 @@ class QuestionEntry extends React.Component {
   showAddAnswerModal() {
     this.setState({showAddAnswerModal: !this.state.showAddAnswerModal})
   }
+  handleReportButtonClick(question_id) {
+    this.props.updateQuestionReport(question_id)
+    this.setState({isReported: true});
+  }
 
   render() {
     console.log('render', this.props)
+    const reportButtonText = this.state.isReported ? "Reported" : "Report"
     return (
       <div>
         {this.state.displayedQuestions.map(indQuestion => {
@@ -78,7 +85,10 @@ class QuestionEntry extends React.Component {
             <>
             <h1> Q: {indQuestion.question_body}</h1>
             <h4> helpful? <button onClick={() => {this.onHelpfulClick(indQuestion.question_id)}}>YES</button>{indQuestion.question_helpfulness}</h4>
-            <AnswersEntry answer={indQuestion.answers}/>
+            <button onClick={() => {this.handleReportButtonClick(indQuestion.question_id)}}>{reportButtonText}</button>
+            <AnswersEntry answer={indQuestion.answers}
+            updateAnswerReport={this.props.updateAnswerReport}
+            updateAnswerHelpfulness={this.props.updateAnswerHelpfulness}/>
             <button onClick={() => {this.showAddAnswerModal()}}>Add Answer</button>
             </>
           )

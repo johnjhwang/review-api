@@ -13,6 +13,7 @@ class AddAnswer extends React.Component {
       question_id: null,
       showModal: false
     }
+
     this.handleChange = this.handleChange.bind(this);
     this.updateAnswers = this.updateAnswers.bind(this);
     this.onClose = this.onClose.bind(this);

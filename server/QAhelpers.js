@@ -64,5 +64,35 @@ module.exports = {
         'Authorization': `${config.API_KEY}`
       }
     })
+  },
+  reportQuestion: function(question_id) {
+    return axios({
+      method: 'PUT',
+      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-nyc/qa/questions/${question_id}/report`,
+      headers: {
+        'User-Agent': 'request',
+        'Authorization': `${config.API_KEY}`
+      }
+    })
+  },
+  reportAnswer: function(answer_id) {
+    return axios({
+      method: 'PUT',
+      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-nyc/qa/answers/${answer_id}/report`,
+      headers: {
+        'User-Agent': 'request',
+        'Authorization': `${config.API_KEY}`
+      }
+    })
+  },
+  addToAnswerHelpfulness: function(answer_id) {
+    return axios({
+      method: 'PUT',
+      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-nyc/qa/answers/${answer_id}/helpful`,
+      headers: {
+        'User-Agent': 'request',
+        'Authorization': `${config.API_KEY}`
+      }
+    })
   }
 }

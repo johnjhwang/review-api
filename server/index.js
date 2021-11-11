@@ -77,24 +77,55 @@ app.post('/qa/answers', (req, res) =>
 
 app.put('/qa/questions/:product_id/helpful', (req, res) => {
   console.log('i got hit');
-  const { product_id } = req.params
+  const { product_id } = req.params;
   QAhelpers.addToHelpfulness(product_id)
   .then((response) => {
-    console.log("🚀 ~ file: index.js ~ line 84 ~ .then ~ response", response)
     res.sendStatus(204)
   })
   .catch((error) => {
-    console.log("🚀 ~ file: index.js ~ line 87 ~ app.put ~ error", error)
+    console.log(error)
+  })
+})
+
+// --- report question ------
+
+app.put('/qa/questions/:question_id/report', (req, res) => {
+  const { question_id } = req.params;
+  QAhelpers.reportQuestion(question_id)
+  .then((response) => {
+    res.sendStatus(204)
+  })
+  .catch((err) => {
+    console.log(err);
   })
 })
 
 
-
-// --- report question ------
-
-
 // ---- report answer -------
 
+app.put('/qa/answers/:answer_id/report', (req, res) => {
+  const { answer_id } = req.params;
+  QAhelpers.reportAnswer(answer_id)
+  .then((response) => {
+    res.sendStatus(204);
+  })
+  .then((err) => {
+    console.log(err)
+  })
+})
+
+// ------ add to answer helpfulness count ----
+
+app.put('/qa/answers/:answer_id/helpful', (req, res) => {
+  const { answer_id } = req.params;
+  QAhelpers.addToAnswerHelpfulness(answer_id)
+  .then((response) => {
+    res.sendStatus(204);
+  })
+  .then((err) => {
+    console.log(err)
+  })
+})
 
 
 

@@ -15,6 +15,8 @@ class QuestionsAndAnswers extends React.Component {
     this.getQuestions = this.getQuestions.bind(this);
     this.updateQuestions = this.updateQuestions.bind(this);
     this.updateHelpfulness = this.updateHelpfulness.bind(this);
+    this.updateQuestionReport = this.updateQuestionReport.bind(this);
+    this.updateAnswerReport = this.updateAnswerReport.bind(this);
   }
 
   componentDidMount() {
@@ -40,7 +42,7 @@ class QuestionsAndAnswers extends React.Component {
   updateHelpfulness(question_id) {
     const updatedQuestions = this.state.questions.map((question => {
       if (question.question_id === question_id) {
-        question.question_helpfulness = question.question_helpfulness + 1
+        question.question_helpfulness += 1
       }
       return question
     }))
@@ -49,7 +51,25 @@ class QuestionsAndAnswers extends React.Component {
     })
   }
 
+  updateQuestionReport(question_id) {
+    axios.put(`/qa/questions/${question_id}/report`)
+    .then((res) => {
+      res.sendStatus(200)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }
 
+  updateAnswerReport(answer_id) {
+    axios.put(`/qa/answers/${answer_id}/report`)
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }
 
   render() {
     console.log(this.state)
@@ -63,6 +83,8 @@ class QuestionsAndAnswers extends React.Component {
       product_id={this.state.product_id}
       questions={this.state.questions}
       updateHelpfulness={this.updateHelpfulness}
+      updateQuestionReport={this.updateQuestionReport}
+      updateAnswerReport={this.updateAnswerReport}
       />
       </>}
     </div>

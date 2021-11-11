@@ -1,4 +1,5 @@
 import React from "react";
+import axios from 'axios';
 
 class AnswersEntry extends React.Component {
   constructor(props) {
@@ -12,7 +13,7 @@ class AnswersEntry extends React.Component {
       isReported: false,
       showAnswerModal: false
     }
-
+    console.log('answers entry', this.props);
     this.handleAnswerHelpfulnessClick = this.handleAnswerHelpfulnessClick.bind(this);
     this.handleReportButtonClick = this.handleReportButtonClick.bind(this);
     this.showNext2Answers = this.showNext2Answers.bind(this);
@@ -50,19 +51,34 @@ class AnswersEntry extends React.Component {
     })
   }
 
-  handleAnswerHelpfulnessClick() {
-    // will make call to api to update the answer helpfulness count
-    // make sure that the user is only able to click on this once
+  handleAnswerHelpfulnessClick(answer_id) {
+    axios.put(`/qa/answers/${answer_id}/helpful`)
+    .then((res) => {
+      const updatedAnswers = this.state.answers.map((answer => {
+        if (answer.id === answer_id) {
+          answer.helpfulness += 1
+        }
+        return answer
+      }))
+      this.setState({
+        answers: updatedAnswers
+      })
+    })
+    .catch((err) => {
+      console.log(err)
+    })
     console.log('helpfulness button clicked')
   }
 
 
-  handleReportButtonClick() {
+  handleReportButtonClick(answer_id) {
+    this.props.updateAnswerReport(answer_id)
     this.setState(PrevState => ({isReported: true}));
   }
 
 
   render() {
+    console.log('answers', this.state.answers);
     const reportButtonText = this.state.isReported ? "Reported" : "Report"
     return(
       <div>
@@ -74,13 +90,13 @@ class AnswersEntry extends React.Component {
             answer.photos.map((image => {
               return(
                 <>
-                <img src={image} />
+                <img src={image}/>
                 </>
               )
             }))
             }
             <h6>by :{answer.answerer_name} date: {answer.date} | Helpful?
-            <button onClick={this.handleAnswerHelpfulnessClick}>YES({answer.helpfulness})</button> | <button onClick={this.handleReportButtonClick}>{reportButtonText}</button></h6>
+            <button onClick={() => this.handleAnswerHelpfulnessClick(answer.id)}>YES({answer.helpfulness})</button> | <button onClick={() => {this.handleReportButtonClick(answer.id)}}>{reportButtonText}</button></h6>
             </>
           )
         })}
