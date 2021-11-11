@@ -27,8 +27,14 @@ module.exports = {
       })
   },
 
-  post: {
-
+  post: function (body, callback) {
+    axios.post('/reviews/', body)
+    .then((response) => {
+      callback(response);
+    })
+    .catch((err) => {
+      console.log('post handler error >>>>>', err);
+    })
   },
 
   update: function (review_id, action, callback) { // mark review as helpful and report review (PUT /reviews/:review_id/helpful) (PUT /reviews/:review_id/report)

@@ -45,7 +45,7 @@ class ReviewTile extends React.Component {
         <h3>{review.summary}</h3>
         {review.body}
         <br/>
-        {review.recommend && <div>✅ &nbsp; I recommend this product</div>}
+        {review.recommend && <div>✔️ I recommend this product</div>}
         <br/>
         <span>Was this review helpful? </span>
         <span value='helpful' onClick={(e) => this.handleClick(e)} style={{textDecoration: 'underline', cursor: 'pointer'}}>Yes</span>
