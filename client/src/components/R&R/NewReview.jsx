@@ -156,14 +156,14 @@ class NewReview extends React.Component {
             <ExitButton>
               <button style={{backgroundColor: 'red', color: 'white', cursor: 'pointer'}} onClick={this.toggleModal}>x</button>
             </ExitButton>
-            <div style={{ justifyContent: 'center', textAlign: 'center' }}>
-              <h2>Write your review about the {this.props.name}</h2>
+            <div style={{ fontSize: '20px', fontWeight:'bold', justifyContent: 'center', textAlign: 'center' }}>
+              <span>Write your review about the {this.props.name}</span>
             </div>
             <form>
               <label>
                 <Headers>Overall Rating (required)</Headers>
                 <div style={{display: 'flex'}}>
-                  <StarRating handleInputChange={this.handleInputChange}/>&nbsp;{ratingArr[this.state.stars - 1]}
+                  <StarRating handleInputChange={this.handleInputChange}/>&nbsp;&nbsp;{ratingArr[this.state.stars - 1]}
                 </div>
               </label>
               <br/>
@@ -303,7 +303,7 @@ const Background = styled.div`
 
 const ModalWrapper = styled.div`
   width: 50%;
-  height: 86%;
+  height: 90%;
   border-radius: 12px;
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
