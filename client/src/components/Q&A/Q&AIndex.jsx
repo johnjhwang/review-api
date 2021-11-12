@@ -2,7 +2,8 @@
 import React from 'react';
 import axios from 'axios';
 import QuestionEntry from './QuestionsEntry.jsx';
-import QuestionsSearchForm from './QuestionsSearchForm.jsx';
+import QASearchBar from './QASearchBar.jsx';
+import _ from 'lodash';
 
 
 class QuestionsAndAnswers extends React.Component {
@@ -10,13 +11,15 @@ class QuestionsAndAnswers extends React.Component {
     super(props);
     this.state = {
       product_id: 39337,
-      questions: []
+      questions: [],
+      searchedTerm: ""
     }
     this.getQuestions = this.getQuestions.bind(this);
     this.updateQuestions = this.updateQuestions.bind(this);
     this.updateHelpfulness = this.updateHelpfulness.bind(this);
     this.updateQuestionReport = this.updateQuestionReport.bind(this);
     this.updateAnswerReport = this.updateAnswerReport.bind(this);
+    this.handleSearchBarInput = this.handleSearchBarInput.bind(this);
   }
 
   componentDidMount() {
@@ -40,15 +43,34 @@ class QuestionsAndAnswers extends React.Component {
   }
 
   updateHelpfulness(question_id) {
-    const updatedQuestions = this.state.questions.map((question => {
-      if (question.question_id === question_id) {
-        question.question_helpfulness += 1
+
+    const updateHelpfulnessInnerFunc = () => {
+
+      let alreadyCalled = false;
+
+      if (!alreadyCalled) {
+        const updatedQuestions = (this.state.questions.map((question => {
+          if (question.question_id === question_id) {
+            question.question_helpfulness += 1
+          }
+          return question
+        })))
+        this.setState({
+          questions: updatedQuestions
+        })
+        alreadyCalled = true;
       }
-      return question
-    }))
-    this.setState({
-      questions: updatedQuestions
-    })
+    }
+    updateHelpfulnessInnerFunc()
+    // const updatedQuestions = _.once(this.state.questions.map((question => {
+    //   if (question.question_id === question_id) {
+    //     question.question_helpfulness += 1
+    //   }
+    //   return question
+    // })))
+    // this.setState({
+    //   questions: updatedQuestions
+    // })
   }
 
   updateQuestionReport(question_id) {
@@ -71,14 +93,25 @@ class QuestionsAndAnswers extends React.Component {
     })
   }
 
+  handleSearchBarInput(searchTerm) {
+    this.setState({searchedTerm: searchTerm})
+  }
+
+  renderSearchResults() {
+
+  }
+
   render() {
     console.log(this.state)
     return (
       <div>
       {this.state.questions.length &&
        <>
-      <QuestionsSearchForm questions={this.state.questions}/>
+      <QASearchBar questions={this.state.questions}
+      handleSearchBarInput={this.handleSearchBarInput}/>
       <QuestionEntry updateQuestions={this.updateQuestions}
+      searchedTerm={this.state.input}
+      searchInput={this.state.searchInput}
       getQuestions={this.getQuestions}
       product_id={this.state.product_id}
       questions={this.state.questions}

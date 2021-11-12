@@ -1,5 +1,7 @@
 import React from "react";
 import axios from 'axios';
+import styled from 'styled-components';
+import dateFormatter from '../Shared/dateformatter.js'
 
 class AnswersEntry extends React.Component {
   constructor(props) {
@@ -13,7 +15,6 @@ class AnswersEntry extends React.Component {
       isReported: false,
       showAnswerModal: false
     }
-    console.log('answers entry', this.props);
     this.handleAnswerHelpfulnessClick = this.handleAnswerHelpfulnessClick.bind(this);
     this.handleReportButtonClick = this.handleReportButtonClick.bind(this);
     this.showNext2Answers = this.showNext2Answers.bind(this);
@@ -32,8 +33,6 @@ class AnswersEntry extends React.Component {
       this.state.answers.push(answers[key]);
     }
   }
-
-
 
   showNext2Answers() {
     let displayedAnswers = this.state.displayedAnswers;
@@ -67,7 +66,6 @@ class AnswersEntry extends React.Component {
     .catch((err) => {
       console.log(err)
     })
-    console.log('helpfulness button clicked')
   }
 
 
@@ -78,33 +76,63 @@ class AnswersEntry extends React.Component {
 
 
   render() {
-    console.log('answers', this.state.answers);
     const reportButtonText = this.state.isReported ? "Reported" : "Report"
     return(
       <div>
+        <AnswersContainer>
         {this.state.displayedAnswers.map(answer => {
           return(
             <>
-            <h4>A:{answer.body}</h4>
+            <p>A:{answer.body}</p>
             {answer.photos.length &&
             answer.photos.map((image => {
               return(
-                <>
+                <ImageContainer>
                 <img src={image}/>
-                </>
+                </ImageContainer>
               )
             }))
             }
-            <h6>by :{answer.answerer_name} date: {answer.date} | Helpful?
-            <button onClick={() => this.handleAnswerHelpfulnessClick(answer.id)}>YES({answer.helpfulness})</button> | <button onClick={() => {this.handleReportButtonClick(answer.id)}}>{reportButtonText}</button></h6>
+            <Words>
+            <p>By :{answer.answerer_name} date: {dateFormatter(answer.date)} | Helpful?
+            <button onClick={() => this.handleAnswerHelpfulnessClick(answer.id)}>YES({answer.helpfulness})</button> | <button onClick={() => {this.handleReportButtonClick(answer.id)}}>{reportButtonText}</button></p>
+            </Words>
             </>
           )
         })}
         {Object.keys(this.state.answers).length > 2 &&
         <button onClick={this.showNext2Answers}>More Answers</button>}
+        </AnswersContainer>
       </div>
     )
   }
 }
+
+const AnswersContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  // align-items: center;
+  position: relative;
+`;
+
+const ImageContainer = styled.li`
+  width: 159px;
+  height: 143px;
+  float: left;
+  margin-right: 10px;
+  // background-position: center-center;
+  overflow: hidden;
+  padding: 10px;
+  display: flex;
+  border: none;
+`;
+
+const Words = styled.div`
+  display: flex;
+  width: 500px;
+  height: 50px;
+  border: none;
+  text-align: left;
+`;
 
 export default AnswersEntry;
