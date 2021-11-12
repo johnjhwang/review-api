@@ -21,7 +21,7 @@ class App extends React.Component {
   }
 
   handleProductChange(id) {
-    this.setState({ product_id: id }, () => console.log('this.state.product_id is now >>>>', this.state.product_id));
+    this.setState({ product_id: id });
   }
 
   render () {
