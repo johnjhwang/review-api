@@ -46,13 +46,12 @@ class Reviews extends React.Component {
   applyFilters() {
     let result = [];
     if (this.props.filters.length > 0) {
-      console.log('reviewdata >>>>', this.props.reviewsData)
       this.props.reviewsData.results.forEach((review) => {
         if (this.props.filters.indexOf(JSON.stringify(review.rating)) !== -1) {
           result.push(review);
         }
       })
-      this.setState({ reviews: result}, () => console.log('reviewsdata is now:', this.state.reviews));
+      this.setState({ reviews: result});
     } else {
       this.setState({ reviews: this.props.reviewsData.results, visible: 2 });
     }

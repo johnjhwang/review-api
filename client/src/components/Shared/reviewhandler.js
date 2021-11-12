@@ -8,7 +8,7 @@ module.exports = {
 
     axios.get(`/reviews/${product_id}/${sort}`)
       .then((responseData) => {
-        console.log('handler responseData >>>', responseData);
+
         callback(responseData.data);
       })
       .catch((err) => {
@@ -19,7 +19,7 @@ module.exports = {
   getMeta: function (product_id, callback) {
     axios.get(`/reviews/meta/${product_id}`)
       .then((responseData) => {
-        console.log('handler metaData >>>', responseData);
+
         callback(responseData.data);
       })
       .catch((err) => {
@@ -41,7 +41,7 @@ module.exports = {
     console.log('review id/action >>>', review_id, action);
     axios.put(`/reviews/${review_id}/${action}`)
     .then((responseData) => {
-      console.log('put data >>>', responseData);
+
       callback(responseData);
     })
     .catch((err) => {

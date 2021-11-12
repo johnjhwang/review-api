@@ -29,7 +29,6 @@ const Ratings = ({ reviewsMetaData, updateFilters, filters, clearFilters }) => {
     }
     if (ratings !== undefined){
 
-      console.log('Object.entries >>>', Object.entries(ratings))
     }
     return (sum / getTotal()).toFixed(1);
   };
