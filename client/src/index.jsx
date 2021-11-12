@@ -1,22 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import $ from 'jquery';
-import axios from 'axios';
-import Subcomponent from './components/Subcomponent.jsx';
-
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-    }
-
-  }
-
-  render () {
-    return (<div>
-        Placeholder
-    </div>)
-  }
-}
+import App from './App.jsx';
 
 ReactDOM.render(<App />, document.getElementById('app'));
+
