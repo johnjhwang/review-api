@@ -4,7 +4,7 @@ import _ from "underscore";
 
 import AddToCart from "./AddToCart.jsx";
 import ImageGallery from "./ImageGallery.jsx";
-
+import GalleryModal from "./GalleryModal.jsx";
 import styled from "styled-components";
 
 
@@ -19,11 +19,15 @@ const StyleSelector = (props) => {
   }
 
   return (<div>
+  {props.openModal &&
+    <GalleryModal closeModal={props.modalHandler} url={photos[props.picIndex].url}/>
+  }
   <SuperContainer>
     <ImageGallery 
       pics={photos || null} 
       picIndex={props.picIndex}
       handlePictureChange={props.picHandler}
+      modalHandler={props.modalHandler}
     />
     <Cart>
       <AddToCart 
@@ -71,6 +75,7 @@ width: 90px;
 height: 20px;
 margin: 4px;
 float: left;
+cursor: pointer;
 align-items: center;
 `
 

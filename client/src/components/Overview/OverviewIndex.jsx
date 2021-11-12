@@ -24,7 +24,8 @@ class Overview extends React.Component {
       picMax: 0,
       sku: 0,
       size: null,
-      starRating: 0
+      starRating: 0,
+      openModal: false
     }
     this.productGetter = this.productGetter.bind(this);
     this.getReviewsMeta = this.getReviewsMeta.bind(this);
@@ -34,6 +35,7 @@ class Overview extends React.Component {
     this.handlePictureChange = this.handlePictureChange.bind(this);
     this.retrieveCart = this.retrieveCart.bind(this);
     this.sendToCart = this.sendToCart.bind(this);
+    this.toggleModal = this.toggleModal.bind(this);
   }
 
   componentDidMount() {
@@ -46,10 +48,10 @@ class Overview extends React.Component {
     let store = null;
     axios.get(`/products/${id}`).then((productData) => {
       // Grabbing product information, including current style
-      console.log(productData.data);
+      // console.log(productData.data);
       store = productData.data;
       axios.get(`/products/${id}/styles`).then((styleData) => {
-        console.log(styleData.data);
+        // console.log(styleData.data);
         this.setState({
           productSelected: store, 
           productStyles: styleData.data.results, 
@@ -63,20 +65,22 @@ class Overview extends React.Component {
   }
 
   getReviewsMeta() {
-    handler.getMeta(this.state.product_id, (responseData) => {
-      console.log('client metaData >>>>', responseData);
+    handler.getMeta(this.props.product_id, (responseData) => {
+      // console.log('client metaData >>>>', responseData);
       
-      let { ratings } = responseData;
+      let ratings = responseData.ratings;
  
       let sum = 0;
       for (let key in ratings) {
         sum += Number(key) * Number(ratings[key]);
       }
-      if (ratings !== undefined){
-        console.log('Object.entries >>>', Object.entries(ratings))
+      let total = 0;
+      for (let key in ratings) {
+        total += Number(ratings[key]);
       }
-      let average = (sum / getTotal()).toFixed(1);
 
+      let average = (sum / total).toFixed(1);
+      // console.log('average', average);
       this.setState({ starRating: average });
     })
   }
@@ -121,8 +125,6 @@ class Overview extends React.Component {
       this.setState({picIndex: (this.state.picIndex + 1)})
     } else if (!direction && this.state.picIndex > 0) {
       this.setState({picIndex: (this.state.picIndex - 1)})
-    } else {
-      console.log('what?');
     }
   }
 
@@ -131,12 +133,15 @@ class Overview extends React.Component {
 
   sendToCart () {
     let id = this.state.sku;
-    console.log(id);
+    // console.log(id);
     if (id !== 0) {
       axios.post(`/cart/${id}`)
     }
   }
 
+  toggleModal (boo) {
+    this.setState({openModal: boo});
+  }
 
   render () {
     return (
@@ -144,7 +149,7 @@ class Overview extends React.Component {
         <Top>
           <h1>{this.state.productSelected.name}</h1>
           <StarsDiv>
-            <Stars ratings={this.state.starRating} />
+            <Stars rating={this.state.starRating} />
           </StarsDiv>
         </Top>
         <h3> {this.state.productSelected.slogan}</h3>
@@ -162,6 +167,8 @@ class Overview extends React.Component {
         cartHandler={this.sendToCart}
         picHandler={this.handlePictureChange}
         picIndex={this.state.picIndex}
+        openModal={this.state.openModal}
+        modalHandler={this.toggleModal}
         />
         <ProductInfo>
           <div>
@@ -229,11 +236,7 @@ const Features = styled.div`
   flex-direction: column;
 `
 
-{/* <ImageGallery 
-pics={this.state.productStyles[this.state.styleSelected].photos || null} 
-currentPic={this.state.picIndex} 
-picChangeHandler={this.handlePictureChange.bind(this)} 
-/> */}
+
 
 export default Overview;
 

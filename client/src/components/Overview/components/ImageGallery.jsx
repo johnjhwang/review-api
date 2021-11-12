@@ -8,8 +8,11 @@ const ImageGallery = (props) => {
   let arrowRight = '>>';
   let arrowLeft = '<<';
 
+
+
+
   if (props.pics === null) {
-    console.log('images', props.pics);
+    // console.log('images', props.pics);
       return (<div>
         <h2>Images</h2>
         <Gallery>
@@ -20,7 +23,8 @@ const ImageGallery = (props) => {
     console.log('images', props.pics[0]);
     return (<Gallery>
           <LeftButton onClick={(e) => {props.handlePictureChange(false)}} > {arrowLeft} </LeftButton>
-          <Image url={props.pics[props.picIndex].url} />
+          <Image url={props.pics[props.picIndex].url} onClick={(e) => {props.modalHandler(true)}} />
+
           <RightButton onClick={(e) => {props.handlePictureChange(true)}} > {arrowRight} </RightButton>  
         </Gallery>)
   }
