@@ -16,7 +16,8 @@ const OutfitList = (props) => {
   const ref = useRef()
 
   useEffect(() => { showArrow() })
-
+  useEffect(() => { moveToNext() })
+  useEffect(() => { moveToPrev() })
 
   const handlePlusButtonClick = () => {
     let copy = outfits;
@@ -66,14 +67,14 @@ const OutfitList = (props) => {
 
   //render() {
     return(
-      <div>
+      <div id="OutfitList">
         <Title>YOUR OUTFIT</Title>
         <ListContainer>
         <ButtonContainer>{showLeft && <LeftArrow onClick={moveToPrev}>˱</LeftArrow>}</ButtonContainer>
           <Card><PlusButton onClick={handlePlusButtonClick}>+</PlusButton></Card>
           <CarouserContainerInner ref={ref}>
-            {storageOutfits.slice(leftCount).map((id) => {
-              return <ProductCard relatedProductId={id} key={id} outfit={true} deleteOutfit={deleteOutfit}/>
+            {storageOutfits.slice(leftCount).map((id, i) => {
+              return <ProductCard relatedProductId={id} key={i} outfit={true} deleteOutfit={deleteOutfit}/>
             })}
         </CarouserContainerInner>
         <ButtonContainer>{showRight && <RightArrow onClick={moveToNext}>˲</RightArrow>}</ButtonContainer>
@@ -92,7 +93,7 @@ const Title = styled.h3`
 `
 
 const ListContainer = styled.div`
-  //margin: auto;
+  margin-bottom: 30px;
   height: 320px;
   width: 71%;
   display: flex;

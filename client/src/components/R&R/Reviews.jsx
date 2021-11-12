@@ -26,7 +26,10 @@ class Reviews extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.state.reviews !== this.props.reviewsData.results){
+    if (prevProps.filters !== this.props.filters) {
+      this.applyFilters();
+    }
+    if (prevProps.reviewsData !== this.props.reviewsData){
       this.setState({
         reviews: this.props.reviewsData.results,
         visible: 2
@@ -42,8 +45,17 @@ class Reviews extends React.Component {
 
   applyFilters() {
     let result = [];
-
-
+    if (this.props.filters.length > 0) {
+      console.log('reviewdata >>>>', this.props.reviewsData)
+      this.props.reviewsData.results.forEach((review) => {
+        if (this.props.filters.indexOf(JSON.stringify(review.rating)) !== -1) {
+          result.push(review);
+        }
+      })
+      this.setState({ reviews: result}, () => console.log('reviewsdata is now:', this.state.reviews));
+    } else {
+      this.setState({ reviews: this.props.reviewsData.results, visible: 2 });
+    }
   }
 
   // stars, loading more questions/reviews, adding a question/review,
@@ -51,7 +63,7 @@ class Reviews extends React.Component {
   // All reviews will be saved per product.  Specific styles will not be accounted for within the review module.
 
   render () {
-    const { reviewsData } = this.props;
+    const { reviewsData, characteristics, pid } = this.props;
 
     return (<div>
         <ReviewsSort total={this.state.reviews && this.state.reviews.length} getReviews={this.props.getReviews}/>
@@ -59,7 +71,7 @@ class Reviews extends React.Component {
         <br/>
         <ButtonsStyle>
           <MoreReviews total={this.state.reviews && this.state.reviews.length} visible={this.state.visible} showMoreReviews={this.showMoreReviews}/>
-          <NewReview name={this.props.name}/>
+          <NewReview name={this.props.name} characteristics={characteristics} pid={pid}/>
         </ButtonsStyle>
     </div>)
   }

@@ -8,7 +8,7 @@ import Characteristics from './Characteristics.jsx';
 
 
 
-const Ratings = ({ reviewsMetaData, updateFilters, filters }) => {
+const Ratings = ({ reviewsMetaData, updateFilters, filters, clearFilters }) => {
 
   let { ratings, recommended, characteristics } = reviewsMetaData;
 
@@ -51,12 +51,29 @@ const Ratings = ({ reviewsMetaData, updateFilters, filters }) => {
         {recommended && <div>{getRecPercentage()}% of Users recommend this product</div>}
         <br />
         {ratings && Object.entries(ratings).map((rating) => {
-          return (<div>
-            <span style={{textDecoration: 'underline', cursor: 'pointer'}} onClick={updateFilters} value={rating[0]}>{rating[0]} stars </span>
-            <Bars count={rating[1]} total={getTotal()} />
-            </div>)
-          })
-        }
+          if (filters.indexOf(rating[0]) === -1) {
+            return (
+            <div>
+              <span style={{textDecoration: 'underline', cursor: 'pointer'}} onClick={updateFilters} value={rating[0]}>{rating[0]} stars </span>
+              <Bars count={rating[1]} total={getTotal()} />
+            </div>
+            )
+          } else {
+            return (
+              <div>
+                <span style={{textDecoration: 'underline', cursor: 'pointer', backgroundColor: 'black', color: 'white'}} onClick={updateFilters} value={rating[0]}>{rating[0]} stars </span>
+                <Bars count={rating[1]} total={getTotal()} />
+              </div>
+            )
+          }
+        })}
+        {filters.length > 0
+          ? <div>
+              <br/>
+              Current Filters: {filters.join('/')} star reviews
+              <button onClick={clearFilters}>Remove Current Filters</button>
+          </div>
+          : ''}
         <br />
         {characteristics && Object.entries(characteristics).map((entry) => (
           <Characteristics entry={entry}/>

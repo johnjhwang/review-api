@@ -268,6 +268,20 @@ app.put('/reviews/:review_id/:action', (req, res) => {
     })
 })
 
+app.post('/reviews/', (req, res) => {
+  axios.post(`${url}/reviews/`, req.body, {
+    headers: {
+      Authorization: API_KEY,
+    }
+  })
+    .then((response) => {
+      res.status(201).send(response.data)
+    })
+    .catch((err) => {
+      console.log('error POSTing new review server side >>>', err);
+    })
+})
+
 // ================================================================
 
 
