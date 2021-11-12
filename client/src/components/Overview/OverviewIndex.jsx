@@ -24,7 +24,8 @@ class Overview extends React.Component {
       picMax: 0,
       sku: 0,
       size: null,
-      starRating: 0
+      starRating: 0,
+      openModal: false
     }
     this.productGetter = this.productGetter.bind(this);
     this.getReviewsMeta = this.getReviewsMeta.bind(this);
@@ -34,6 +35,7 @@ class Overview extends React.Component {
     this.handlePictureChange = this.handlePictureChange.bind(this);
     this.retrieveCart = this.retrieveCart.bind(this);
     this.sendToCart = this.sendToCart.bind(this);
+    this.toggleModal = this.toggleModal.bind(this);
   }
 
   componentDidMount() {
@@ -63,10 +65,10 @@ class Overview extends React.Component {
   }
 
   getReviewsMeta() {
-    handler.getMeta(this.state.product_id, (responseData) => {
+    handler.getMeta(this.props.product_id, (responseData) => {
       console.log('client metaData >>>>', responseData);
       
-      let { ratings } = responseData;
+      let ratings = responseData.ratings;
  
       let sum = 0;
       for (let key in ratings) {
@@ -75,8 +77,13 @@ class Overview extends React.Component {
       if (ratings !== undefined){
         console.log('Object.entries >>>', Object.entries(ratings))
       }
-      let average = (sum / getTotal()).toFixed(1);
+      let total = 0;
+      for (let key in ratings) {
+        total += Number(ratings[key]);
+      }
 
+      let average = (sum / total).toFixed(1);
+      console.log('average', average);
       this.setState({ starRating: average });
     })
   }
@@ -137,6 +144,9 @@ class Overview extends React.Component {
     }
   }
 
+  toggleModal (boo) {
+    this.setState({openModal: boo});
+  }
 
   render () {
     return (
@@ -144,7 +154,7 @@ class Overview extends React.Component {
         <Top>
           <h1>{this.state.productSelected.name}</h1>
           <StarsDiv>
-            <Stars ratings={this.state.starRating} />
+            <Stars rating={this.state.starRating} />
           </StarsDiv>
         </Top>
         <h3> {this.state.productSelected.slogan}</h3>
@@ -162,6 +172,8 @@ class Overview extends React.Component {
         cartHandler={this.sendToCart}
         picHandler={this.handlePictureChange}
         picIndex={this.state.picIndex}
+        openModal={this.state.openModal}
+        modalHandler={this.toggleModal}
         />
         <ProductInfo>
           <div>
@@ -229,11 +241,7 @@ const Features = styled.div`
   flex-direction: column;
 `
 
-{/* <ImageGallery 
-pics={this.state.productStyles[this.state.styleSelected].photos || null} 
-currentPic={this.state.picIndex} 
-picChangeHandler={this.handlePictureChange.bind(this)} 
-/> */}
+
 
 export default Overview;
 
