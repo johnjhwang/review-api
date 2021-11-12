@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import handler from '../Shared/reviewhandler.js';
 import dateFormatter from '../Shared/dateformatter.js';
+import Stars from "../Shared/Stars.jsx";
 
 
 class ReviewTile extends React.Component {
@@ -17,7 +18,7 @@ class ReviewTile extends React.Component {
   handleClick = (e) => {
     let { review, updateReviews } = this.props
 
-    let action = e.target.getAttribute('name');
+    let action = e.target.getAttribute('value');
     console.log('action >>', action, 'checker >>', this.state.checker);
 
     if (action === 'helpful' && this.state.checker === false) {
@@ -29,11 +30,8 @@ class ReviewTile extends React.Component {
     }
     if (action === 'report' && this.state.reported === false) {
       this.setState({ reported: true });
-      handler.update(review.review_id, action, (responseData) => {
-        updateReviews();
-      })
+      handler.update(review.review_id, action);
     }
-
   }
 
   render() {
@@ -42,18 +40,19 @@ class ReviewTile extends React.Component {
     return (
       <div>
         <br/>
-        {review.rating} stars
-        <div style={{ float: 'right' }}>{review.reviewer_name}, {dateFormatter(review.date)}</div>
-        <br />
-        {review.summary}
-        <br />
+        <div><Stars rating={review.rating}/></div>
+        <div style={{ float: 'right', marginRight: '5px' }}>{review.reviewer_name}, {dateFormatter(review.date)}</div>
+        <h3>{review.summary}</h3>
         {review.body}
         <br/>
-        {review.recommend && <div>✅  I recommend this product</div>}
-        <span>Helpful? </span>
-        <span name="helpful" onClick={(e) => this.handleClick(e)} style={{textDecoration: 'underline'}}>Yes</span>
-        <span> {review.helpfulness} |  </span>
-        <span name="report" onClick={(e) => this.handleClick(e)} style={{textDecoration: 'underline'}}>Report</span>
+        {review.recommend && <div>✔️ I recommend this product</div>}
+        <br/>
+        <span>Was this review helpful? </span>
+        <span value='helpful' onClick={(e) => this.handleClick(e)} style={{textDecoration: 'underline', cursor: 'pointer'}}>Yes</span>
+        <span> ({review.helpfulness}) |  </span>
+        {this.state.reported ?
+        <span>Reported</span> : <span value='report' onClick={(e) => this.handleClick(e)} style={{textDecoration: 'underline', cursor: 'pointer'}}>Report</span>}
+
       </div>
     )
   }

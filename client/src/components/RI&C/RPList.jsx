@@ -90,7 +90,6 @@ class RPList extends React.Component {
 
 
   render() {
-    //console.log(this.state.leftCount)
     let leftCount = this.state.leftCount
     let relatedProductId = [];
     this.state.relatedProductId.forEach((id) => {
@@ -99,12 +98,12 @@ class RPList extends React.Component {
       }
     })
     return (
-      <div>
+      <div id="RPList">
         <Title>RELATED PRODUCTS</Title>
-        <ListContainer>
+        <ListContainer id="rplist">
         <ButtonContainer>{this.state.showLeft && <LeftArrow onClick={this.moveToPrev}>˱</LeftArrow>}</ButtonContainer>
           <CarouserContainerInner ref={this.myRef}>
-        {relatedProductId.slice(leftCount).map((id) => {
+        {relatedProductId.slice(leftCount).map((id, i) => {
           return <ProductCard relatedProductId={id} key={id} productInfo={this.state.currentProductInfo} rp={true} handleProductChange={this.props.handleProductChange}/>
         })}
         </CarouserContainerInner>
