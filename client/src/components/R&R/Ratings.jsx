@@ -70,6 +70,7 @@ const Ratings = ({ reviewsMetaData, updateFilters, filters, clearFilters }) => {
           ? <div>
               <br/>
               Current Filters: {filters.join('/')} star reviews
+              <br/>
               <button onClick={clearFilters}>Remove Current Filters</button>
           </div>
           : ''}
