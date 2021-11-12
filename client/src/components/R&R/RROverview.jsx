@@ -34,10 +34,10 @@ class Overview extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.product_id !== prevProps.product_id) {
+      this.setState({ product_id: this.props.product_id });
       this.getReviews();
       this.getReviewsMeta();
       this.getProductName();
-
     }
   }
 
