@@ -25,7 +25,8 @@ const AddToCart = (props) => {
   }
 
   return (<div>
-    <h2>Buy Product</h2>
+    <h2>Purchase this item?</h2>
+    <p>Cost: ${props.price}</p>
     <h3>Select Size</h3>
     <select onChange={(e) => {props.sizeHandler(e.target.options[e.target.selectedIndex])}}>
     <option value={0} quant={[0]} > Choose Size </option>

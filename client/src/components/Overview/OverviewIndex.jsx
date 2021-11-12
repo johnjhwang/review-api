@@ -1,16 +1,19 @@
 // Overview
 
 import React from "react";
+import _ from "underscore";
 import styled from "styled-components";
 import axios from "axios";
 import StyleSelector from "./components/StyleSelector.jsx";
-import ImageGallery from "./components/ImageGallery.jsx";
+import handler from '../Shared/reviewhandler.js';
+import Stars from "../Shared/Stars.jsx";
 
 class Overview extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      productSelected: {name: null},
+      product_id: this.props.product_id,
+      productSelected: {name: null, features: []},
       productStyles: ["default"],
       productPrice: 0,
       totalPrice: 0,
@@ -20,13 +23,22 @@ class Overview extends React.Component {
       picIndex: 0,
       picMax: 0,
       sku: 0,
-      size: null
+      size: null,
+      starRating: 0
     }
+    this.productGetter = this.productGetter.bind(this);
+    this.getReviewsMeta = this.getReviewsMeta.bind(this);
+    this.handleStyleChange = this.handleStyleChange.bind(this);
+    this.handleSizeChange = this.handleSizeChange.bind(this);
+    this.handlePriceChange = this.handlePriceChange.bind(this);
+    this.handlePictureChange = this.handlePictureChange.bind(this);
+    this.retrieveCart = this.retrieveCart.bind(this);
+    this.sendToCart = this.sendToCart.bind(this);
   }
 
   componentDidMount() {
-    this.productGetter.bind(this);
-    this.productGetter(39333);
+    this.productGetter(this.props.product_id);
+    this.getReviewsMeta();
   }
 
   productGetter (id) {
@@ -48,6 +60,25 @@ class Overview extends React.Component {
       })
       
     });
+  }
+
+  getReviewsMeta() {
+    handler.getMeta(this.state.product_id, (responseData) => {
+      console.log('client metaData >>>>', responseData);
+      
+      let { ratings } = responseData;
+ 
+      let sum = 0;
+      for (let key in ratings) {
+        sum += Number(key) * Number(ratings[key]);
+      }
+      if (ratings !== undefined){
+        console.log('Object.entries >>>', Object.entries(ratings))
+      }
+      let average = (sum / getTotal()).toFixed(1);
+
+      this.setState({ starRating: average });
+    })
   }
 
   handleStyleChange (e) {
@@ -96,48 +127,58 @@ class Overview extends React.Component {
   }
 
   retrieveCart () {
-
   }
 
   sendToCart () {
     let id = this.state.sku;
     console.log(id);
-    axios.post(`/cart/${id}`).then((newCart) => {
-      console.log('newCart', newCart);
-      
-    })
-    
-    // if (id !== 0) {
-    //   axios.post(`/cart/${id}`).then((data) => {
-    //     console.log('Here after cart post');
-    //     axios.get('/cart').then((newCart) => {
-    //       console.log(newCart.data);
-    //     })
-    //   })
-    // }
+    if (id !== 0) {
+      axios.post(`/cart/${id}`)
+    }
   }
 
 
   render () {
     return (
       <OverDiv>
-        <h1>{this.state.productSelected.name}</h1>
-        <h2>{this.state.productStyles[this.state.styleSelected].name}</h2>
+        <Top>
+          <h1>{this.state.productSelected.name}</h1>
+          <StarsDiv>
+            <Stars ratings={this.state.starRating} />
+          </StarsDiv>
+        </Top>
+        <h3> {this.state.productSelected.slogan}</h3>
 
-        <p>{this.state.productSelected.description}</p>
+        
         <StyleSelector 
         styles={this.state.productStyles} 
-        styleHandler={this.handleStyleChange.bind(this)} 
-        sizeHandler={this.handleSizeChange.bind(this)} 
-        priceHandler={this.handlePriceChange.bind(this)}
+        styleHandler={this.handleStyleChange} 
+        sizeHandler={this.handleSizeChange} 
+        priceHandler={this.handlePriceChange}
         currentStyle={this.state.styleSelected} 
         quantity={this.state.quantity} 
-        price={this.state.chosenAmount * this.state.productPrice}
-        cartHandler={this.sendToCart.bind(this)}
-        picHandler={this.handlePictureChange.bind(this)}
+        price={this.state.productPrice}
+        totalPrice={this.state.chosenAmount * this.state.productPrice}
+        cartHandler={this.sendToCart}
+        picHandler={this.handlePictureChange}
         picIndex={this.state.picIndex}
         />
-        
+        <ProductInfo>
+          <div>
+          <p><b>Style</b>: {this.state.productStyles[this.state.styleSelected].name}</p>
+          <p>{this.state.productSelected.description}</p>
+          </div>
+          <Features>
+            <b>Features</b>
+            {_.map(this.state.productSelected.features, (feature) => {
+              if (feature.value === null) {
+                return (<li>{feature.feature}</li>)
+              } else {
+                return (<li>{feature.feature}: {feature.value}</li>)
+              }
+            })}
+          </Features>
+        </ProductInfo>
       </OverDiv>
       
     )
@@ -145,14 +186,48 @@ class Overview extends React.Component {
 }
 
 const OverDiv = styled.div`
-width: 1000px;
-height: 1000px;
-box-shadow: 0 0.5em 1em -0.125em rgb(10 10 10 / 10%), 0 0 0 1px rgb(10 10 10 / 2%);
-border-radius: 0.25rem;
-margin: 8px;
-border: 1px solid grey;
-float: left;
-`;
+  display: flex;
+  width: 100%;
+  height: 1000px;
+  box-shadow: 0 0.5em 1em -0.125em rgb(10 10 10 / 10%), 0 0 0 1px rgb(10 10 10 / 2%);
+  border-radius: 0.25rem;
+  margin: 8px;
+  border: 1px solid grey;
+  float: left;
+  flex-direction: column;
+`
+
+const Top = styled.div`
+  display: flex;
+  width: 100%;
+  height: 50px;
+  margin: 8px;
+  align-items: center;
+  float: left;
+`
+
+const StarsDiv = styled.div`
+  display: flex;
+  width: 80px;
+  height: 25px;
+  margin: 8px;
+  float: left;
+`
+
+const ProductInfo = styled.div`
+  display: flex;
+  width: 100%;
+  height: 100px;
+  margin: 8px;
+`
+
+const Features = styled.div`
+  display: flex;
+  width: 35%;
+  height: 100px;
+  border-left: 1px solid grey;
+  flex-direction: column;
+`
 
 {/* <ImageGallery 
 pics={this.state.productStyles[this.state.styleSelected].photos || null} 

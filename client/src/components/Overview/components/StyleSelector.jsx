@@ -19,25 +19,26 @@ const StyleSelector = (props) => {
   }
 
   return (<div>
-    <Cart>
-    <AddToCart 
-    styleInfo={props.styles[props.currentStyle]} 
-    quantity={props.quantity} 
-    sizeHandler={props.sizeHandler} 
-    priceHandler={props.priceHandler}
+  <SuperContainer>
+    <ImageGallery 
+      pics={photos || null} 
+      picIndex={props.picIndex}
+      handlePictureChange={props.picHandler}
     />
-    <p>Total is: {props.price}</p>
+    <Cart>
+      <AddToCart 
+        styleInfo={props.styles[props.currentStyle]} 
+        quantity={props.quantity} 
+        sizeHandler={props.sizeHandler} 
+        priceHandler={props.priceHandler}
+        price={props.price}
+      />
+    <p>Total is: {props.totalPrice}</p>
         
-    <button onClick={(e) => {props.cartHandler()}}>Add to Cart</button>
+    <CartAdd onClick={(e) => {props.cartHandler()}}>Add to Cart</CartAdd>
   </Cart>
-  <ImageGallery 
-    pics={photos || null} 
-    picIndex={props.picIndex}
-    handlePictureChange={props.picHandler}
-  />
-  
-    <div>
-      <h2>Style List</h2>
+  </SuperContainer>
+    <StyleContainer>
       {_.map(props.styles, (s) => {
           num = num + 1;
           // let url =  || ;
@@ -48,21 +49,42 @@ const StyleSelector = (props) => {
             return (<li key={s.style_id} id={num} onClick={(e) => {props.styleHandler(e)}}>{s.name}</li>)
           }
       })}
-    </div>
+    </StyleContainer>
   </div>)
 }
 
 const Cart = styled.div`
-width: 400px;
-height: 300px;
+display: flex;
+width: 30%;
+height: 100%;
 box-shadow: 0 0.5em 1em -0.125em rgb(10 10 10 / 10%), 0 0 0 1px rgb(10 10 10 / 2%);
 border-radius: 0.25rem;
 margin: 8px;
 border: 1px solid grey;
 float: right;
+flex-direction: column;
+`;
+
+const CartAdd = styled.button`
+display: flex;
+width: 90px;
+height: 20px;
+margin: 4px;
+float: left;
+align-items: center;
+`
+
+const StyleContainer = styled.div`
+display: flex;
+width: 70%;
+height: 125px;
+margin-top: 10px;
+float: left;
+flex-wrap: wrap;
 `;
 
 const Style = styled.div`
+display: flex;
 width: 50px;
 height: 50px;
 border: solid;
@@ -70,9 +92,15 @@ border-radius: 20rem;
 background-image: url(${props => props.url});
 background-repeat: no-repeat;
 background-size: 100% 100%;
-margin: 0 auto;
+margin: 10px;
 float: left;
 `;
 
+const SuperContainer = styled.div`
+  display: flex;
+  width: 100%;
+  height: 350px;
+  float: left;
+`
 
 export default StyleSelector;
