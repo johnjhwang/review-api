@@ -43,21 +43,17 @@ class Overview extends React.Component {
 
   getReviews(sort = 'relevant') {
     handler.get(this.state.product_id, sort, (responseData) => {
-      console.log('client responseData >>>>', responseData);
-      this.setState({ reviewsData: responseData }, () => {
-        console.log('this.state.reviewsData >>>', this.state.reviewsData);
-      });
-    })
+      this.setState({ reviewsData: responseData });
+   })
   }
+
 
   getReviewsMeta() {
     handler.getMeta(this.state.product_id, (responseData) => {
-      console.log('client metaData >>>>', responseData);
-      this.setState({ reviewsMetaData: responseData }, () => {
-        console.log('reviewsMetaData in state >>>', this.state.reviewsMetaData);
-      });
-    })
+      this.setState({ reviewsMetaData: responseData });
+  });
   }
+
 
   updateReviews() {
     this.getReviews();

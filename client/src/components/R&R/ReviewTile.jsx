@@ -19,7 +19,6 @@ class ReviewTile extends React.Component {
     let { review, updateReviews } = this.props
 
     let action = e.target.getAttribute('value');
-    console.log('action >>', action, 'checker >>', this.state.checker);
 
     if (action === 'helpful' && this.state.checker === false) {
 

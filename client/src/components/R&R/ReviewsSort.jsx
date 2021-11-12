@@ -15,7 +15,6 @@ class ReviewsSort extends React.Component {
   }
 
   handleSortChange(e) {
-    console.log('e.target.value', e.target.value);
     this.setState({ sort: e.target.value }, () => {
       this.props.getReviews(this.state.sort);
   })

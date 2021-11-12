@@ -15,8 +15,7 @@ class NewReviewChars extends React.Component {
     const name = e.target.name;
     const value = e.target.value;
 
-    console.log('e.target >>>>', name, value);
-    this.setState({ [name]: value }, () => console.log(`${name} in state is now: `, this.state[name]), this.props.processCharSelection(name, value));
+    this.setState({ [name]: value }, this.props.processCharSelection(name, value));
   }
 
   render () {
