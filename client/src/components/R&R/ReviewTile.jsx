@@ -37,7 +37,7 @@ class ReviewTile extends React.Component {
     let { review, updateReviews } = this.props
 
     return (
-      <div>
+      <div style={{borderBottom: '1px solid black'}}>
         <br/>
         <div><Stars rating={review.rating}/></div>
         <div style={{ float: 'right', marginRight: '5px' }}>{review.reviewer_name}, {dateFormatter(review.date)}</div>
@@ -51,7 +51,8 @@ class ReviewTile extends React.Component {
         <span> ({review.helpfulness}) |  </span>
         {this.state.reported ?
         <span>Reported</span> : <span value='report' onClick={(e) => this.handleClick(e)} style={{textDecoration: 'underline', cursor: 'pointer'}}>Report</span>}
-
+        <br/>
+        <br/>
       </div>
     )
   }

@@ -6,8 +6,6 @@ import styled from 'styled-components';
 
 const Characteristics = ({ entry }) => {
 
-  console.log('entry >>>>', entry);
-
     return (
     <div>
       {entry[0]}:
@@ -32,7 +30,7 @@ const Characteristics = ({ entry }) => {
   height: 0;
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
-  border-top: 10px solid #054308;
+  border-top: 10px solid #0d7012;
   position: absolute;
 
   `
