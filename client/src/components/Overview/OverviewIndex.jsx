@@ -48,10 +48,10 @@ class Overview extends React.Component {
     let store = null;
     axios.get(`/products/${id}`).then((productData) => {
       // Grabbing product information, including current style
-      console.log(productData.data);
+      // console.log(productData.data);
       store = productData.data;
       axios.get(`/products/${id}/styles`).then((styleData) => {
-        console.log(styleData.data);
+        // console.log(styleData.data);
         this.setState({
           productSelected: store, 
           productStyles: styleData.data.results, 
@@ -66,7 +66,7 @@ class Overview extends React.Component {
 
   getReviewsMeta() {
     handler.getMeta(this.props.product_id, (responseData) => {
-      console.log('client metaData >>>>', responseData);
+      // console.log('client metaData >>>>', responseData);
       
       let ratings = responseData.ratings;
  
@@ -74,16 +74,13 @@ class Overview extends React.Component {
       for (let key in ratings) {
         sum += Number(key) * Number(ratings[key]);
       }
-      if (ratings !== undefined){
-        console.log('Object.entries >>>', Object.entries(ratings))
-      }
       let total = 0;
       for (let key in ratings) {
         total += Number(ratings[key]);
       }
 
       let average = (sum / total).toFixed(1);
-      console.log('average', average);
+      // console.log('average', average);
       this.setState({ starRating: average });
     })
   }
@@ -128,8 +125,6 @@ class Overview extends React.Component {
       this.setState({picIndex: (this.state.picIndex + 1)})
     } else if (!direction && this.state.picIndex > 0) {
       this.setState({picIndex: (this.state.picIndex - 1)})
-    } else {
-      console.log('what?');
     }
   }
 
@@ -138,7 +133,7 @@ class Overview extends React.Component {
 
   sendToCart () {
     let id = this.state.sku;
-    console.log(id);
+    // console.log(id);
     if (id !== 0) {
       axios.post(`/cart/${id}`)
     }

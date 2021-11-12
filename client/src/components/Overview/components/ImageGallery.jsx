@@ -12,7 +12,7 @@ const ImageGallery = (props) => {
 
 
   if (props.pics === null) {
-    console.log('images', props.pics);
+    // console.log('images', props.pics);
       return (<div>
         <h2>Images</h2>
         <Gallery>
