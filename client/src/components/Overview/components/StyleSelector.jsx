@@ -3,8 +3,11 @@ import React from "react";
 import _ from "underscore";
 
 import AddToCart from "./AddToCart.jsx";
+import ImageGallery from "./ImageGallery.jsx";
 
 import styled from "styled-components";
+
+
 
 const StyleSelector = (props) => {
   // console.log(props.styles);
@@ -16,7 +19,7 @@ const StyleSelector = (props) => {
   }
 
   return (<div>
-  <Cart>
+    <Cart>
     <AddToCart 
     styleInfo={props.styles[props.currentStyle]} 
     quantity={props.quantity} 
@@ -25,13 +28,25 @@ const StyleSelector = (props) => {
     />
     <p>Total is: {props.price}</p>
         
-    <button onClick={(e) => {this.cartHandler()}}>Add to Cart</button>
+    <button onClick={(e) => {props.cartHandler()}}>Add to Cart</button>
   </Cart>
+  <ImageGallery 
+    pics={photos || null} 
+    picIndex={props.picIndex}
+    handlePictureChange={props.picHandler}
+  />
+  
     <div>
       <h2>Style List</h2>
       {_.map(props.styles, (s) => {
           num = num + 1;
-          return (<li key={s.style_id} id={num} onClick={(e) => {props.styleHandler(e)}}>{s.name}</li>)
+          // let url =  || ;
+          console.log('s', s);
+          if (s !== 'default') {
+           return (<Style id={num} url={s.photos[0].thumbnail_url} onClick={(e) => {props.styleHandler(e)}} />)
+          } else {
+            return (<li key={s.style_id} id={num} onClick={(e) => {props.styleHandler(e)}}>{s.name}</li>)
+          }
       })}
     </div>
   </div>)
@@ -46,5 +61,18 @@ margin: 8px;
 border: 1px solid grey;
 float: right;
 `;
+
+const Style = styled.div`
+width: 50px;
+height: 50px;
+border: solid;
+border-radius: 20rem;
+background-image: url(${props => props.url});
+background-repeat: no-repeat;
+background-size: 100% 100%;
+margin: 0 auto;
+float: left;
+`;
+
 
 export default StyleSelector;

@@ -31,16 +31,22 @@ class Overview extends React.Component {
 
   productGetter (id) {
     console.log('Getting products...', id);
-    axios.get(`/products/${id}`).then((data) => {
+    let store = null;
+    axios.get(`/products/${id}`).then((productData) => {
       // Grabbing product information, including current style
-      console.log(data.data);
-      this.setState({
-        productSelected: data.data.product, 
-        productStyles: data.data.styles, 
-        productPrice: data.data.product.default_price,
-        picIndex: 0,
-        picMax: (data.data.styles[0].photos.length - 1)
-      });
+      console.log(productData.data);
+      store = productData.data;
+      axios.get(`/products/${id}/styles`).then((styleData) => {
+        console.log(styleData.data);
+        this.setState({
+          productSelected: store, 
+          productStyles: styleData.data.results, 
+          productPrice: store.default_price,
+          picIndex: 0,
+          picMax: (styleData.data.results[0].photos.length - 1)
+        });
+      })
+      
     });
   }
 
@@ -80,7 +86,6 @@ class Overview extends React.Component {
   }
 
   handlePictureChange (direction) {
-    
     if (direction && this.state.picIndex < this.state.picMax) {
       this.setState({picIndex: (this.state.picIndex + 1)})
     } else if (!direction && this.state.picIndex > 0) {
@@ -97,13 +102,19 @@ class Overview extends React.Component {
   sendToCart () {
     let id = this.state.sku;
     console.log(id);
-    if (id !== 0) {
-      axios.post(`/cart/${id}`).then((data) => {
-        axios.get('/cart').then((newCart) => {
-          console.log(newCart.data);
-        })
-      })
-    }
+    axios.post(`/cart/${id}`).then((newCart) => {
+      console.log('newCart', newCart);
+      
+    })
+    
+    // if (id !== 0) {
+    //   axios.post(`/cart/${id}`).then((data) => {
+    //     console.log('Here after cart post');
+    //     axios.get('/cart').then((newCart) => {
+    //       console.log(newCart.data);
+    //     })
+    //   })
+    // }
   }
 
 
@@ -112,11 +123,7 @@ class Overview extends React.Component {
       <OverDiv>
         <h1>{this.state.productSelected.name}</h1>
         <h2>{this.state.productStyles[this.state.styleSelected].name}</h2>
-        <ImageGallery 
-        pics={this.state.productStyles[this.state.styleSelected].photos || null} 
-        currentPic={this.state.picIndex} 
-        picChangeHandler={this.handlePictureChange.bind(this)} 
-        />
+
         <p>{this.state.productSelected.description}</p>
         <StyleSelector 
         styles={this.state.productStyles} 
@@ -126,7 +133,9 @@ class Overview extends React.Component {
         currentStyle={this.state.styleSelected} 
         quantity={this.state.quantity} 
         price={this.state.chosenAmount * this.state.productPrice}
-        cartHandle={this.sendToCart.bind(this)}
+        cartHandler={this.sendToCart.bind(this)}
+        picHandler={this.handlePictureChange.bind(this)}
+        picIndex={this.state.picIndex}
         />
         
       </OverDiv>
@@ -145,7 +154,11 @@ border: 1px solid grey;
 float: left;
 `;
 
-
+{/* <ImageGallery 
+pics={this.state.productStyles[this.state.styleSelected].photos || null} 
+currentPic={this.state.picIndex} 
+picChangeHandler={this.handlePictureChange.bind(this)} 
+/> */}
 
 export default Overview;
 

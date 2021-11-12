@@ -17,7 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static(__dirname + '/../client/dist'));
 
-let {OverHelpers} = require('./OVhelpers.js');
+let {OVhelpers} = require('./OVhelpers.js');
 
 // attach authorization header with API key imported in from config.js file here or in helper js
 // -------get questions-----
@@ -361,6 +361,7 @@ app.get('/reviews/meta/:product_id', (req, res) => {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
 app.get(`/products/:productid`, function (req, res) {
   // TODO - your code here!
   console.log(req.params.productid);
@@ -376,6 +377,7 @@ app.get(`/products/:productid`, function (req, res) {
 
 });
 
+
 app.post(`/cart/:sku_id`, function (req, res) {
   // TODO - your code here!
 
@@ -383,18 +385,32 @@ app.post(`/cart/:sku_id`, function (req, res) {
 
   console.log('Hi there, cart', product);
 
-  helpers.intoCart(product).then((data) => {
-    res.status(200);
-  }).catch((err) => {
-    res.status(404);
+  axios.post(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-nyc/cart`, 
+  { 
+    headers: { 
+      'Authorization': API_KEY,
+      'Content-Type': 'application/json'
+    },
+    data: { 'sku_id': `${product}` }
   })
+      .then((results) => {
+        res.status(200).send(results.data);
+      })
+      .catch((err) => {
+        res.send(err);
+      })
 });
 
 app.get(`/cart`, function (req, res) {
   // TODO - your code here!
-  helpers.retrieveCart().then((cart) => {
-    res.status(200).send(cart.data);
-  })
+  axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-nyc/cart`, 
+  { headers: { 'Authorization': API_KEY } })
+    .then((results) => {
+      res.send(results.data);
+    })
+    .catch((err) => {
+      res.send(err);
+    })
 });
 
 

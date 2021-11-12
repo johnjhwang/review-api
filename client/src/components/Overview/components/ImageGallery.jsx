@@ -20,25 +20,58 @@ const ImageGallery = (props) => {
     return (<div>
         <h2>Images</h2>
         <Gallery>
-        <Image url={props.pics[props.currentPic].url} />
+          <LeftButton onClick={(e) => {props.handlePictureChange(false)}} /> 
+          <RightButton onClick={(e) => {props.handlePictureChange(true)}} />
+        <Image url={props.pics[props.picIndex].url} />
+          
         </Gallery>
-        <button onClick={(e) => {props.picChangeHandler(false)}}>Left</button>
-        <button onClick={(e) => {props.picChangeHandler(true)}}>Right</button>
     </div>)
   }
 }
 
-const Image = styled.img`
+const Image = styled.div`
   width: 200px;
-  height: 290px;
+  height: 295px;
   // border: solid;
   background-image: url(${props => props.url});
   background-repeat: no-repeat;
   background-size: 100% 100%;
+  margin: 0 auto;
+  align-items: center;
 `;
 
+const LeftButton = styled.button`
+  width: 30px;
+  height: 280px;
+  box-shadow: 0 0.5em 1em -0.125em rgb(10 10 10 / 10%), 0 0 0 1px rgb(10 10 10 / 2%);
+  border-radius: 0.25rem;
+  margin: 8px;
+  border: 1px solid grey;
+  float: left;
+`
+
+const RightButton = styled.button`
+  width: 30px;
+  height: 280px;
+  box-shadow: 0 0.5em 1em -0.125em rgb(10 10 10 / 10%), 0 0 0 1px rgb(10 10 10 / 2%);
+  border-radius: 0.25rem;
+  margin: 8px;
+  border: 1px solid grey;
+  float: right;
+`
+
 const Gallery = styled.div`
-width: 400px;
+  width: 400px;
+  height: 300px;
+  box-shadow: 0 0.5em 1em -0.125em rgb(10 10 10 / 10%), 0 0 0 1px rgb(10 10 10 / 2%);
+  border-radius: 0.25rem;
+  margin: 8px;
+  border: 1px solid grey;
+  align-items: center;
+`;
+
+const ButtonDisplay = styled.div`
+width: 300px;
 height: 300px;
 box-shadow: 0 0.5em 1em -0.125em rgb(10 10 10 / 10%), 0 0 0 1px rgb(10 10 10 / 2%);
 border-radius: 0.25rem;
