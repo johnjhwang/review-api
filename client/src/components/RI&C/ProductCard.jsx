@@ -5,6 +5,7 @@ import axios from "axios";
 import styled from "styled-components";
 import ComparisonModal from "./ComparisonModal.jsx";
 import Stars from "../Shared/Stars.jsx";
+import no_img from "./no_img.png"
 
 class RPEntry extends React.Component {
   constructor(props) {
@@ -178,7 +179,7 @@ const Image = styled.div`
   width: 100%;
   height: 200px;
   // border: solid;
-  background-image: url(${props => props.url || "https://images.unsplash.com/photo-1529108750117-bcbad8bd25dd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80"});
+  background-image: url(${props => props.url || no_img });
   background-repeat: no-repeat;
   background-size: 100% 100%;
 `;
