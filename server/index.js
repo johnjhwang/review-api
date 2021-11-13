@@ -8,16 +8,19 @@ const morgan = require('morgan');
 const config = require('../config.js');
 const API_KEY = config.API_KEY;
 const url = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-nyc';
+const compression = require('compression')
 // const helpers = require('./helpers.js');
 
 
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(compression());
 
 app.use(express.static(__dirname + '/../client/dist'));
 
 let {OverHelpers} = require('./OVhelpers.js');
+
 
 // attach authorization header with API key imported in from config.js file here or in helper js
 // -------get questions-----
@@ -99,6 +102,7 @@ app.get('/products/:product_id', (req, res) => {
   )
     .then((results) => {
       res.set('Cache-control', 'public, max-age=30000')
+      res.set('Accept-Encoding', 'gzip, compress, br')
       res.send(results.data)
     })
     .catch((err) => {
