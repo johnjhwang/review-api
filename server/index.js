@@ -8,16 +8,19 @@ const morgan = require('morgan');
 const config = require('../config.js');
 const API_KEY = config.API_KEY;
 const url = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-nyc';
+const compression = require('compression')
 // const helpers = require('./helpers.js');
 
 
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(compression());
 
 app.use(express.static(__dirname + '/../client/dist'));
 
 let {OVhelpers} = require('./OVhelpers.js');
+
 
 // attach authorization header with API key imported in from config.js file here or in helper js
 // -------get questions-----
@@ -137,9 +140,12 @@ app.get('/products/:product_id', (req, res) => {
   //console.log('REQ.PARAMS: ', req.params);
   axios.get(
     `https://app-hrsei-api.herokuapp.com/api/fec2/hr-nyc/products/${req.params.product_id}`,
-    { headers: { 'Authorization': API_KEY }}
+    { headers: {
+      'Authorization': API_KEY, 'Cache': 'public, max-age=30000' }}
   )
     .then((results) => {
+      res.set('Cache-control', 'public, max-age=30000')
+      res.set('Accept-Encoding', 'gzip, compress, br')
       res.send(results.data)
     })
     .catch((err) => {
@@ -152,9 +158,10 @@ app.get('/products/:product_id/related', (req, res) => {
   //console.log('REQ.PARAMS: ', req.params);
   axios.get(
     `https://app-hrsei-api.herokuapp.com/api/fec2/hr-nyc/products/${req.params.product_id}/related`,
-    { headers: { 'Authorization': API_KEY }}
+    { headers: { 'Authorization': API_KEY, 'Cache': 'public, max-age=30000' }}
   )
     .then((results) => {
+      res.set('Cache-control', 'public, max-age=30000')
       res.send(results.data)
     })
     .catch((err) => {
@@ -167,10 +174,10 @@ app.get('/products/:product_id/styles', (req, res) => {
   //console.log('REQ.PARAMS: ', req.params);
   axios.get(
     `https://app-hrsei-api.herokuapp.com/api/fec2/hr-nyc/products/${req.params.product_id}/styles`,
-    { headers: { 'Authorization': API_KEY }}
+    { headers: { 'Authorization': API_KEY, 'Cache': 'public, max-age=30000' }}
   )
     .then((results) => {
-      //console.log('results.data.results🐥',results.data.results)
+      res.set('Cache-control', 'public, max-age=30000')
       res.send(results.data)
     })
     .catch((err) => {
@@ -183,10 +190,10 @@ app.get('/reviews/meta/:product_id', (req, res) => {
   //console.log('REQ.PARAMS: ', req.params);
   axios.get(
     `https://app-hrsei-api.herokuapp.com/api/fec2/hr-nyc/reviews/meta?product_id=${req.params.product_id}`,
-    { headers: { 'Authorization': API_KEY }}
+    { headers: { 'Authorization': API_KEY, 'Cache': 'public, max-age=30000' }}
   )
     .then((results) => {
-      //console.log('results.data',results.data)
+      res.set('Cache-control', 'public, max-age=30000')
       res.send(results.data)
     })
     .catch((err) => {
@@ -284,80 +291,6 @@ app.post('/reviews/', (req, res) => {
 
 // ================================================================
 
-
-
-
-
-
-
-
-
-// ================================================================
-
-
-///////////////////////////////Related Product and Comparison////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-//request handler for get individual product information
-app.get('/products/:product_id', (req, res) => {
-  //console.log('REQ.PARAMS: ', req.params);
-  axios.get(
-    `https://app-hrsei-api.herokuapp.com/api/fec2/hr-nyc/products/${req.params.product_id}`,
-    { headers: { 'Authorization': API_KEY }}
-  )
-    .then((results) => {
-      res.send(results.data)
-    })
-    .catch((err) => {
-      console.log('Error in getting individual product information: ', err);
-    })
-})
-
-//request handler for get related product id
-app.get('/products/:product_id/related', (req, res) => {
-  //console.log('REQ.PARAMS: ', req.params);
-  axios.get(
-    `https://app-hrsei-api.herokuapp.com/api/fec2/hr-nyc/products/${req.params.product_id}/related`,
-    { headers: { 'Authorization': API_KEY }}
-  )
-    .then((results) => {
-      res.send(results.data)
-    })
-    .catch((err) => {
-      console.log('Error in getting individual product information: ', err);
-    })
-})
-
-//request handler for get product styles
-app.get('/products/:product_id/styles', (req, res) => {
-  //console.log('REQ.PARAMS: ', req.params);
-  axios.get(
-    `https://app-hrsei-api.herokuapp.com/api/fec2/hr-nyc/products/${req.params.product_id}/styles`,
-    { headers: { 'Authorization': API_KEY }}
-  )
-    .then((results) => {
-      //console.log('results.data.results🐥',results.data.results)
-      res.send(results.data)
-    })
-    .catch((err) => {
-      console.log('Error in getting individual product information: ', err);
-    })
-})
-
-//request handler for get product ratings
-app.get('/reviews/meta/:product_id', (req, res) => {
-  //console.log('REQ.PARAMS: ', req.params);
-  axios.get(
-    `https://app-hrsei-api.herokuapp.com/api/fec2/hr-nyc/reviews/meta?product_id=${req.params.product_id}`,
-    { headers: { 'Authorization': API_KEY }}
-  )
-    .then((results) => {
-      //console.log('results.data',results.data)
-      res.send(results.data)
-    })
-    .catch((err) => {
-      console.log('Error in getting individual product information: ', err);
-    })
-})
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
