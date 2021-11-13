@@ -94,9 +94,11 @@ app.get('/products/:product_id', (req, res) => {
   //console.log('REQ.PARAMS: ', req.params);
   axios.get(
     `https://app-hrsei-api.herokuapp.com/api/fec2/hr-nyc/products/${req.params.product_id}`,
-    { headers: { 'Authorization': API_KEY }}
+    { headers: {
+      'Authorization': API_KEY, 'Cache': 'public, max-age=30000' }}
   )
     .then((results) => {
+      res.set('Cache-control', 'public, max-age=30000')
       res.send(results.data)
     })
     .catch((err) => {
@@ -109,9 +111,10 @@ app.get('/products/:product_id/related', (req, res) => {
   //console.log('REQ.PARAMS: ', req.params);
   axios.get(
     `https://app-hrsei-api.herokuapp.com/api/fec2/hr-nyc/products/${req.params.product_id}/related`,
-    { headers: { 'Authorization': API_KEY }}
+    { headers: { 'Authorization': API_KEY, 'Cache': 'public, max-age=30000' }}
   )
     .then((results) => {
+      res.set('Cache-control', 'public, max-age=30000')
       res.send(results.data)
     })
     .catch((err) => {
@@ -124,10 +127,10 @@ app.get('/products/:product_id/styles', (req, res) => {
   //console.log('REQ.PARAMS: ', req.params);
   axios.get(
     `https://app-hrsei-api.herokuapp.com/api/fec2/hr-nyc/products/${req.params.product_id}/styles`,
-    { headers: { 'Authorization': API_KEY }}
+    { headers: { 'Authorization': API_KEY, 'Cache': 'public, max-age=30000' }}
   )
     .then((results) => {
-      //console.log('results.data.results🐥',results.data.results)
+      res.set('Cache-control', 'public, max-age=30000')
       res.send(results.data)
     })
     .catch((err) => {
@@ -140,10 +143,10 @@ app.get('/reviews/meta/:product_id', (req, res) => {
   //console.log('REQ.PARAMS: ', req.params);
   axios.get(
     `https://app-hrsei-api.herokuapp.com/api/fec2/hr-nyc/reviews/meta?product_id=${req.params.product_id}`,
-    { headers: { 'Authorization': API_KEY }}
+    { headers: { 'Authorization': API_KEY, 'Cache': 'public, max-age=30000' }}
   )
     .then((results) => {
-      //console.log('results.data',results.data)
+      res.set('Cache-control', 'public, max-age=30000')
       res.send(results.data)
     })
     .catch((err) => {
