@@ -14,23 +14,24 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // 39333 to 40343
-      product_id: 39336
+      // 39333 to 40343 (39346) 40125 40212
+      product_id: 40212
     }
     this.handleProductChange = this.handleProductChange.bind(this);
   }
 
   handleProductChange(id) {
-    this.setState({ product_id: id })
+    this.setState({ product_id: id });
   }
+
   render () {
     return (
     <div>
-       {/* <Overview /> */}
+        <Overview product_id={this.state.product_id} />
         <RPList productId={this.state.product_id} handleProductChange={this.handleProductChange}/>
         <OutfitList productId={this.state.product_id}/>
-        {/* <QA /> */}
-        {/* <RROverview product_id={this.state.product_id}/> */}
+        <QA productId={this.state.product_id}/>
+        <RROverview product_id={this.state.product_id}/>
     </div>)
   }
 }

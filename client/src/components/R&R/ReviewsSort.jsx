@@ -15,7 +15,6 @@ class ReviewsSort extends React.Component {
   }
 
   handleSortChange(e) {
-    console.log('e.target.value', e.target.value);
     this.setState({ sort: e.target.value }, () => {
       this.props.getReviews(this.state.sort);
   })
@@ -28,7 +27,7 @@ class ReviewsSort extends React.Component {
     return (
     <div>
       <form>
-          <label>{this.props.total} reviews, sorted by:
+          <label>{this.props.total} reviews, sorted by&nbsp;
             <select value={this.state.sort} onChange={this.handleSortChange}>
               <option value="relevant">relevance</option>
               <option value="newest">new</option>

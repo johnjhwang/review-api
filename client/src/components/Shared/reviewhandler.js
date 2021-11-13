@@ -8,7 +8,7 @@ module.exports = {
 
     axios.get(`/reviews/${product_id}/${sort}`)
       .then((responseData) => {
-        console.log('handler responseData >>>', responseData);
+
         callback(responseData.data);
       })
       .catch((err) => {
@@ -19,7 +19,7 @@ module.exports = {
   getMeta: function (product_id, callback) {
     axios.get(`/reviews/meta/${product_id}`)
       .then((responseData) => {
-        console.log('handler metaData >>>', responseData);
+
         callback(responseData.data);
       })
       .catch((err) => {
@@ -27,15 +27,21 @@ module.exports = {
       })
   },
 
-  post: {
-
+  post: function (body, callback) {
+    axios.post('/reviews/', body)
+    .then((response) => {
+      callback(response);
+    })
+    .catch((err) => {
+      console.log('post handler error >>>>>', err);
+    })
   },
 
   update: function (review_id, action, callback) { // mark review as helpful and report review (PUT /reviews/:review_id/helpful) (PUT /reviews/:review_id/report)
     console.log('review id/action >>>', review_id, action);
     axios.put(`/reviews/${review_id}/${action}`)
     .then((responseData) => {
-      console.log('put data >>>', responseData);
+
       callback(responseData);
     })
     .catch((err) => {

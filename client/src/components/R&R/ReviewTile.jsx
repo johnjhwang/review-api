@@ -19,7 +19,6 @@ class ReviewTile extends React.Component {
     let { review, updateReviews } = this.props
 
     let action = e.target.getAttribute('value');
-    console.log('action >>', action, 'checker >>', this.state.checker);
 
     if (action === 'helpful' && this.state.checker === false) {
 
@@ -38,21 +37,22 @@ class ReviewTile extends React.Component {
     let { review, updateReviews } = this.props
 
     return (
-      <div>
+      <div style={{borderBottom: '1px solid black'}}>
         <br/>
         <div><Stars rating={review.rating}/></div>
         <div style={{ float: 'right', marginRight: '5px' }}>{review.reviewer_name}, {dateFormatter(review.date)}</div>
         <h3>{review.summary}</h3>
         {review.body}
         <br/>
-        {review.recommend && <div>✅ &nbsp; I recommend this product</div>}
+        {review.recommend && <div>✔️ I recommend this product</div>}
         <br/>
         <span>Was this review helpful? </span>
         <span value='helpful' onClick={(e) => this.handleClick(e)} style={{textDecoration: 'underline', cursor: 'pointer'}}>Yes</span>
         <span> ({review.helpfulness}) |  </span>
         {this.state.reported ?
         <span>Reported</span> : <span value='report' onClick={(e) => this.handleClick(e)} style={{textDecoration: 'underline', cursor: 'pointer'}}>Report</span>}
-
+        <br/>
+        <br/>
       </div>
     )
   }

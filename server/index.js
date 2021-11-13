@@ -19,13 +19,13 @@ app.use(compression());
 
 app.use(express.static(__dirname + '/../client/dist'));
 
-let {OverHelpers} = require('./OVhelpers.js');
+let {OVhelpers} = require('./OVhelpers.js');
 
 
 // attach authorization header with API key imported in from config.js file here or in helper js
 // -------get questions-----
 app.get('/qa/questions', (req, res) => {
-  QAhelpers.getQuestion(req.query.product_id)
+  QAhelpers.getQuestion(req.query.product_id, req.query.count)
   .then((questions) => {
     res.json(questions.data)
   })
@@ -45,7 +45,6 @@ app.get('/qa/answers', (req, res) => {
 })
 // ----post questions-----
 app.post('/qa/questions', (req, res) => {
-  console.log(req.body)
   let body = req.body.body;
   let name = req.body.name;
   let email = req.body.email;
@@ -79,13 +78,57 @@ app.post('/qa/answers', (req, res) =>
 
 // ---- add to the Question helpfulness count ----
 
-
+app.put('/qa/questions/:product_id/helpful', (req, res) => {
+  console.log('i got hit');
+  const { product_id } = req.params;
+  QAhelpers.addToHelpfulness(product_id)
+  .then((response) => {
+    res.sendStatus(204)
+  })
+  .catch((error) => {
+    console.log(error)
+  })
+})
 
 // --- report question ------
+
+app.put('/qa/questions/:question_id/report', (req, res) => {
+  const { question_id } = req.params;
+  QAhelpers.reportQuestion(question_id)
+  .then((response) => {
+    res.sendStatus(204)
+  })
+  .catch((err) => {
+    console.log(err);
+  })
+})
 
 
 // ---- report answer -------
 
+app.put('/qa/answers/:answer_id/report', (req, res) => {
+  const { answer_id } = req.params;
+  QAhelpers.reportAnswer(answer_id)
+  .then((response) => {
+    res.sendStatus(204);
+  })
+  .then((err) => {
+    console.log(err)
+  })
+})
+
+// ------ add to answer helpfulness count ----
+
+app.put('/qa/answers/:answer_id/helpful', (req, res) => {
+  const { answer_id } = req.params;
+  QAhelpers.addToAnswerHelpfulness(answer_id)
+  .then((response) => {
+    res.sendStatus(204);
+  })
+  .then((err) => {
+    console.log(err)
+  })
+})
 
 
 
@@ -232,10 +275,25 @@ app.put('/reviews/:review_id/:action', (req, res) => {
     })
 })
 
+app.post('/reviews/', (req, res) => {
+  axios.post(`${url}/reviews/`, req.body, {
+    headers: {
+      Authorization: API_KEY,
+    }
+  })
+    .then((response) => {
+      res.status(201).send(response.data)
+    })
+    .catch((err) => {
+      console.log('error POSTing new review server side >>>', err);
+    })
+})
+
 // ================================================================
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 app.get(`/products/:productid`, function (req, res) {
   // TODO - your code here!
@@ -252,6 +310,7 @@ app.get(`/products/:productid`, function (req, res) {
 
 });
 
+
 app.post(`/cart/:sku_id`, function (req, res) {
   // TODO - your code here!
 
@@ -259,18 +318,32 @@ app.post(`/cart/:sku_id`, function (req, res) {
 
   console.log('Hi there, cart', product);
 
-  helpers.intoCart(product).then((data) => {
-    res.status(200);
-  }).catch((err) => {
-    res.status(404);
+  axios.post(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-nyc/cart`, 
+  { 
+    headers: { 
+      'Authorization': API_KEY,
+      'Content-Type': 'application/json'
+    },
+    data: { 'sku_id': `${product}` }
   })
+      .then((results) => {
+        res.status(200).send(results.data);
+      })
+      .catch((err) => {
+        res.send(err);
+      })
 });
 
 app.get(`/cart`, function (req, res) {
   // TODO - your code here!
-  helpers.retrieveCart().then((cart) => {
-    res.status(200).send(cart.data);
-  })
+  axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-nyc/cart`, 
+  { headers: { 'Authorization': API_KEY } })
+    .then((results) => {
+      res.send(results.data);
+    })
+    .catch((err) => {
+      res.send(err);
+    })
 });
 
 
