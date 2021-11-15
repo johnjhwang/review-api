@@ -5,8 +5,7 @@ const PORT = 3000;
 const axios = require('axios');
 const QAhelpers = require('./QAhelpers.js');
 const morgan = require('morgan');
-const config = require('../config.js');
-const API_KEY = config.API_KEY;
+const API_KEY = require('../config.js').API_KEY;
 const url = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-nyc';
 const compression = require('compression')
 // const helpers = require('./helpers.js');
@@ -25,23 +24,11 @@ let {OVhelpers} = require('./OVhelpers.js');
 // attach authorization header with API key imported in from config.js file here or in helper js
 // -------get questions-----
 app.get('/qa/questions', (req, res) => {
-  QAhelpers.getQuestion(req.query.product_id, req.query.count)
-  .then((questions) => {
-    res.json(questions.data)
-  })
-  .catch((err) => {
-    console.log(err);
-  })
+
 })
 // ----- getAnswers------
 app.get('/qa/answers', (req, res) => {
-  QAhelpers.getAnswers(question_id)
-  .then((answers) => {
-    res.json(answers.data)
-  })
-  .catch((err) => {
-    console.log(err)
-  })
+
 })
 // ----post questions-----
 app.post('/qa/questions', (req, res) => {
@@ -49,13 +36,7 @@ app.post('/qa/questions', (req, res) => {
   let name = req.body.name;
   let email = req.body.email;
   let product_id = req.body.product_id;
-  QAhelpers.createQuestion(body, name, email, product_id)
-  .then((question) => {
-    res.sendStatus(200)
-  })
-  .catch((err) => {
-    console.log(err);
-  })
+
 })
 
 // ---- post answers------
@@ -67,40 +48,21 @@ app.post('/qa/answers', (req, res) =>
   req.body.name = name;
   req.body.email = email;
   req.body.product_id = product_id;
-  QAhelpers.createAnswer(body, name, email, product_id)
-  .then((answer) => {
-    console.log(answer)
-  })
-  .catch((err) => {
-    console.log(err);
-  })
+
 })
 
 // ---- add to the Question helpfulness count ----
 
 app.put('/qa/questions/:product_id/helpful', (req, res) => {
-  console.log('i got hit');
   const { product_id } = req.params;
-  QAhelpers.addToHelpfulness(product_id)
-  .then((response) => {
-    res.sendStatus(204)
-  })
-  .catch((error) => {
-    console.log(error)
-  })
+
 })
 
 // --- report question ------
 
 app.put('/qa/questions/:question_id/report', (req, res) => {
   const { question_id } = req.params;
-  QAhelpers.reportQuestion(question_id)
-  .then((response) => {
-    res.sendStatus(204)
-  })
-  .catch((err) => {
-    console.log(err);
-  })
+
 })
 
 
@@ -108,26 +70,14 @@ app.put('/qa/questions/:question_id/report', (req, res) => {
 
 app.put('/qa/answers/:answer_id/report', (req, res) => {
   const { answer_id } = req.params;
-  QAhelpers.reportAnswer(answer_id)
-  .then((response) => {
-    res.sendStatus(204);
-  })
-  .then((err) => {
-    console.log(err)
-  })
+
 })
 
 // ------ add to answer helpfulness count ----
 
 app.put('/qa/answers/:answer_id/helpful', (req, res) => {
   const { answer_id } = req.params;
-  QAhelpers.addToAnswerHelpfulness(answer_id)
-  .then((response) => {
-    res.sendStatus(204);
-  })
-  .then((err) => {
-    console.log(err)
-  })
+
 })
 
 
@@ -318,9 +268,9 @@ app.post(`/cart/:sku_id`, function (req, res) {
 
   console.log('Hi there, cart', product);
 
-  axios.post(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-nyc/cart`, 
-  { 
-    headers: { 
+  axios.post(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-nyc/cart`,
+  {
+    headers: {
       'Authorization': API_KEY,
       'Content-Type': 'application/json'
     },
@@ -336,7 +286,7 @@ app.post(`/cart/:sku_id`, function (req, res) {
 
 app.get(`/cart`, function (req, res) {
   // TODO - your code here!
-  axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-nyc/cart`, 
+  axios.get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-nyc/cart`,
   { headers: { 'Authorization': API_KEY } })
     .then((results) => {
       res.send(results.data);
