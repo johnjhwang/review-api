@@ -1,5 +1,4 @@
 const express = require('express');
-const { rest } = require('underscore');
 const app = express();
 const PORT = 3000;
 const axios = require('axios');
@@ -7,8 +6,6 @@ const morgan = require('morgan');
 const API_KEY = require('../config.js').API_KEY;
 const url = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-nyc';
 const compression = require('compression');
-// const helpers = require('./helpers.js');
-
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -19,10 +16,6 @@ app.use(express.static(__dirname + '/../client/dist'));
 
 // attach authorization header with API key imported in from config.js file here or in helper js
 
-
-///////////////////////////////Related Product and Comparison////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-//request handler for get individual product information
 app.get('/products/:product_id', (req, res) => {
   //console.log('REQ.PARAMS: ', req.params);
   axios
@@ -31,72 +24,16 @@ app.get('/products/:product_id', (req, res) => {
       {
         headers: {
           Authorization: API_KEY,
-          Cache: 'public, max-age=30000',
         },
       }
     )
     .then((results) => {
-      res.set('Cache-control', 'public, max-age=30000');
-      res.set('Accept-Encoding', 'gzip, compress, br');
       res.send(results.data);
     })
     .catch((err) => {
       console.log('Error in getting individual product information: ', err);
     });
 });
-
-//request handler for get related product id
-app.get('/products/:product_id/related', (req, res) => {
-  //console.log('REQ.PARAMS: ', req.params);
-  axios
-    .get(
-      `https://app-hrsei-api.herokuapp.com/api/fec2/hr-nyc/products/${req.params.product_id}/related`,
-      { headers: { Authorization: API_KEY, Cache: 'public, max-age=30000' } }
-    )
-    .then((results) => {
-      res.set('Cache-control', 'public, max-age=30000');
-      res.send(results.data);
-    })
-    .catch((err) => {
-      console.log('Error in getting individual product information: ', err);
-    });
-});
-
-//request handler for get product styles
-app.get('/products/:product_id/styles', (req, res) => {
-  //console.log('REQ.PARAMS: ', req.params);
-  axios
-    .get(
-      `https://app-hrsei-api.herokuapp.com/api/fec2/hr-nyc/products/${req.params.product_id}/styles`,
-      { headers: { Authorization: API_KEY, Cache: 'public, max-age=30000' } }
-    )
-    .then((results) => {
-      res.set('Cache-control', 'public, max-age=30000');
-      res.send(results.data);
-    })
-    .catch((err) => {
-      console.log('Error in getting individual product information: ', err);
-    });
-});
-
-//request handler for get product ratings
-app.get('/reviews/meta/:product_id', (req, res) => {
-  //console.log('REQ.PARAMS: ', req.params);
-  axios
-    .get(
-      `https://app-hrsei-api.herokuapp.com/api/fec2/hr-nyc/reviews/meta?product_id=${req.params.product_id}`,
-      { headers: { Authorization: API_KEY, Cache: 'public, max-age=30000' } }
-    )
-    .then((results) => {
-      res.set('Cache-control', 'public, max-age=30000');
-      res.send(results.data);
-    })
-    .catch((err) => {
-      console.log('Error in getting individual product information: ', err);
-    });
-});
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // ==================== Ratings & Reviews =========================
 
@@ -172,57 +109,6 @@ app.post('/reviews/', (req, res) => {
 
 // ================================================================
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
-app.get(`/products/:productid`, function (req, res) {
-  // TODO - your code here!
-  console.log(req.params.productid);
-  let end = {};
-  helpers.getProducts(req.params.productid).then((product) => {
-    end.product = product.data;
-    helpers.getStyle(req.params.productid).then((styles) => {
-      end.styles = styles.data.results;
-      res.status(200).send(end);
-    });
-  });
-});
-
-app.post(`/cart/:sku_id`, function (req, res) {
-  // TODO - your code here!
-
-  let product = req.params.sku_id;
-
-  console.log('Hi there, cart', product);
-
-  axios
-    .post(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-nyc/cart`, {
-      headers: {
-        Authorization: API_KEY,
-        'Content-Type': 'application/json',
-      },
-      data: { sku_id: `${product}` },
-    })
-    .then((results) => {
-      res.status(200).send(results.data);
-    })
-    .catch((err) => {
-      res.send(err);
-    });
-});
-
-app.get(`/cart`, function (req, res) {
-  // TODO - your code here!
-  axios
-    .get(`https://app-hrsei-api.herokuapp.com/api/fec2/hr-nyc/cart`, {
-      headers: { Authorization: API_KEY },
-    })
-    .then((results) => {
-      res.send(results.data);
-    })
-    .catch((err) => {
-      res.send(err);
-    });
-});
 
 app.listen(PORT, () => {
   console.log(`Server listening at localhost:${PORT}!`);
