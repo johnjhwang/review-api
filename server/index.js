@@ -6,6 +6,9 @@ const morgan = require('morgan');
 const API_KEY = require('../config.js').API_KEY;
 const url = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-nyc';
 const compression = require('compression');
+const db = require('./db/index.js');
+
+
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -14,10 +17,8 @@ app.use(compression());
 app.use(express.static(__dirname + '/../client/dist'));
 
 
-// attach authorization header with API key imported in from config.js file here or in helper js
 
 app.get('/products/:product_id', (req, res) => {
-  //console.log('REQ.PARAMS: ', req.params);
   axios
     .get(
       `https://app-hrsei-api.herokuapp.com/api/fec2/hr-nyc/products/${req.params.product_id}`,
@@ -43,14 +44,12 @@ app.get('/reviews/:product_id/:sort', (req, res) => {
     .get(
       `${url}/reviews?product_id=${req.params.product_id}&sort=${req.params.sort}&page=1&count=1000`,
       {
-        // refactor to use params obj?
         headers: {
           Authorization: API_KEY,
         },
       }
     )
     .then((responseData) => {
-      // console.log('server responseData.data >>>', responseData.data);
       res.status(200).send(responseData.data);
     })
     .catch((err) => {
