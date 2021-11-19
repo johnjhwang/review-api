@@ -7,7 +7,7 @@ const API_KEY = require('../config.js').API_KEY;
 const url = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-nyc';
 const compression = require('compression');
 const db = require('./db/index.js');
-
+const helper = require('./db/helper.js');
 
 app.use(morgan('dev'));
 app.use(express.json());
@@ -18,43 +18,13 @@ app.use(express.static(__dirname + '/../client/dist'));
 
 
 
-app.get('/products/:product_id', (req, res) => {
-  axios
-    .get(
-      `https://app-hrsei-api.herokuapp.com/api/fec2/hr-nyc/products/${req.params.product_id}`,
-      {
-        headers: {
-          Authorization: API_KEY,
-        },
-      }
-    )
-    .then((results) => {
-      res.send(results.data);
-    })
-    .catch((err) => {
-      console.log('Error in getting individual product information: ', err);
-    });
-});
+
 
 // ==================== Ratings & Reviews =========================
 
 app.get('/reviews/:product_id/:sort', (req, res) => {
   console.log('req.params for sort >>>>>', req.params);
-  axios
-    .get(
-      `${url}/reviews?product_id=${req.params.product_id}&sort=${req.params.sort}&page=1&count=1000`,
-      {
-        headers: {
-          Authorization: API_KEY,
-        },
-      }
-    )
-    .then((responseData) => {
-      res.status(200).send(responseData.data);
-    })
-    .catch((err) => {
-      console.log('error on server side >>>', err);
-    });
+
 });
 
 app.get('/reviews/meta/:product_id', (req, res) => {
@@ -107,7 +77,23 @@ app.post('/reviews/', (req, res) => {
 });
 
 // ================================================================
-
+app.get('/products/:product_id', (req, res) => {
+  axios
+    .get(
+      `https://app-hrsei-api.herokuapp.com/api/fec2/hr-nyc/products/${req.params.product_id}`,
+      {
+        headers: {
+          Authorization: API_KEY,
+        },
+      }
+    )
+    .then((results) => {
+      res.send(results.data);
+    })
+    .catch((err) => {
+      console.log('Error in getting individual product information: ', err);
+    });
+});
 
 app.listen(PORT, () => {
   console.log(`Server listening at localhost:${PORT}!`);
