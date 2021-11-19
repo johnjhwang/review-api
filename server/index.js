@@ -18,8 +18,6 @@ app.use(express.static(__dirname + '/../client/dist'));
 
 
 
-
-
 // ==================== Ratings & Reviews =========================
 
 app.get('/reviews/:product_id/:sort', (req, res) => {
