@@ -1,20 +1,22 @@
 // const mongoose = require('mongoose');
 // mongoose.connect('mongodb://localhost/ReviewAPI');
-
+const Promise = require('bluebird');
 const mysql = require('mysql2');
-const db = mysql.createConnection({
+const connection = mysql.createPool({ // mysql connection pool with promise
   host: 'localhost',
   user: 'root',
   password: '',
-  database: 'ReviewAPI'
+  database: 'ReviewAPI',
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
 });
 
-db.connect((err) => {
-  if (err) {
-    return console.error('error: ' + err.message);
-  }
-  console.log('Connected to the MySQL server.');
-});
+const db = Promise.promisifyAll(connection, {multiArgs: true});
+
+db.getConnectionAsync()
+  .then(() => console.log('Connected to the MySQL server.'))
+  .catch(err => console.log(err));
 
 
-module.exports.db = db;
+module.exports = db;

@@ -16,62 +16,58 @@ app.use(compression());
 
 app.use(express.static(__dirname + '/../client/dist'));
 
-
-
 // ==================== Ratings & Reviews =========================
 
-app.get('/reviews/:product_id/:sort', (req, res) => {
-  console.log('req.params for sort >>>>>', req.params);
 
-});
 
 app.get('/reviews/meta/:product_id', (req, res) => {
-  axios
-    .get(`${url}/reviews/meta?product_id=${req.params.product_id}`, {
-      headers: {
-        Authorization: API_KEY,
-      },
-    })
-    .then((responseData) => {
-      res.status(200).send(responseData.data);
-    })
-    .catch((err) => {
-      console.log('error on server side >>>', err);
-    });
+  const pid = req.params.product_id; // this is already in string form here
+  helper.getMeta(pid, (err, responseData) => {
+    if (err) {
+      console.log('err in getting meta');
+    } else {
+      res.status(200).send(responseData);
+    }
+  });
 });
 
+
+app.get('/reviews/:product_id/:sort', (req, res) => {
+  const pid = req.params.product_id; // this is already in string form here
+  const sort = req.params.sort;
+  helper.get(pid, sort, (err, responseData) => {
+    if (err) {
+      console.log('err in getting reviews');
+    } else {
+      res.status(200).send(responseData);
+    }
+  });
+});
+
+
+
 app.put('/reviews/:review_id/:action', (req, res) => {
-  axios
-    .put(
-      `${url}/reviews/${req.params.review_id}/${req.params.action}`,
-      {},
-      {
-        headers: {
-          Authorization: API_KEY,
-        },
-      }
-    )
-    .then((responseData) => {
-      res.status(204).send(responseData.data);
-    })
-    .catch((err) => {
-      console.log('error on PUT server side >>>', err);
-    });
+  const rid = req.params.review_id;
+  const action = req.params.action;
+  helper.update(rid, action, (err) => {
+    if (err) {
+	    res.sendStatus(500);
+    } else {
+      res.sendStatus(204);
+    }
+  })
 });
 
 app.post('/reviews/', (req, res) => {
-  axios
-    .post(`${url}/reviews/`, req.body, {
-      headers: {
-        Authorization: API_KEY,
-      },
-    })
-    .then((response) => {
-      res.status(201).send(response.data);
-    })
-    .catch((err) => {
-      console.log('error POSTing new review server side >>>', err);
-    });
+  const body = req.body;
+  console.log('req.body >>>>', body);
+  helper.post(body, (err) => {
+    if (err) {
+      res.sendStatus(500);
+    } else {
+      res.sendStatus(204);
+    }
+  })
 });
 
 // ================================================================
