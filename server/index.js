@@ -4,7 +4,6 @@ const express = require('express');
 const app = express();
 const axios = require('axios');
 const morgan = require('morgan');
-const API_KEY = require('../config.js').API_KEY;
 const db = require('./db/index.js');
 const helper = require('./db/helper.js');
 const PORT = process.env.PORT;
