@@ -5,8 +5,6 @@ const app = express();
 const axios = require('axios');
 const morgan = require('morgan');
 const API_KEY = require('../config.js').API_KEY;
-const url = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-nyc';
-const compression = require('compression');
 const db = require('./db/index.js');
 const helper = require('./db/helper.js');
 const PORT = process.env.PORT;
@@ -14,7 +12,6 @@ const PORT = process.env.PORT;
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(compression());
 
 app.use(express.static(__dirname + '/../client/dist'));
 
