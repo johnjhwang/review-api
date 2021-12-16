@@ -7,14 +7,14 @@ services:
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     ports:
-      - "3306:3306"
+      - "3000:3000"
     expose:
-      - "3306"
+      - "3000"
     environment:
       MYSQL_ROOT_PASSWORD: rp
       MYSQL_USER: user
       MYSQL_PASSWORD: password
-      MYSQL_DATABASE: blueocean2
+      MYSQL_DATABASE: ReviewAPI
     volumes:
       - data:/data/db
 

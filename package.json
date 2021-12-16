@@ -10,8 +10,8 @@
   "scripts": {
     "test": "jest --watch",
     "test-coverage": "jest --coverage",
-    "server-dev": "npx nodemon server/index.js",
-    "react-dev": "webpack --mode development --watch"
+    "start": "npx nodemon server/index.js",
+    "build": "webpack --mode development --watch"
   },
   "repository": {
     "type": "git",
