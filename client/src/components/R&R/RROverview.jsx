@@ -118,6 +118,7 @@ const RatingsStyle = styled.div`
   padding-left: 20px;
   flex: 1 0 20%;
 `
+
 const ReviewsStyle = styled.div`
   flex: 0 1 80%;
 `
