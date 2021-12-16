@@ -17,6 +17,10 @@ app.use(express.static(__dirname + '/../client/dist'));
 // ==================== Ratings & Reviews =========================
 
 
+app.get('/', (req, res) => {
+  res.status(200).send('hi');
+});
+
 
 app.get('/reviews/meta/:product_id', (req, res) => {
   const pid = req.params.product_id; // this is already in string form here
