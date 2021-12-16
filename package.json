@@ -11,7 +11,7 @@
     "test": "jest --watch",
     "test-coverage": "jest --coverage",
     "start": "npx nodemon server/index.js",
-    "build": "webpack --mode development --watch"
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
