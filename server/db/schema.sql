@@ -125,26 +125,26 @@ CREATE TABLE charReviews (
 -- INSERT INTO `ReviewsMeta` (`product_id`,`ratings`,`recommended`) VALUES
 -- ('','','');
 
--- LOAD DATA LOCAL INFILE '/Users/jhwang/Downloads/reviews.csv'
--- INTO TABLE Reviews
--- FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
--- LINES TERMINATED BY '\n'
--- IGNORE 1 ROWS;
+LOAD DATA LOCAL INFILE '/home/ubuntu/reviews.csv'
+INTO TABLE Reviews
+FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
 
--- LOAD DATA LOCAL INFILE '/Users/jhwang/Downloads/reviews_photos.csv'
--- INTO TABLE photos
--- FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
--- LINES TERMINATED BY '\n'
--- IGNORE 1 ROWS;
+LOAD DATA LOCAL INFILE '/home/ubuntu/reviews_photos.csv'
+INTO TABLE photos
+FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
 
--- LOAD DATA LOCAL INFILE '/Users/jhwang/Downloads/characteristics.csv'
--- INTO TABLE characteristics
--- FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
--- LINES TERMINATED BY '\n'
--- IGNORE 1 ROWS;
+LOAD DATA LOCAL INFILE '/home/ubuntu/characteristics.csv'
+INTO TABLE characteristics
+FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
 
--- LOAD DATA LOCAL INFILE '/Users/jhwang/Downloads/characteristic_reviews.csv'
--- INTO TABLE charReviews
--- FIELDS TERMINATED BY ','
--- LINES TERMINATED BY '\n'
--- IGNORE 1 ROWS;
+LOAD DATA LOCAL INFILE '/home/ubuntu/characteristic_reviews.csv'
+INTO TABLE charReviews
+FIELDS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
