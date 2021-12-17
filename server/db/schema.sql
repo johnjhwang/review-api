@@ -1,15 +1,21 @@
 -- ---
 -- Globals
 -- ---
-DROP DATABASE IF EXISTS ReviewAPI;
 
-CREATE DATABASE ReviewAPI;
+-- DROP DATABASE IF EXISTS heroku_d1094ae8bb349af;
 
-USE ReviewAPI;
+-- CREATE DATABASE heroku_d1094ae8bb349af;
 
+-- USE heroku_d1094ae8bb349af;
+
+
+-- mysql -u b2e43b95a74146 -p3ea000b8 -h us-cdbr-east-05.cleardb.net
+
+
+-- mysql --host=us-cdbr-east-05.cleardb.net --user=b2e43b95a74146 --password=3ea000b8 --reconnect heroku_d1094ae8bb349af < ./server/db/schema.sql
 
 -- SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
--- SET FOREIGN_KEY_CHECKS=0;
+SET FOREIGN_KEY_CHECKS=0;
 
 -- ---
 -- Table 'Reviews'
@@ -119,26 +125,26 @@ CREATE TABLE charReviews (
 -- INSERT INTO `ReviewsMeta` (`product_id`,`ratings`,`recommended`) VALUES
 -- ('','','');
 
-LOAD DATA LOCAL INFILE '/Users/jhwang/Downloads/reviews.csv'
-INTO TABLE Reviews
-FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
-LINES TERMINATED BY '\n'
-IGNORE 1 ROWS;
+-- LOAD DATA LOCAL INFILE '/Users/jhwang/Downloads/reviews.csv'
+-- INTO TABLE Reviews
+-- FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
+-- LINES TERMINATED BY '\n'
+-- IGNORE 1 ROWS;
 
-LOAD DATA LOCAL INFILE '/Users/jhwang/Downloads/reviews_photos.csv'
-INTO TABLE photos
-FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
-LINES TERMINATED BY '\n'
-IGNORE 1 ROWS;
+-- LOAD DATA LOCAL INFILE '/Users/jhwang/Downloads/reviews_photos.csv'
+-- INTO TABLE photos
+-- FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
+-- LINES TERMINATED BY '\n'
+-- IGNORE 1 ROWS;
 
-LOAD DATA LOCAL INFILE '/Users/jhwang/Downloads/characteristics.csv'
-INTO TABLE characteristics
-FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
-LINES TERMINATED BY '\n'
-IGNORE 1 ROWS;
+-- LOAD DATA LOCAL INFILE '/Users/jhwang/Downloads/characteristics.csv'
+-- INTO TABLE characteristics
+-- FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
+-- LINES TERMINATED BY '\n'
+-- IGNORE 1 ROWS;
 
-LOAD DATA LOCAL INFILE '/Users/jhwang/Downloads/characteristic_reviews.csv'
-INTO TABLE charReviews
-FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\n'
-IGNORE 1 ROWS;
+-- LOAD DATA LOCAL INFILE '/Users/jhwang/Downloads/characteristic_reviews.csv'
+-- INTO TABLE charReviews
+-- FIELDS TERMINATED BY ','
+-- LINES TERMINATED BY '\n'
+-- IGNORE 1 ROWS;

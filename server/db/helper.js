@@ -2,7 +2,7 @@ const db = require('./index.js');
 
 
 module.exports = {
-  get: function (product_id, sort, callback) { // match the shape, process photos separately
+  get: function (product_id, sort='newest', callback) { // match the shape, process photos separately
     let result = {};
     let sortKeyword = '';
     if (sort === 'newest') {
