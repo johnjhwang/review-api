@@ -125,26 +125,34 @@ CREATE TABLE charReviews (
 -- INSERT INTO `ReviewsMeta` (`product_id`,`ratings`,`recommended`) VALUES
 -- ('','','');
 
-LOAD DATA LOCAL INFILE '/home/ubuntu/reviews.csv'
-INTO TABLE Reviews
-FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
-LINES TERMINATED BY '\n'
-IGNORE 1 ROWS;
+-- LOAD DATA LOCAL INFILE '/home/ubuntu/reviews.csv'
+-- INTO TABLE Reviews
+-- FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
+-- LINES TERMINATED BY '\n'
+-- IGNORE 1 ROWS;
 
-LOAD DATA LOCAL INFILE '/home/ubuntu/reviews_photos.csv'
-INTO TABLE photos
-FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
-LINES TERMINATED BY '\n'
-IGNORE 1 ROWS;
+-- LOAD DATA LOCAL INFILE '/home/ubuntu/reviews_photos.csv'
+-- INTO TABLE photos
+-- FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
+-- LINES TERMINATED BY '\n'
+-- IGNORE 1 ROWS;
 
-LOAD DATA LOCAL INFILE '/home/ubuntu/characteristics.csv'
-INTO TABLE characteristics
-FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
-LINES TERMINATED BY '\n'
-IGNORE 1 ROWS;
+-- LOAD DATA LOCAL INFILE '/home/ubuntu/characteristics.csv'
+-- INTO TABLE characteristics
+-- FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
+-- LINES TERMINATED BY '\n'
+-- IGNORE 1 ROWS;
 
-LOAD DATA LOCAL INFILE '/home/ubuntu/characteristic_reviews.csv'
-INTO TABLE charReviews
-FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\n'
-IGNORE 1 ROWS;
+-- LOAD DATA LOCAL INFILE '/home/ubuntu/characteristic_reviews.csv'
+-- INTO TABLE charReviews
+-- FIELDS TERMINATED BY ','
+-- LINES TERMINATED BY '\n'
+-- IGNORE 1 ROWS;
+
+
+-- CREATE INDEX product_id_and_reported_idx ON Reviews (product_id, reported);
+-- CREATE INDEX review_id_index ON photos (review_id);
+-- CREATE INDEX product_id_and_recommend_idx ON Reviews (product_id, recommend);
+-- CREATE INDEX product_id_idx ON Reviews (product_id);
+-- CREATE INDEX product_id_idx ON characteristics (product_id);
+-- CREATE INDEX characteristic_id_idx ON charReviews (characteristic_id);
