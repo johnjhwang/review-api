@@ -1,12 +1,10 @@
-
-require('dotenv').config()
 const express = require('express');
 const app = express();
 const axios = require('axios');
 const morgan = require('morgan');
 const db = require('./db/index.js');
 const helper = require('./db/helper.js');
-const PORT = process.env.PORT;
+const PORT = 3000;
 
 app.use(morgan('dev'));
 app.use(express.json());
@@ -72,24 +70,7 @@ app.post('/reviews/', (req, res) => {
   })
 });
 
-// ================================================================
-app.get('/products/:product_id', (req, res) => {
-  axios
-    .get(
-      `https://app-hrsei-api.herokuapp.com/api/fec2/hr-nyc/products/${req.params.product_id}`,
-      {
-        headers: {
-          Authorization: API_KEY,
-        },
-      }
-    )
-    .then((results) => {
-      res.send(results.data);
-    })
-    .catch((err) => {
-      console.log('Error in getting individual product information: ', err);
-    });
-});
+
 
 app.listen(PORT, () => {
   console.log(`Server listening at localhost:${PORT}!`);
